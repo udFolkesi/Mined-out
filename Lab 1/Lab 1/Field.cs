@@ -40,8 +40,10 @@ namespace Lab_1
 
                     if (Matrix[i, k] == '#')
                     {
-                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.ForegroundColor = ConsoleColor.DarkBlue;
+                        Console.BackgroundColor = ConsoleColor.DarkBlue;
                         Console.Write(Matrix[i, k]);
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.Gray;
                     }
                     else
@@ -51,7 +53,7 @@ namespace Lab_1
                 }
 
                 Console.WriteLine();
-                this.mine.Traps(i);
+                mine.Traps(i);
             }
         }
 
@@ -70,8 +72,10 @@ namespace Lab_1
 
                     if (Matrix[i, j] == '#')
                     {
-                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.ForegroundColor = ConsoleColor.DarkBlue;
+                        Console.BackgroundColor = ConsoleColor.DarkBlue;
                         Console.Write(Matrix[i, j]);
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.Gray;
                     }
 

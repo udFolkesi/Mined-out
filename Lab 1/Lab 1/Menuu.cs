@@ -17,9 +17,9 @@ namespace Lab_1
         public void Menu()
         {
             Console.WriteLine("**** Menu ****");
-            for (int i = 0; i < this.listMenu.Length; i++)
+            for (int i = 0; i < listMenu.Length; i++)
             {
-                Console.Write($" {this.listMenu[i]} \n");
+                Console.Write($" {listMenu[i]} \n");
             }
 
             Console.Write("**************");
@@ -46,14 +46,14 @@ namespace Lab_1
                 }
 
                 Console.Clear();
-                this.Menu();
+                Menu();
                 if (k.Key == ConsoleKey.Enter && y == 1)
                 {
                     Console.Beep();
                     Console.Clear();
-                    this.rules.Define();
-                    this.field.Define();
-                    this.player.Define();
+                    rules.Define();
+                    field.Define();
+                    player.Define();
                 }
 
                 if (k.Key == ConsoleKey.Enter && y == 2)

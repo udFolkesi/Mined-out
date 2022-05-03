@@ -14,58 +14,37 @@ namespace Lab_1
         private static int act = 0;
         private Field field = new Field();
 
+        //удалить this
+
         // Player player = new Player(); почему с этим с не работает?
         // чтоб можно было внизу и вверху по 3 клетки были свободными
         public override void Define()
         {
-            Console.SetCursorPosition(this.cursorPosLeft, this.cursorPosTop);
-            this.Check(this.cursorPosLeft, this.cursorPosTop);
-            Console.SetCursorPosition(this.cursorPosLeft, this.cursorPosTop);
+            int whatCase = 0; // чет другое придумать
+            Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
+            Check(cursorPosLeft, cursorPosTop);
+            Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
             key = Console.ReadKey(true);
             while (key.Key != ConsoleKey.Escape && act == 0)
             {
                 switch (key.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        Console.Write('.');
-                        this.cursorPosTop--;
-                        this.MoveCursor(ref this.cursorPosLeft, ref this.cursorPosTop);
-                        if (this.cursorPosTop != 0)
-                        {
-                            this.Check(this.cursorPosLeft, this.cursorPosTop);
-                        }
-
-                        if ((this.cursorPosLeft == 11 && this.cursorPosTop == 0) ||
-                            (this.cursorPosLeft == 10 && this.cursorPosTop == 0) ||
-                            (this.cursorPosLeft == 12 && this.cursorPosTop == 0))
-                        {
-                            this.Win();
-                        }
-
-                        this.MoveCursor(ref this.cursorPosLeft, ref this.cursorPosTop);
+                        whatCase = 1;
+                        moveCase(whatCase);
                         break;
                     case ConsoleKey.DownArrow:
-                        Console.Write('.');
-                        this.cursorPosTop++;
-                        this.MoveCursor(ref this.cursorPosLeft, ref this.cursorPosTop);
-                        this.Check(this.cursorPosLeft, this.cursorPosTop);
-                        this.MoveCursor(ref this.cursorPosLeft, ref this.cursorPosTop);
+                        whatCase = 2;
+                        moveCase(whatCase);
                         break;
                     case ConsoleKey.LeftArrow:
-                        Console.Write('.');
-                        this.cursorPosLeft--;
-                        this.MoveCursor(ref this.cursorPosLeft, ref this.cursorPosTop);
-                        this.Check(this.cursorPosLeft, this.cursorPosTop);
-                        this.MoveCursor(ref this.cursorPosLeft, ref this.cursorPosTop);
+                        whatCase = 3;
+                        moveCase(whatCase);
                         break;
                     case ConsoleKey.RightArrow:
-                        Console.Write('.');
-                        this.cursorPosLeft++;
-                        this.MoveCursor(ref this.cursorPosLeft, ref this.cursorPosTop);
-                        this.Check(this.cursorPosLeft, this.cursorPosTop);
-
+                        whatCase = 4;
+                        moveCase(whatCase);
                         // Console.Write('0');
-                        this.MoveCursor(ref this.cursorPosLeft, ref this.cursorPosTop);
                         break;
                 }
 
@@ -77,6 +56,49 @@ namespace Lab_1
                 Console.Clear();
                 Console.WriteLine("GAME OVER");
             }
+        }
+
+        public void moveCase(int Case)
+        {
+            Console.BackgroundColor = ConsoleColor.Gray;
+            Console.Write('.');
+            Console.BackgroundColor = ConsoleColor.Black;
+            switch (Case)
+            {
+                case 1:
+                    cursorPosTop--;
+                    break;
+                case 2:
+                    cursorPosTop++;
+                    break;
+                case 3:
+                    cursorPosLeft--;
+                    break;
+                case 4:
+                    cursorPosLeft++;
+                    break;
+            }
+            MoveCursor(ref cursorPosLeft, ref cursorPosTop);
+
+            if (Case == 1)
+            {
+                if (cursorPosTop != 0)
+                {
+                    Check(cursorPosLeft, cursorPosTop);
+                }
+
+                if ((cursorPosLeft == 11 && cursorPosTop == 0) ||
+                    (cursorPosLeft == 10 && cursorPosTop == 0) ||
+                    (cursorPosLeft == 12 && cursorPosTop == 0))
+                {
+                    Win();
+                }
+            }
+            else
+            {
+                Check(cursorPosLeft, cursorPosTop);
+            }
+            MoveCursor(ref cursorPosLeft, ref cursorPosTop);
         }
 
         public void MoveCursor(ref int left, ref int top)
@@ -116,7 +138,7 @@ namespace Lab_1
 
             if (Field.Matrix[top, left] == 'X')
             {
-                this.Defeat();
+                Defeat();
             }
 
             Console.SetCursorPosition(left, top);
@@ -167,8 +189,10 @@ namespace Lab_1
             }
 
             Console.ForegroundColor = ConsoleColor.Green;
-            this.WhatColor(amount);
+            WhatColor(amount);
+            Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.Write(amount);
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
 
             // ConsoleColor.Gray;
@@ -177,7 +201,7 @@ namespace Lab_1
         public void Defeat()
         {
             Console.Clear();
-            this.field.Draw();
+            field.Draw();
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("Defeat.");
             Console.ForegroundColor = ConsoleColor.Gray;
@@ -190,11 +214,11 @@ namespace Lab_1
             if (game == "yes")
             {
                 Console.Clear();
-                this.cursorPosLeft = 11;
-                this.cursorPosTop = 7;
+                cursorPosLeft = 11;
+                cursorPosTop = 7;
                 act = 0;
-                this.field.Define();
-                this.Define();
+                field.Define();
+                Define();
             }
 
             if (game == "no")
