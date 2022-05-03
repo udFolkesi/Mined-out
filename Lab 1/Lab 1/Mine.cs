@@ -14,13 +14,13 @@ namespace Lab_1
         // Mine mine = new Mine();
         public void Traps(int i)
         {
-            int x = this.random.Next(1, 7);
+            int x = random.Next(1, 7);
             for (int j = 0; j < x; j++)
             {
                 // 11 12 13
                 if (i != 0 && i != 7)
                 {
-                    Field.Matrix[i, this.random.Next(1, 22)] = 'X';
+                    Field.Matrix[i, random.Next(1, 22)] = 'X';
                 }
             }
         }
