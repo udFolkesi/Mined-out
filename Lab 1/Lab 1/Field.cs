@@ -8,18 +8,24 @@ namespace Lab_1
 {
     public class Field : Element
     {
-        internal static readonly char[,] Matrix = new char[8, 23];
+        public static int matrixWidth = 8;
+        public static int matrixLength = 23;
+        // public int matrixLength { set; get; } = 23;
+        public static char[,] Matrix = new char[100, 50];
+        public int bord { set; get; } = Convert.ToInt32(Math.Floor(matrixLength / 2d) - 1);
         private Mine mine = new Mine();
+        
 
         // 6, 17
+        // abstract field
         public override void Define()
         {
             Console.SetCursorPosition(0, 0);
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < matrixWidth; i++)
             {
-                for (int k = 0; k < 23; k++)
+                for (int k = 0; k < matrixLength; k++)
                 {
-                    if (i > 0 && i < 7 && k > 0 && k < 22)
+                    if (i > 0 && i < matrixWidth - 1 && k > 0 && k < matrixLength - 1)
                     {
                         Matrix[i, k] = ' ';
                     }
@@ -28,12 +34,12 @@ namespace Lab_1
                         Matrix[i, k] = '#';
                     }
 
-                    if (i == 0 && k < 13 && k > 9)
+                    if (i == 0 && k >= bord && k <= bord + 2)
                     {
                         Matrix[i, k] = ' ';
                     }
 
-                    if (i == 7 && k < 13 && k > 9)
+                    if (i == matrixWidth - 1 && k >= bord && k <= bord + 2)
                     {
                         Matrix[i, k] = ' ';
                     }
@@ -53,15 +59,15 @@ namespace Lab_1
                 }
 
                 Console.WriteLine();
-                mine.Traps(i);
+                mine.Traps(i, matrixLength, matrixWidth);
             }
         }
 
         public void Draw()
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < matrixWidth; i++)
             {
-                for (int j = 0; j < 23; j++)
+                for (int j = 0; j < matrixLength; j++)
                 {
                     if (Matrix[i, j] == 'X')
                     {

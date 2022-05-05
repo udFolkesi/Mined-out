@@ -9,18 +9,23 @@ namespace Lab_1
     internal class Player : Element
     {
         private static ConsoleKeyInfo key;
-        public int cursorPosLeft = 11;
-        public int cursorPosTop = 7;
+        public int cursorPosLeft = 0; // 11
+        public int cursorPosTop = 0; // 7
         private static int act = 0;
         private Field field = new Field();
+        private Rules rules = new Rules();
 
         //удалить this
 
         // Player player = new Player(); почему с этим с не работает?
         // чтоб можно было внизу и вверху по 3 клетки были свободными
+        // абстрактное поле
         public override void Define()
         {
             int whatCase = 0; // чет другое придумать
+            field.bord = Convert.ToInt32(Math.Floor(Field.matrixLength / 2d) - 1);
+            cursorPosLeft = field.bord + 1; 
+            cursorPosTop = Field.matrixWidth - 1;
             Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
             Check(cursorPosLeft, cursorPosTop);
             Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
@@ -87,9 +92,9 @@ namespace Lab_1
                     Check(cursorPosLeft, cursorPosTop);
                 }
 
-                if ((cursorPosLeft == 11 && cursorPosTop == 0) ||
-                    (cursorPosLeft == 10 && cursorPosTop == 0) ||
-                    (cursorPosLeft == 12 && cursorPosTop == 0))
+                if ((cursorPosLeft == field.bord + 1 && cursorPosTop == 0) ||
+                    (cursorPosLeft == field.bord && cursorPosTop == 0) ||
+                    (cursorPosLeft == field.bord + 2 && cursorPosTop == 0))
                 {
                     Win();
                 }
@@ -110,30 +115,30 @@ namespace Lab_1
                 left = 1;
             }
 
-            if (top < 1 && left == 11)
+            if (top < 1 && left == field.bord + 1)
             {
                 top = 0;
             }
 
-            if (top < 1 && left != 11 && left != 12 && left != 10)
+            if (top < 1 && left != field.bord + 1 && left != field.bord + 2 && left != field.bord)
             {
                 top = 1;
             }
 
             // if ((top < 1 && left) != 11||12|13)
-            if (left > 21)
+            if (left > Field.matrixLength - 2)
             {
-                left = 21;
+                left = Field.matrixLength - 2;
             }
 
-            if (top == 7 && left == 10)
+            if (top == Field.matrixWidth - 1 && left == field.bord)
             {
-                top = 7;
+                top = Field.matrixWidth - 1;
             }
 
-            if (top > 6 && left != 10 && left != 12 && left != 11)
+            if (top > Field.matrixWidth - 2 && left != field.bord && left != field.bord + 2 && left != field.bord + 1)
             {
-                top = 6;
+                top = Field.matrixWidth - 2;
             }
 
             if (Field.Matrix[top, left] == 'X')
@@ -203,25 +208,30 @@ namespace Lab_1
             Console.Clear();
             field.Draw();
             Console.ForegroundColor = ConsoleColor.Red;
+            // Console.SetBufferSize; set??
+            Console.SetCursorPosition(0, Field.matrixWidth + 1);
             Console.Write("Defeat.");
             Console.ForegroundColor = ConsoleColor.Gray;
             act++;
 
             // key = Console.ReadKey(false);
-            Console.WriteLine("TRY AGAIN?");
+            Console.WriteLine("TRY AGAIN? (yes/no)");
             Console.CursorVisible = true;
-            string game = Console.ReadLine();
-            if (game == "yes")
+            char game = Console.ReadKey().KeyChar;
+            if (game == 'y')
             {
+                Console.CursorVisible = false;
                 Console.Clear();
                 cursorPosLeft = 11;
                 cursorPosTop = 7;
                 act = 0;
+                rules.Define();
+
                 field.Define();
                 Define();
             }
 
-            if (game == "no")
+            if (game == 'n')
             {
                 Console.Clear();
                 Console.WriteLine("GAME OVER");
