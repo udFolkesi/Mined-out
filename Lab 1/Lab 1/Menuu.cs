@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -110,13 +111,14 @@ namespace Lab_1
                     rules.Define();
                     field.Define();
                     player.Define();
+                    //time();
                 }
 
                 if (k.Key == ConsoleKey.Enter && y == 2)
                 {
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.WriteLine("Нихуя не придумал, так шо пока так");
+                    // Console.WriteLine("Нихуя не придумал, так шо пока так");
                     Console.WriteLine("What size of field?");
                     Console.CursorVisible = true;
                     Console.Write("Width:");

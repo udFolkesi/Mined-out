@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Lab_1
@@ -14,22 +13,41 @@ namespace Lab_1
         private static int act = 0;
         private Field field = new Field();
         private Rules rules = new Rules();
+        static int timeStop = 0;
+        private static CancellationTokenSource _cts;
+        public int life { set; get; }
 
         //удалить this
+        static object locker = new object();
 
         // Player player = new Player(); почему с этим с не работает?
         // чтоб можно было внизу и вверху по 3 клетки были свободными
         // абстрактное поле
         public override void Define()
         {
+            timeStop = 0;
             int whatCase = 0; // чет другое придумать
+            lock (locker)
+            {
+                Console.SetCursorPosition(Field.matrixLength + 1, 0);
+            }
+            Console.Write("00:00:00");
             field.bord = Convert.ToInt32(Math.Floor(Field.matrixLength / 2d) - 1);
             cursorPosLeft = field.bord + 1; 
             cursorPosTop = Field.matrixWidth - 1;
-            Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
+            lock (locker)
+            {
+                Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
+            }
             Check(cursorPosLeft, cursorPosTop);
-            Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
+            lock (locker)
+            {
+                Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
+            }
             key = Console.ReadKey(true);
+            timer();
+            
+
             while (key.Key != ConsoleKey.Escape && act == 0)
             {
                 switch (key.Key)
@@ -49,13 +67,10 @@ namespace Lab_1
                     case ConsoleKey.RightArrow:
                         whatCase = 4;
                         moveCase(whatCase);
-                        // Console.Write('0');
                         break;
                 }
-
                 key = Console.ReadKey(true);
             }
-
             if (key.Key == ConsoleKey.Escape)
             {
                 Console.Clear();
@@ -63,15 +78,44 @@ namespace Lab_1
             }
         }
 
+        public static void timer()
+        {
+            _cts = new CancellationTokenSource();
+            Task.Run(() =>
+            {
+                var watch2 = Stopwatch.StartNew();
+                while (timeStop == 0)
+                {
+                    Console.CursorVisible = false;
+                    Thread.Sleep(1); // to simulate some work
+                    lock (locker)
+                    {
+                        Console.SetCursorPosition(Field.matrixLength + 1, 0);
+                        Console.Write(watch2.Elapsed);
+                    }
+                    if (timeStop == 1)
+                    {
+                        watch2.Stop();
+                        _cts.Cancel();
+                    }
+                }
+            });
+        }
+
         public void moveCase(int Case)
         {
-            Console.BackgroundColor = ConsoleColor.Gray;
-            Console.Write('.');
-            Console.BackgroundColor = ConsoleColor.Black;
+            lock (locker)
+            {
+                Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
+                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.Write('.'); // ?
+                Console.BackgroundColor = ConsoleColor.Black;
+            }
+            
             switch (Case)
             {
                 case 1:
-                    cursorPosTop--;
+                    cursorPosTop--;      
                     break;
                 case 2:
                     cursorPosTop++;
@@ -84,7 +128,14 @@ namespace Lab_1
                     break;
             }
             MoveCursor(ref cursorPosLeft, ref cursorPosTop);
-
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
             if (Case == 1)
             {
                 if (cursorPosTop != 0)
@@ -96,6 +147,8 @@ namespace Lab_1
                     (cursorPosLeft == field.bord && cursorPosTop == 0) ||
                     (cursorPosLeft == field.bord + 2 && cursorPosTop == 0))
                 {
+                    timeStop = 1;
+                    Console.Clear();
                     Win();
                 }
             }
@@ -108,8 +161,6 @@ namespace Lab_1
 
         public void MoveCursor(ref int left, ref int top)
         {
-            // x=8, y=5
-            // 6    17
             if (left < 1)
             {
                 left = 1;
@@ -125,7 +176,6 @@ namespace Lab_1
                 top = 1;
             }
 
-            // if ((top < 1 && left) != 11||12|13)
             if (left > Field.matrixLength - 2)
             {
                 left = Field.matrixLength - 2;
@@ -141,20 +191,51 @@ namespace Lab_1
                 top = Field.matrixWidth - 2;
             }
 
-            if (Field.Matrix[top, left] == 'X')
+            if (Field.Matrix[top, left] == '$')
             {
-                Defeat();
+                Field.Matrix[top, left] = ' ';
+                life = 1;
+                Console.SetCursorPosition(Field.matrixLength + 1, 1);
+                Console.Write("Life: 1");
             }
 
-            Console.SetCursorPosition(left, top);
+            if (Field.Matrix[top, left] == 'X')
+            {
+                if(life != 1)
+                {
+                    Defeat();
+                }
+                if (life == 1)
+                {
+                    life = 0;
+                    Console.SetCursorPosition(Field.matrixLength + 1, 1);
+                    Console.Write("Life: 0");
+                }
+            }
+
+            lock (locker)
+            {
+                Console.SetCursorPosition(left, top);
+            }
         }
 
         public void Win()
         {
-            Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write($"Victory!{(char)1} ");
-            Console.ForegroundColor = ConsoleColor.Gray;
+            // Console.Write($"Victory!{(char)1} ");
+            Console.Clear();
+            Console.Write(
+                    @"
+ _    _  _                                  
+| |  | |(_)        _                        
+| |  | | _   ____ | |_   ___    ____  _   _ 
+ \ \/ / | | / ___)|  _) / _ \  / ___)| | | |
+  \  /  | |( (___ | |__| |_| || |    | |_| |
+   \/   |_| \____) \___)\___/ |_|     \__  |
+                                     (____/ 
+                                            
+");
+            Console.ForegroundColor = ConsoleColor.Gray; //типа всвязке
             act++;
         }
 
@@ -193,24 +274,29 @@ namespace Lab_1
             {
             }
 
+            lock (locker)
+            {
             Console.ForegroundColor = ConsoleColor.Green;
             WhatColor(amount);
             Console.BackgroundColor = ConsoleColor.DarkGray;
-            Console.Write(amount);
+                Console.Write(amount);
+            }
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
-
-            // ConsoleColor.Gray;
         }
 
         public void Defeat()
         {
+            timeStop = 1;
             Console.Clear();
             field.Draw();
             Console.ForegroundColor = ConsoleColor.Red;
             // Console.SetBufferSize; set??
-            Console.SetCursorPosition(0, Field.matrixWidth + 1);
-            Console.Write("Defeat.");
+            lock (locker)
+            {
+                Console.SetCursorPosition(0, Field.matrixWidth + 1);
+                Console.Write("Defeat.");
+            }
             Console.ForegroundColor = ConsoleColor.Gray;
             act++;
 
@@ -222,11 +308,10 @@ namespace Lab_1
             {
                 Console.CursorVisible = false;
                 Console.Clear();
-                cursorPosLeft = 11;
-                cursorPosTop = 7;
+                cursorPosLeft = field.bord;
+                cursorPosTop = Field.matrixWidth - 1;
                 act = 0;
                 rules.Define();
-
                 field.Define();
                 Define();
             }
@@ -234,10 +319,27 @@ namespace Lab_1
             if (game == 'n')
             {
                 Console.Clear();
-                Console.WriteLine("GAME OVER");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                // Console.BackgroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(
+                    @"
+  ______                                                  
+ / _____)                                                 
+| /  ___   ____  ____    ____     ___  _   _  ____   ____ 
+| | (___) / _  ||    \  / _  )   / _ \| | | |/ _  ) / ___)
+| \____/|( ( | || | | |( (/ /   | |_| |\ V /( (/ / | |    
+ \_____/  \_||_||_|_|_| \____)   \___/  \_/  \____)|_| 
+
+                    ");
                 Environment.Exit(0);
             }
 
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("Something is wrong, try again");
+                game = Console.ReadKey().KeyChar;
+            }
             // restart?
         }
 
@@ -256,5 +358,7 @@ namespace Lab_1
                     break;
             }
         }
+        
+
     }
 }

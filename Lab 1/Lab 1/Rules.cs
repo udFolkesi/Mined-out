@@ -15,6 +15,7 @@ namespace Lab_1
                                               ============= Rules ================
                                               You can use arrows(◄ ►▲▼) for move
                                               To show hint press.. 
+                                              Additional life - $
                                               If you want to finish game press Esc
             ");
         }
