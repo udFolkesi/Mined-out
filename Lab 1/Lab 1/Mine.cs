@@ -8,13 +8,13 @@ namespace Lab_1
 {
     public class Mine
     {
-        private Random random = new Random();
-       
+        private static Random random = new Random();
+
         // Console.ForegroundColor = ConsoleColor.Red;
-        
         public void Traps(int i, int length, int width)
         {
-            int x = random.Next(1, 1); // 6
+            //Random random = new Random();
+            int x = random.Next(1, 5); // 6
             for (int j = 0; j < x; j++)
             {
                 // 11 12 13
@@ -25,8 +25,26 @@ namespace Lab_1
             }
         }
 
+        public void Wall2()
+        {
+            //Random random = new Random();
+            for (int i = 0; i < Field.matrixWidth; i++) 
+            {
+                int y = random.Next(1, Field.matrixWidth - 1);
+                int x = random.Next(1, Field.matrixLength - 1);
+                Field.Matrix[y, x] = '0';
+                Console.SetCursorPosition(x, y);
+                Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.Write('0');
+            }
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
         public void Bonus()
         {
+            //Random random = new Random();
             int y = random.Next(1, Field.matrixWidth - 1);
             int x = random.Next(1, Field.matrixLength - 1);
             Field.Matrix[y, x] = '$';

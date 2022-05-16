@@ -18,18 +18,17 @@ namespace Lab_1
 
         public void Menu()
         {
-            
             Console.WriteLine("**** Menu ****");
             for (int i = 0; i < listMenu.Length; i++)
             {
                 Console.Write($" {listMenu[i]} \n");
             }
-            //Console.SetCursorPosition(5, 0){ } while true - change color
 
+            // Console.SetCursorPosition(5, 0){ } while true - change color
             Console.Write("**************");
             MenuAsync();
         }
-        
+
         public async Task MenuAsync()
         {
             await Task.Run(wordMenu);
@@ -51,7 +50,7 @@ namespace Lab_1
                     Console.ForegroundColor = (ConsoleColor)r.Next(16);
                     Console.Write(letter);
                 }
-                
+
                 Console.Write('\r');
                 Thread.Sleep(150);
             }
@@ -60,7 +59,6 @@ namespace Lab_1
         }
 
         // Parallel 
-
         public void Define()
         {
             Console.CursorVisible = false; // гасим курсор
@@ -78,7 +76,7 @@ namespace Lab_1
                 {
                     Console.SetCursorPosition(x, y);
                     Console.Write(' ');
-                    if(y-1 > 0)
+                    if (y - 1 > 0)
                     {
                         y--;
                     }
@@ -102,8 +100,6 @@ namespace Lab_1
                     }
                 }
 
-                //Console.Clear();
-                //Menu();
                 if (k.Key == ConsoleKey.Enter && y == 1)
                 {
                     Console.Beep();
@@ -111,13 +107,15 @@ namespace Lab_1
                     rules.Define();
                     field.Define();
                     player.Define();
-                    //time();
+
+                    // time();
                 }
 
                 if (k.Key == ConsoleKey.Enter && y == 2)
                 {
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Gray;
+
                     // Console.WriteLine("Нихуя не придумал, так шо пока так");
                     Console.WriteLine("What size of field?");
                     Console.CursorVisible = true;
@@ -126,8 +124,9 @@ namespace Lab_1
                     Console.Write("Length:");
                     Field.matrixLength = int.Parse(Console.ReadLine());
                     Console.Clear();
+
                     // Field.Matrix
-                    field.bord =Convert.ToInt32(Math.Floor(Field.matrixLength / 2d) - 1);
+                    field.bord = Convert.ToInt32(Math.Floor(Field.matrixLength / 2d) - 1);
                     Menu();
                     Define();
                 }

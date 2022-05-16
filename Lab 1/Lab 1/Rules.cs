@@ -14,6 +14,7 @@ namespace Lab_1
             Console.Write(@"
                                               ============= Rules ================
                                               You can use arrows(◄ ►▲▼) for move
+                                              Restart - press R
                                               To show hint press.. 
                                               Additional life - $
                                               If you want to finish game press Esc
