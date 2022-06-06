@@ -5,22 +5,22 @@ using System.Threading.Tasks;
 
 namespace Lab_1
 {
-    internal class Player : Element
+    class Player : Element
     {
+        // proeprty?
         private static ConsoleKeyInfo key;
         public int cursorPosLeft = 0; // 11
         public int cursorPosTop = 0; // 7
-        private static int act = 0;
+        public static int act = 0;
+        public int life { get; set; }
         private Field field = new Field();
         private Rules rules = new Rules();
-        private File file = new File();
+        //private Files file = new Files();
+        private Result result = new Result();
+        public static TimeSpan _time;
         static int timeStop = 0;
         private static CancellationTokenSource _cts;
-
-        public int life { get; set; }
-
-        // удалить this
-        static object locker = new object();
+        private static object locker = new object();
 
         // Player player = new Player(); почему с этим с не работает?
         // чтоб можно было внизу и вверху по 3 клетки были свободными
@@ -34,7 +34,7 @@ namespace Lab_1
                 Console.SetCursorPosition(Field.matrixLength + 1, 0);
             }
 
-            Console.Write("00:00:00");
+            Console.Write("00:00:00"); // убрать
             field.bord = Convert.ToInt32(Math.Floor(Field.matrixLength / 2d) - 1);
             cursorPosLeft = field.bord + 1;
             cursorPosTop = Field.matrixWidth - 1;
@@ -52,7 +52,8 @@ namespace Lab_1
             key = Console.ReadKey(true);
             timer();
 
-            while (key.Key != ConsoleKey.Escape && act == 0 && key.Key != ConsoleKey.R)
+            while (key.Key != ConsoleKey.Escape && act == 0 && key.Key != ConsoleKey.R
+                && key.Key != ConsoleKey.B) // пока игровая сессия идет = true
             {
                 switch (key.Key)
                 {
@@ -61,6 +62,11 @@ namespace Lab_1
                         moveCase(whatCase);
                         break;
                     case ConsoleKey.DownArrow:
+                        if(cursorPosTop == Field.matrixWidth - 1)
+                        {
+                            break;
+                        }
+
                         whatCase = 2;
                         moveCase(whatCase);
                         break;
@@ -77,6 +83,16 @@ namespace Lab_1
                 key = Console.ReadKey(true);
             }
 
+            if (key.Key == ConsoleKey.B)
+            {
+                Menu menu = new Menu();
+                timeStop = 1;
+                Thread.Sleep(20);
+                Console.Clear();
+                menu.PrintMenu();
+                menu.Start();
+            }
+
             if (key.Key == ConsoleKey.R)
             {
                 timeStop = 1;
@@ -90,6 +106,8 @@ namespace Lab_1
 
             if (key.Key == ConsoleKey.Escape)
             {
+                timeStop = 1;
+                Thread.Sleep(50);
                 Console.Clear();
                 Console.WriteLine("GAME OVER");
             }
@@ -97,7 +115,7 @@ namespace Lab_1
 
         public static void timer()
         {
-            _cts = new CancellationTokenSource();
+            //_cts = new CancellationTokenSource();
             Task.Run(() =>
             {
                 var watch2 = Stopwatch.StartNew();
@@ -113,11 +131,11 @@ namespace Lab_1
 
                     if (timeStop == 1 )
                     {
+                        _time = watch2.Elapsed;
                         watch2.Stop();
                         _cts.Cancel();
                     }
                 }
-                //while do
             });
         }
 
@@ -162,7 +180,9 @@ namespace Lab_1
                 {
                     timeStop = 1;
                     Console.Clear();
-                    Win();
+
+                    result.Win();
+                    //Win();
                 }
             }
             else
@@ -235,14 +255,17 @@ namespace Lab_1
 
             if (Field.Matrix[top, left] == 'X')
             {
-                if (life != 1)
+                if (life == 0)
                 {
-                    Defeat();
+                    //Console.Write("hallo");
+                    result.Defeat();
+                    //Defeat();
                 }
 
                 if (life == 1)
                 {
                     life = 0;
+                    Field.Matrix[top, left] = ' ';
                     Console.SetCursorPosition(Field.matrixLength + 1, 1);
                     Console.Write("Life: 0");
                 }
@@ -252,28 +275,6 @@ namespace Lab_1
             {
                 Console.SetCursorPosition(left, top);
             }
-        }
-
-        public void Win()
-        {
-            file.save();
-            Console.ForegroundColor = ConsoleColor.Green;
-
-            // Console.Write($"Victory!{(char)1} ");
-            Console.Clear();
-            Console.Write(
-                    @"
- _    _  _                                  
-| |  | |(_)        _                        
-| |  | | _   ____ | |_   ___    ____  _   _ 
- \ \/ / | | / ___)|  _) / _ \  / ___)| | | |
-  \  /  | |( (___ | |__| |_| || |    | |_| |
-   \/   |_| \____) \___)\___/ |_|     \__  |
-                                     (____/ 
-                                            
-");
-            Console.ForegroundColor = ConsoleColor.Gray; //типа всвязке
-            act++;
         }
 
         public void Check(int x, int y)
@@ -313,84 +314,17 @@ namespace Lab_1
 
             lock (locker)
             {
-            Console.ForegroundColor = ConsoleColor.Green;
-            WhatColor(amount);
-            Console.BackgroundColor = ConsoleColor.DarkGray;
-            Console.Write(amount);
+                Console.ForegroundColor = ConsoleColor.Green;
+                WhatColor(amount);
+                Console.BackgroundColor = ConsoleColor.DarkGray;
+                Console.Write(amount);
             }
 
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
-        public void Defeat()
-        {
-            timeStop = 1;
-            Console.Clear();
-            field.Draw();
-            Console.ForegroundColor = ConsoleColor.Red;
 
-            // Console.SetBufferSize; set??
-            lock (locker)
-            {
-                Console.SetCursorPosition(0, Field.matrixWidth + 1);
-                Console.Write("Defeat.");
-            }
-
-            Console.ForegroundColor = ConsoleColor.Gray;
-            act++;
-
-            // key = Console.ReadKey(false);
-            Console.WriteLine("TRY AGAIN? (yes/no)");
-            Console.CursorVisible = true;
-            char game;
-            bool flag = false;
-            while (!flag)
-            {
-                game = Console.ReadKey().KeyChar;
-                Console.WriteLine();
-                if (game == 'y')
-                {
-                    //File.save();
-                    flag = true;
-                    Console.CursorVisible = false;
-                    Console.Clear();
-                    cursorPosLeft = field.bord;
-                    cursorPosTop = Field.matrixWidth - 1;
-                    act = 0;
-                    rules.Define();
-                    field.Define();
-                    Define();
-                }
-                if (game == 'n')
-                {
-                    flag = true;
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-
-                    // Console.BackgroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine(
-                        @"
-  ______                                                  
- / _____)                                                 
-| /  ___   ____  ____    ____     ___  _   _  ____   ____ 
-| | (___) / _  ||    \  / _  )   / _ \| | | |/ _  ) / ___)
-| \____/|( ( | || | | |( (/ /   | |_| |\ V /( (/ / | |    
- \_____/  \_||_||_|_|_| \____)   \___/  \_/  \____)|_| 
-
-                    ");
-                    Environment.Exit(0);
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Wrong.");
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                }
-            }
-
-            // restart?
-        }
 
         public void WhatColor(int minesAmount)
         {

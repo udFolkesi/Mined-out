@@ -9,13 +9,13 @@ namespace Lab_1
 {
     internal class Program
     {
-        public delegate void ThreadStart();
+        // public delegate void ThreadStart();
 
         internal static void Main()
         {
-            Menuu menu = new Menuu();
-            menu.Menu();
-            menu.Define();
+            Menu menu = new Menu();
+            menu.PrintMenu();
+            menu.Start();
 
             // Field.Matrix = (char[,])ResizeArray(Field.Matrix, new char[] { 12, 2 });
         }

@@ -13,8 +13,7 @@ namespace Lab_1
         // Console.ForegroundColor = ConsoleColor.Red;
         public void Traps(int i, int length, int width)
         {
-            //Random random = new Random();
-            int x = random.Next(1, 5); // 6
+            int x = random.Next(1, 6); // 6
             for (int j = 0; j < x; j++)
             {
                 // 11 12 13
@@ -27,7 +26,6 @@ namespace Lab_1
 
         public void Wall2()
         {
-            //Random random = new Random();
             for (int i = 0; i < Field.matrixWidth; i++) 
             {
                 int y = random.Next(1, Field.matrixWidth - 1);
@@ -44,7 +42,6 @@ namespace Lab_1
 
         public void Bonus()
         {
-            //Random random = new Random();
             int y = random.Next(1, Field.matrixWidth - 1);
             int x = random.Next(1, Field.matrixLength - 1);
             Field.Matrix[y, x] = '$';
