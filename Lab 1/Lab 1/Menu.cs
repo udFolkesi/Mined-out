@@ -13,9 +13,9 @@ namespace Lab_1
         private readonly string[] listMenu = new string[] { "Start game", "Rate", "Settings", "Exit" };
         private ConsoleKeyInfo k;
         private Field field = new Field();
-        private Field2 field2 = new Field2();
         private Player player = new Player();
         private Rules rules = new Rules();
+        public static int playerAmount = 1;
 
         public void PrintMenu()
         {
@@ -133,7 +133,7 @@ namespace Lab_1
                         {
                             Console.Clear();
                             rules.Define();
-                            field.Define();
+                            field.Define(ref Field.Matrix1);
                             player.Define();
                             Console.Beep();
                             
@@ -141,20 +141,12 @@ namespace Lab_1
 
                         if (k.Key == ConsoleKey.Enter && index == 1)
                         {
+                            playerAmount = 2;
                             Console.Clear();
-                            //field.Define();
-                            //player.Define();
-                            
-                            field2.Define(Field2.Matrix1);
-                            //Thread.Sleep(3000);
-                            //Console.SetCursorPosition(50, 0);
-                            //Console.WriteLine();
-                            field2.Define(Field2.Matrix2);
+                            field.Define(ref Field.Matrix1);
+                            field.Define(ref Field.Matrix2);
                             player.Define();
-                            //Console.SetCursorPosition(0, 40);
-                            //field.Draw();
-                            //Console.Beep();
-                            //player.Define();
+                            // player.Define();
                         }
 
                         //перегрузку метода

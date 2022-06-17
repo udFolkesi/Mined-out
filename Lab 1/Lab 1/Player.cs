@@ -9,6 +9,8 @@ namespace Lab_1
     {
         // proeprty?
         private static ConsoleKeyInfo key;
+        public int cursorPosLeft2 = 0; // 11
+        public int cursorPosTop2 = 0; // 7
         public int cursorPosLeft = 0; // 11
         public int cursorPosTop = 0; // 7
         public static int act = 0;
@@ -18,7 +20,7 @@ namespace Lab_1
         //private Files file = new Files();
         private Result result = new Result();
         public static TimeSpan _time;
-        static int timeStop = 0;
+        public static int timeStop = 0;
         private static CancellationTokenSource _cts;
         private static object locker = new object();
 
@@ -38,15 +40,33 @@ namespace Lab_1
             field.bord = Convert.ToInt32(Math.Floor(Field.matrixLength / 2d) - 1);
             cursorPosLeft = field.bord + 1;
             cursorPosTop = Field.matrixWidth - 1;
+            cursorPosLeft2 = 50 + field.bord + 1;
+            cursorPosTop2 = Field.matrixWidth - 1;
             lock (locker)
             {
                 Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
             }
 
-            Check(cursorPosLeft, cursorPosTop);
+            Check(cursorPosLeft, cursorPosTop, ref Field.Matrix1);
+
             lock (locker)
             {
                 Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
+            }
+
+            if (Menu.playerAmount == 2)
+            {
+                lock (locker)
+                {
+                    Console.SetCursorPosition(cursorPosLeft + 50, cursorPosTop);
+                }
+
+                Check(50 + cursorPosLeft, cursorPosTop, ref Field.Matrix2);
+
+                lock (locker)
+                {
+                    Console.SetCursorPosition(cursorPosLeft + 50, cursorPosTop);
+                }
             }
 
             key = Console.ReadKey(true);
@@ -59,7 +79,7 @@ namespace Lab_1
                 {
                     case ConsoleKey.UpArrow:
                         whatCase = 1;
-                        moveCase(whatCase);
+                        moveCase(whatCase, ref Field.Matrix1, ref cursorPosLeft, ref cursorPosTop);
                         break;
                     case ConsoleKey.DownArrow:
                         if(cursorPosTop == Field.matrixWidth - 1)
@@ -68,15 +88,31 @@ namespace Lab_1
                         }
 
                         whatCase = 2;
-                        moveCase(whatCase);
+                        moveCase(whatCase, ref Field.Matrix1, ref cursorPosLeft, ref cursorPosTop);
                         break;
                     case ConsoleKey.LeftArrow:
                         whatCase = 3;
-                        moveCase(whatCase);
+                        moveCase(whatCase, ref Field.Matrix1, ref cursorPosLeft, ref cursorPosTop);
                         break;
                     case ConsoleKey.RightArrow:
                         whatCase = 4;
-                        moveCase(whatCase);
+                        moveCase(whatCase, ref Field.Matrix1, ref cursorPosLeft, ref cursorPosTop);
+                        break;
+                    case ConsoleKey.W:
+                        whatCase = 1;
+                        moveCase(whatCase, ref Field.Matrix2, ref cursorPosLeft2, ref cursorPosTop2);
+                        break;
+                    case ConsoleKey.A:
+                        whatCase = 3;
+                        moveCase(whatCase, ref Field.Matrix2, ref cursorPosLeft2, ref cursorPosTop2);
+                        break;
+                    case ConsoleKey.D:
+                        whatCase = 4;
+                        moveCase(whatCase, ref Field.Matrix2, ref cursorPosLeft2, ref cursorPosTop2);
+                        break;
+                    case ConsoleKey.S:
+                        whatCase = 2;
+                        moveCase(whatCase, ref Field.Matrix2, ref cursorPosLeft2, ref cursorPosTop2);
                         break;
                 }
 
@@ -99,7 +135,7 @@ namespace Lab_1
                 Thread.Sleep(20);
                 Console.Clear();
                 rules.Define();
-                field.Define();
+                field.Define(ref Field.Matrix1);
                 Define();
                 // Console.Beep();
             }
@@ -140,11 +176,14 @@ namespace Lab_1
         }
 
         // использовать this
-        public void moveCase(int Case)
+        public void moveCase(int Case, ref char[,] Matrix, ref int cursorPosLeft, ref int cursorPosTop)
         {
             lock (locker)
             {
-                Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
+
+                    Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
+
+                
                 Console.BackgroundColor = ConsoleColor.Gray;
                 Console.Write('.'); // ?
                 Console.BackgroundColor = ConsoleColor.Black;
@@ -166,12 +205,20 @@ namespace Lab_1
                     break;
             }
 
-            MoveCursor(ref cursorPosLeft, ref cursorPosTop, Case);
+            if(cursorPosLeft == cursorPosLeft2)
+            {
+                cursorPosLeft -= 50;
+            }
+            MoveCursor(ref cursorPosLeft, ref cursorPosTop, Case, ref Matrix);
+            if (cursorPosLeft == cursorPosLeft2)
+            {
+                cursorPosLeft += 50;
+            }
             if (Case == 1)
             {
                 if (cursorPosTop != 0)
                 {
-                    Check(cursorPosLeft, cursorPosTop);
+                    Check(cursorPosLeft, cursorPosTop, ref Matrix);
                 }
 
                 if ((cursorPosLeft == field.bord + 1 && cursorPosTop == 0) ||
@@ -187,15 +234,22 @@ namespace Lab_1
             }
             else
             {
-                Check(cursorPosLeft, cursorPosTop);
+                Check(cursorPosLeft, cursorPosTop, ref Matrix);
             }
-
-            MoveCursor(ref cursorPosLeft, ref cursorPosTop, Case);
+            if (cursorPosLeft == cursorPosLeft2)
+            {
+                cursorPosLeft -= 50;
+            }
+            MoveCursor(ref cursorPosLeft, ref cursorPosTop, Case, ref Matrix);
+            if (cursorPosLeft == cursorPosLeft2)
+            {
+                cursorPosLeft += 50;
+            }
         }
 
-        public void MoveCursor(ref int left, ref int top, int Case)
+        public void MoveCursor(ref int left, ref int top, int Case, ref char[,] Matrix)
         {
-            if (Field.Matrix[top, left] == '0')
+            if (Matrix[top, left] == '0')
             {
                 switch (Case)
                 {
@@ -245,27 +299,27 @@ namespace Lab_1
                 top = Field.matrixWidth - 2;
             }
 
-            if (Field.Matrix[top, left] == '$')
+            if (Matrix[top, left] == '$')
             {
-                Field.Matrix[top, left] = ' ';
+                Matrix[top, left] = ' ';
                 life = 1;
                 Console.SetCursorPosition(Field.matrixLength + 1, 1);
                 Console.Write("Life: 1");
             }
 
-            if (Field.Matrix[top, left] == 'X')
+            if (Matrix[top, left] == 'X')
             {
                 if (life == 0)
                 {
                     //Console.Write("hallo");
-                    result.Defeat();
+                    result.Defeat(ref Matrix);
                     //Defeat();
                 }
 
                 if (life == 1)
                 {
                     life = 0;
-                    Field.Matrix[top, left] = ' ';
+                    Matrix[top, left] = ' ';
                     Console.SetCursorPosition(Field.matrixLength + 1, 1);
                     Console.Write("Life: 0");
                 }
@@ -273,16 +327,28 @@ namespace Lab_1
 
             lock (locker)
             {
-                Console.SetCursorPosition(left, top);
+                if (Matrix == Field.Matrix1)
+                {
+                    Console.SetCursorPosition(left, top);
+                }
+                else
+                {
+                    Console.SetCursorPosition(left + 50, top);
+                }
             }
         }
 
-        public void Check(int x, int y)
+        public void Check(int x, int y, ref char[,] Matrix)
         {
             int amount = 0;
+            if (Matrix == Field.Matrix2)
+            {
+                x+=50;
+            }
+
             try
             {
-                if (Field.Matrix[y - 1, x] == 'X')
+                if (Matrix[y - 1, x] == 'X')
                 {
                     amount++;
                 }
@@ -291,19 +357,34 @@ namespace Lab_1
             {
             }
 
-            if (Field.Matrix[y, x + 1] == 'X')
-            {
-                amount++;
-            }
 
-            if (Field.Matrix[y, x - 1] == 'X')
+            try
             {
-                amount++;
+                if (Matrix[y, x + 1] == 'X')
+                {
+                    amount++;
+                }
+            }
+            catch
+            {
+
             }
 
             try
             {
-                if (Field.Matrix[y + 1, x] == 'X')
+                if (Matrix[y, x - 1] == 'X')
+                {
+                    amount++;
+                }
+            }
+            catch
+            {
+
+            }
+
+            try
+            {
+                if (Matrix[y + 1, x] == 'X')
                 {
                     amount++;
                 }

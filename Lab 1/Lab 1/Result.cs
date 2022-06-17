@@ -37,11 +37,15 @@ namespace Lab_1
             Environment.Exit(0); // лишнее
         }
 
-        public void Defeat()
+        public void Defeat(ref char[,] Matrix)
         {
-            //timeStop = 1;
+            Player.timeStop = 1;
             Console.Clear();
-            field.Draw();
+            field.Draw(ref Field.Matrix1);
+            if(Menu.playerAmount == 2)
+            {
+                field.Draw(ref Field.Matrix2);
+            }
             Console.ForegroundColor = ConsoleColor.Red;
 
             // Console.SetBufferSize; set??
@@ -73,8 +77,18 @@ namespace Lab_1
                     player.cursorPosLeft = field.bord;
                     player.cursorPosTop = Field.matrixWidth - 1;
                     Player.act = 0;
-                    rules.Define();
-                    field.Define();
+                    if(Menu.playerAmount == 1)
+                    {
+                        rules.Define();
+                        field.Define(ref Field.Matrix1);
+                    }
+                    else
+                    {
+                        player.cursorPosLeft = 50 + field.bord;
+                        player.cursorPosTop = Field.matrixWidth - 1;
+                        field.Define(ref Field.Matrix1);
+                        field.Define(ref Field.Matrix2);
+                    }
                     player.Define();
                 }
                 if (game == 'n')

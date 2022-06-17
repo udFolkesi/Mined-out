@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Lab_1
 {
-    public class Field : Element
+    public class Field
     {
         private Mine mine = new Mine();
         public static int matrixWidth = 8;
         public static int matrixLength = 23;
 
         // public int matrixLength { set; get; } = 23;
-        public static char[,] Matrix = new char[100, 40];
+        public static char[,] Matrix1 = new char[40, 40];
         public static char[,] Matrix2 = new char[40, 40];
         //public static char[,] Matrix2 = new char[100, 50];
 
@@ -23,7 +23,9 @@ namespace Lab_1
         public object locker = new object();
 
         // abstract field
-        public override void Define()
+
+        // override define
+        public void Define(ref char[,] Matrix)
         {
             //Array.Clear(Matrix, 50, 50);
             lock (locker)
@@ -72,23 +74,27 @@ namespace Lab_1
                     }
 
                     Console.WriteLine();
-                    mine.Traps(i, matrixLength, matrixWidth);
+                    mine.Traps(i, matrixLength, matrixWidth, ref Matrix);
                 }
 
-                mine.Wall2();
-                mine.Bonus();
+                mine.Wall(ref Matrix);
+                mine.Bonus(ref Matrix);
             }
         }
 
-        public void Draw()
+        public void Draw(ref char[,] Matrix)
         {
             Thread.Sleep(50);
             lock (locker)
             {
                 Console.SetCursorPosition(0, 0);
-                //Console.SetCursorPosition(40, 0);
                 for (int i = 0; i < matrixWidth; i++)
                 {
+                    if (Matrix == Matrix2)
+                    {
+                        Console.SetCursorPosition(50, i);
+                    }
+
                     for (int j = 0; j < matrixLength; j++)
                     {
                         if (Matrix[i, j] == 'X')

@@ -61,7 +61,6 @@
   <ItemGroup>
     <Compile Include="Element.cs" />
     <Compile Include="Field.cs" />
-    <Compile Include="Field2.cs" />
     <Compile Include="Files.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Mine.cs" />
