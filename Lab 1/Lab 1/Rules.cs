@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lab_1
 {
-    public class Rules : Element
+    public class Rules
     {
-        public override void Define()
+        public void Define()
         {
             Console.SetCursorPosition(2, 0);
             Console.Write(@"

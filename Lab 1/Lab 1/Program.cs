@@ -10,11 +10,9 @@ namespace Lab_1
     internal class Program
     {
         // public delegate void ThreadStart();
-
         internal static void Main()
         {
             Menu menu = new Menu();
-            menu.PrintMenu();
             menu.Start();
 
             // Field.Matrix = (char[,])ResizeArray(Field.Matrix, new char[] { 12, 2 });

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Lab_1
 {
-    public class Mine
+    public class AddElements
     {
         private static Random random = new Random();
-        //private Menu menu = new Menu();
+        
 
         // Console.ForegroundColor = ConsoleColor.Red;
-        public void Traps(int i, int length, int width, ref char[,] Matrix)
+        public void Traps(int i, int length, int width, ref object[,] Matrix)
         {
             int x = random.Next(1, 6); // 6
             for (int j = 0; j < x; j++)
@@ -20,19 +20,19 @@ namespace Lab_1
                 // 11 12 13
                 if (i != 0 && i != width - 1)
                 {
-                    Matrix[i, random.Next(1, length - 1)] = 'X';
+                    Matrix[i, random.Next(1, length - 1)] = new Trap();
                 }
             }
         }
 
-        public void Wall(ref char[,] Matrix)
+        public void Wall(ref object[,] Matrix)
         {
             for (int i = 0; i < Field.matrixWidth; i++) 
             {
                 int y = random.Next(1, Field.matrixWidth - 1);
                 int x = random.Next(1, Field.matrixLength - 1);
-                Matrix[y, x] = '0';
-                if(Matrix == Field.Matrix2)
+                Matrix[y, x] = new Wall();
+                if (Matrix == Field.Matrix2)
                 {
                     Console.SetCursorPosition(50 + x, y);
                 }
@@ -49,11 +49,11 @@ namespace Lab_1
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
-        public void Bonus(ref char[,] Matrix)
+        public void Bonus(ref object[,] Matrix)
         {
             int y = random.Next(1, Field.matrixWidth - 1);
             int x = random.Next(1, Field.matrixLength - 1);
-            Matrix[y, x] = '$';
+            Matrix[y, x] = new Bonus();
             if (Matrix == Field.Matrix2)
             {
                 Console.SetCursorPosition(50 + x, y);

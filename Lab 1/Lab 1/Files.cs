@@ -42,16 +42,17 @@ namespace Lab_1
                 }
                 catch
                 {
-
+                    //пустой catch
+                    Console.WriteLine("Проблемка");
                 }
 
                 try
                 {
-                    num = int.Parse(strNum.Substring(0, 1));
+                    num = int.Parse(strNum.Substring(0, 2));
                 }
                 catch 
                 {
-
+                    Console.WriteLine("Шото не так");
                 }
                 //int.TryParse(string.Join("", strNum.Where(c => char.IsDigit(c))), out num);
             }

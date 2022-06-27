@@ -18,8 +18,6 @@ namespace Lab_1
         {
             file.save();
             Console.ForegroundColor = ConsoleColor.Green;
-
-            // Console.Write($"Victory!{(char)1} ");
             Console.Clear();
             Console.Write(
                     @"
@@ -34,10 +32,9 @@ namespace Lab_1
 ");
             Console.ForegroundColor = ConsoleColor.Gray; //типа всвязке
             Player.act++;
-            Environment.Exit(0); // лишнее
         }
 
-        public void Defeat(ref char[,] Matrix)
+        public void Defeat(ref object[,] Matrix)
         {
             Player.timeStop = 1;
             Console.Clear();
@@ -46,6 +43,7 @@ namespace Lab_1
             {
                 field.Draw(ref Field.Matrix2);
             }
+
             Console.ForegroundColor = ConsoleColor.Red;
 
             // Console.SetBufferSize; set??
@@ -74,7 +72,7 @@ namespace Lab_1
                     flag = true;
                     Console.CursorVisible = false;
                     Console.Clear();
-                    player.cursorPosLeft = field.bord;
+                    player.cursorPosLeft = field.middleOfField;
                     player.cursorPosTop = Field.matrixWidth - 1;
                     Player.act = 0;
                     if(Menu.playerAmount == 1)
@@ -84,13 +82,15 @@ namespace Lab_1
                     }
                     else
                     {
-                        player.cursorPosLeft = 50 + field.bord;
+                        player.cursorPosLeft = 50 + field.middleOfField;
                         player.cursorPosTop = Field.matrixWidth - 1;
                         field.Define(ref Field.Matrix1);
                         field.Define(ref Field.Matrix2);
                     }
+
                     player.Define();
                 }
+
                 if (game == 'n')
                 {
                     flag = true;
@@ -108,7 +108,6 @@ namespace Lab_1
  \_____/  \_||_||_|_|_| \____)   \___/  \_/  \____)|_| 
 
                     ");
-                    Environment.Exit(0); // extra
                 }
                 else
                 {
