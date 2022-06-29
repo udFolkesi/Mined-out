@@ -9,12 +9,10 @@ namespace Lab_1
 {
     class Files
     {
-        //пээр
-        //property
         string path = "saves.txt";
         private int num = 0;
 
-        public void getInfo()
+        public void GetInfo()
         {
             using (StreamReader streamReader = new StreamReader(path))
             {
@@ -23,10 +21,12 @@ namespace Lab_1
                 {
                     Console.WriteLine(input);
                 }
+
                 Console.ReadLine();
             }
         }
-        public void getNum()
+
+        public void GetNum()
         {
             using (StreamReader streamReader = new StreamReader(path))
             {
@@ -42,7 +42,6 @@ namespace Lab_1
                 }
                 catch
                 {
-                    //пустой catch
                     Console.WriteLine("Проблемка");
                 }
 
@@ -50,21 +49,24 @@ namespace Lab_1
                 {
                     num = int.Parse(strNum.Substring(0, 2));
                 }
-                catch 
+                catch
                 {
                     Console.WriteLine("Шото не так");
                 }
+
                 //int.TryParse(string.Join("", strNum.Where(c => char.IsDigit(c))), out num);
             }
+
             //Console.ReadLine();
         }
-        public void save()
+
+        public void Save()
         {
-            getNum();
+            GetNum();
             num++;
             using (StreamWriter writer = new StreamWriter(path, true))
             {
-                writer.Write($"{num} Record. Field size: {Field.matrixWidth}x{Field.matrixLength};" +
+                writer.Write($"{num} Record. Field size: {Field.MatrixWidth}x{Field.MatrixLength};" +
                     $" Time: {Player._time}; Result: Victory");
                 writer.WriteLine();
             }

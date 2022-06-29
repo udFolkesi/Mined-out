@@ -9,52 +9,49 @@ namespace Lab_1
     public class AddElements
     {
         private static Random random = new Random();
-        
-
         // Console.ForegroundColor = ConsoleColor.Red;
-        public void Traps(int i, int length, int width, ref object[,] Matrix)
+        public void AddTraps(int posX, int length, int width, ref object[,] matrix)
         {
-            int x = random.Next(1, 6); // 6
-            for (int j = 0; j < x; j++)
+            int traps = random.Next(1, 6); // 6
+            for (int j = 0; j < traps; j++)
             {
                 // 11 12 13
-                if (i != 0 && i != width - 1)
+                if (posX != 0 && posX != width - 1)
                 {
-                    Matrix[i, random.Next(1, length - 1)] = new Trap();
+                    matrix[posX, random.Next(1, length - 1)] = new Trap();
                 }
             }
         }
 
-        public void Wall(ref object[,] Matrix)
+        public void AddWall(ref object[,] matrix)
         {
-            for (int i = 0; i < Field.matrixWidth; i++) 
+            for (int i = 0; i < Field.MatrixWidth; i++)
             {
-                int y = random.Next(1, Field.matrixWidth - 1);
-                int x = random.Next(1, Field.matrixLength - 1);
-                Matrix[y, x] = new Wall();
-                if (Matrix == Field.Matrix2)
-                {
-                    Console.SetCursorPosition(50 + x, y);
-                }
-                else
-                {
-                    Console.SetCursorPosition(x, y);
-                }
-
-                Console.BackgroundColor = ConsoleColor.DarkMagenta;
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                Console.Write('0');
+                Place(ref matrix, "wall");
+                Wall.Draw();
             }
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
-        public void Bonus(ref object[,] Matrix)
+        public void AddBonus(ref object[,] matrix)
         {
-            int y = random.Next(1, Field.matrixWidth - 1);
-            int x = random.Next(1, Field.matrixLength - 1);
-            Matrix[y, x] = new Bonus();
-            if (Matrix == Field.Matrix2)
+            Place(ref matrix, "bonus");
+            Console.Write('$');
+        }
+
+        public void Place(ref object[,] matrix, string elem)
+        {
+            int y = random.Next(1, Field.MatrixWidth - 1);
+            int x = random.Next(1, Field.MatrixLength - 1);
+            if (elem == "bonus")
+            {
+                matrix[y, x] = new Bonus();
+            }
+            else
+            {
+                matrix[y, x] = new Wall();
+            }
+
+            if (matrix == Field.Matrix2)
             {
                 Console.SetCursorPosition(50 + x, y);
             }
@@ -62,8 +59,6 @@ namespace Lab_1
             {
                 Console.SetCursorPosition(x, y);
             }
-
-            Console.Write('$');
         }
     }
 }

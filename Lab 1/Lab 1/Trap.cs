@@ -8,10 +8,18 @@ namespace Lab_1
 {
     public class Trap: Element
     {
-        public override char symbol { set; get; }
+        public override char symbol { get; set; }
+
         public override void Define()
         {
             symbol = 'X';
+        }
+
+        public static void Draw()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write('X');
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
 }

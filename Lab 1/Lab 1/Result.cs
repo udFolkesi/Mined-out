@@ -8,7 +8,7 @@ namespace Lab_1
 {
     public class Result
     {
-        //private Player player = new Player(); stack overflow exception???
+        // private Player player = new Player(); stack overflow exception???
         private Files file = new Files();
         private Field field = new Field(); // public?
         private Rules rules = new Rules();
@@ -16,7 +16,7 @@ namespace Lab_1
 
         public void Win()
         {
-            file.save();
+            file.Save();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Clear();
             Console.Write(
@@ -31,15 +31,14 @@ namespace Lab_1
                                             
 ");
             Console.ForegroundColor = ConsoleColor.Gray; //типа всвязке
-            Player.act++;
         }
 
-        public void Defeat(ref object[,] Matrix)
+        public void Defeat(ref object[,] matrix)
         {
             Player.timeStop = 1;
             Console.Clear();
             field.Draw(ref Field.Matrix1);
-            if(Menu.playerAmount == 2)
+            if (Menu.PlayerAmount == 2)
             {
                 field.Draw(ref Field.Matrix2);
             }
@@ -49,41 +48,39 @@ namespace Lab_1
             // Console.SetBufferSize; set??
             lock (locker)
             {
-                Console.SetCursorPosition(0, Field.matrixWidth + 1);
+                Console.SetCursorPosition(0, Field.MatrixWidth + 1);
                 Console.Write("Defeat.");
             }
 
             Console.ForegroundColor = ConsoleColor.Gray;
-            Player.act++;
 
             // key = Console.ReadKey(false);
             Console.WriteLine("TRY AGAIN? (yes/no)");
             Console.CursorVisible = true;
-            char game;
-            bool flag = false;
-            Player player = new Player(); 
-            while (!flag)
+            char nextGame;
+            bool question = true;
+            Player player = new Player();
+            while (question)
             {
-                game = Console.ReadKey().KeyChar;
+                nextGame = Console.ReadKey().KeyChar;
                 Console.WriteLine();
-                if (game == 'y')
+                if (nextGame == 'y')
                 {
                     //File.save();
-                    flag = true;
+                    question = false;
                     Console.CursorVisible = false;
                     Console.Clear();
-                    player.cursorPosLeft = field.middleOfField;
-                    player.cursorPosTop = Field.matrixWidth - 1;
-                    Player.act = 0;
-                    if(Menu.playerAmount == 1)
+                    player.CursorPosLeft = field.MiddleOfField;
+                    player.CursorPosTop = Field.MatrixWidth - 1;
+                    if (Menu.PlayerAmount == 1)
                     {
                         rules.Define();
                         field.Define(ref Field.Matrix1);
                     }
                     else
                     {
-                        player.cursorPosLeft = 50 + field.middleOfField;
-                        player.cursorPosTop = Field.matrixWidth - 1;
+                        player.CursorPosLeft = 50 + field.MiddleOfField;
+                        player.CursorPosTop = Field.MatrixWidth - 1;
                         field.Define(ref Field.Matrix1);
                         field.Define(ref Field.Matrix2);
                     }
@@ -91,9 +88,9 @@ namespace Lab_1
                     player.Define();
                 }
 
-                if (game == 'n')
+                if (nextGame == 'n')
                 {
-                    flag = true;
+                    question = false;
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.DarkRed;
 

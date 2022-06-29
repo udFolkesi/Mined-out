@@ -15,9 +15,9 @@ namespace Lab_1
         private Field field = new Field();
         private Player player = new Player();
         private Rules rules = new Rules();
-        public static int playerAmount = 1;
+        public static int PlayerAmount = 1;
 
-        public async Task wordMenu()
+        public async Task WordMenu()
         {
             await Task.Run(() =>
             {
@@ -54,7 +54,7 @@ namespace Lab_1
 
             // Console.SetCursorPosition(5, 0){ } while true - change color
             Console.Write("**************");
-            _ = wordMenu();
+            _ = WordMenu();
 
             Console.CursorVisible = false; // гасим курсор
             int x = 0;
@@ -131,22 +131,23 @@ namespace Lab_1
                             field.Define(ref Field.Matrix1);
                             player.Define();
                             Console.Beep();
-                            
                         }
 
                         if (k.Key == ConsoleKey.Enter && index == 1)
                         {
-                            playerAmount = 2;
+                            PlayerAmount = 2;
                             Console.Clear();
                             field.Define(ref Field.Matrix1);
                             field.Define(ref Field.Matrix2);
                             player.Define();
+
                             // player.Define();
                         }
 
                         //перегрузку метода
-                    } while (k.Key != ConsoleKey.Enter);
-                    
+                    }
+                    while (k.Key != ConsoleKey.Enter);
+
                     // time();
                 }
 
@@ -155,7 +156,7 @@ namespace Lab_1
                     Files files = new Files();
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.Clear();
-                    files.getInfo();
+                    files.GetInfo();
                     // Console.WriteLine("пока хз");
                 }
 
@@ -166,11 +167,11 @@ namespace Lab_1
                     Console.WriteLine("What size of field?");
                     Console.CursorVisible = true;
                     Console.Write("Width:");
-                    Field.matrixWidth = int.Parse(Console.ReadLine());
+                    Field.MatrixWidth = int.Parse(Console.ReadLine());
                     Console.Write("Length:");
-                    Field.matrixLength = int.Parse(Console.ReadLine());
+                    Field.MatrixLength = int.Parse(Console.ReadLine());
                     Console.Clear();
-                    field.middleOfField = Convert.ToInt32(Math.Floor(Field.matrixLength / 2d) - 1);
+                    field.MiddleOfField = Convert.ToInt32(Math.Floor(Field.MatrixLength / 2d) - 1);
                     Start();
                 }
 

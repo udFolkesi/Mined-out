@@ -5,24 +5,22 @@ using System.Threading.Tasks;
 
 namespace Lab_1
 {
-    class Player : Element
+    public class Player : Element
     {
         // proeprty?
         private static ConsoleKeyInfo key;
-        public int cursorPosLeft2 = 0; // 11
-        public int cursorPosTop2 = 0; // 7
-        public int cursorPosLeft = 0; // 11
-        public int cursorPosTop = 0; // 7
-        public static int act = 0;
-        public int life { get; set; }
+        public int CursorPosLeft2 = 0; // 11
+        public int CursorPosTop2 = 0; // 7
+        public int CursorPosLeft = 0; // 11
+        public int CursorPosTop = 0; // 7
         private Field field = new Field();
         private Rules rules = new Rules();
-        //private Files file = new Files();
         private Result result = new Result();
         public static TimeSpan _time;
         public static int timeStop = 0;
-
         private static object locker = new object();
+
+        public int Life { get; set; }
 
         // Player player = new Player(); почему с этим с не работает?
         // чтоб можно было внизу и вверху по 3 клетки были свободными
@@ -36,84 +34,86 @@ namespace Lab_1
             w = 1,
             s = 2,
             a = 3,
-            d = 4
+            d = 4,
         }
+
         public override void Define()
         {
-            timeStop = 0;
             lock (locker)
             {
-                Console.SetCursorPosition(Field.matrixLength + 5, 0);
+                Console.SetCursorPosition(Field.MatrixLength + 5, 0);
             }
 
-            Console.Write("00:00:00"); // убрать
-            field.middleOfField = Convert.ToInt32(Math.Floor(Field.matrixLength / 2d) - 1);
-            cursorPosLeft = field.middleOfField + 1;
-            cursorPosTop = Field.matrixWidth - 1;
-            cursorPosLeft2 = 50 + field.middleOfField + 1;
-            cursorPosTop2 = Field.matrixWidth - 1;
+            var watch2 = Stopwatch.StartNew();
+            watch2.Reset();
+            Console.WriteLine(watch2.Elapsed);
+            field.MiddleOfField = Convert.ToInt32(Math.Floor(Field.MatrixLength / 2d) - 1);
+            CursorPosLeft = field.MiddleOfField + 1;
+            CursorPosTop = Field.MatrixWidth - 1;
+            CursorPosLeft2 = 50 + field.MiddleOfField + 1;
+            CursorPosTop2 = Field.MatrixWidth - 1;
             lock (locker)
             {
-                Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
+                Console.SetCursorPosition(CursorPosLeft, CursorPosTop);
             }
 
-            Check(cursorPosLeft, cursorPosTop, ref Field.Matrix1);
+            Check(CursorPosLeft, CursorPosTop, ref Field.Matrix1);
 
             lock (locker)
             {
-                Console.SetCursorPosition(cursorPosLeft, cursorPosTop);
+                Console.SetCursorPosition(CursorPosLeft, CursorPosTop);
             }
 
-            if (Menu.playerAmount == 2)
+            if (Menu.PlayerAmount == 2)
             {
                 lock (locker)
                 {
-                    Console.SetCursorPosition(cursorPosLeft2, cursorPosTop2);
+                    Console.SetCursorPosition(CursorPosLeft2, CursorPosTop2);
                 }
 
-                Check(cursorPosLeft2 - 50, cursorPosTop2, ref Field.Matrix2);
+                Check(CursorPosLeft2 - 50, CursorPosTop2, ref Field.Matrix2);
 
                 lock (locker)
                 {
-                    Console.SetCursorPosition(cursorPosLeft2, cursorPosTop2);
+                    Console.SetCursorPosition(CursorPosLeft2, CursorPosTop2);
                 }
             }
 
             key = Console.ReadKey(true);
-            timer();
+            Timer(watch2);
 
             while (timeStop == 0) // пока игровая сессия идет = true
             {
                 switch (key.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        moveCase(1, ref Field.Matrix1, ref cursorPosLeft, ref cursorPosTop);
+                        MoveCase(1, ref Field.Matrix1, ref CursorPosLeft, ref CursorPosTop);
                         break;
                     case ConsoleKey.DownArrow:
-                        if(cursorPosTop == Field.matrixWidth - 1)
+                        if (CursorPosTop == Field.MatrixWidth - 1)
                         {
                             break;
                         }
 
-                        moveCase(2, ref Field.Matrix1, ref cursorPosLeft, ref cursorPosTop);
+                        MoveCase(2, ref Field.Matrix1, ref CursorPosLeft, ref CursorPosTop);
                         break;
                     case ConsoleKey.LeftArrow:
-                        moveCase(3, ref Field.Matrix1, ref cursorPosLeft, ref cursorPosTop);
+                        MoveCase(3, ref Field.Matrix1, ref CursorPosLeft, ref CursorPosTop);
                         break;
                     case ConsoleKey.RightArrow:
-                        moveCase(4, ref Field.Matrix1, ref cursorPosLeft, ref cursorPosTop);
+                        MoveCase(4, ref Field.Matrix1, ref CursorPosLeft, ref CursorPosTop);
                         break;
                     case ConsoleKey.W:
-                        moveCase(1, ref Field.Matrix2, ref cursorPosLeft2, ref cursorPosTop2);
+                        MoveCase(1, ref Field.Matrix2, ref CursorPosLeft2, ref CursorPosTop2);
                         break;
                     case ConsoleKey.S:
-                        moveCase(2, ref Field.Matrix2, ref cursorPosLeft2, ref cursorPosTop2);
+                        MoveCase(2, ref Field.Matrix2, ref CursorPosLeft2, ref CursorPosTop2);
                         break;
                     case ConsoleKey.A:
-                        moveCase(3, ref Field.Matrix2, ref cursorPosLeft2, ref cursorPosTop2);
+                        MoveCase(3, ref Field.Matrix2, ref CursorPosLeft2, ref CursorPosTop2);
                         break;
                     case ConsoleKey.D:
-                        moveCase(4, ref Field.Matrix2, ref cursorPosLeft2, ref cursorPosTop2);
+                        MoveCase(4, ref Field.Matrix2, ref CursorPosLeft2, ref CursorPosTop2);
                         break;
                 }
 
@@ -149,32 +149,32 @@ namespace Lab_1
             }
         }
 
-        public static void timer()
+        public static void Timer(Stopwatch watch)
         {
+            watch.Restart();
             Task.Run(() =>
             {
-                var watch2 = Stopwatch.StartNew();
                 while (timeStop == 0)
                 {
                     Console.CursorVisible = false;
                     Thread.Sleep(1);
                     lock (locker)
                     {
-                        Console.SetCursorPosition(Field.matrixLength + 5, 0);
-                        Console.Write(watch2.Elapsed);
+                        Console.SetCursorPosition(Field.MatrixLength + 5, 0);
+                        Console.Write(watch.Elapsed);
                     }
 
                     if (timeStop == 1 )
                     {
-                        _time = watch2.Elapsed;
-                        watch2.Stop();
+                        _time = watch.Elapsed;
+                        watch.Stop();
                     }
                 }
             });
         }
 
         // использовать this
-        public void moveCase(int direction, ref object[,] Matrix, ref int cursorPosLeft, ref int cursorPosTop)
+        public void MoveCase(int direction, ref object[,] matrix, ref int cursorPosLeft, ref int cursorPosTop)
         {
             lock (locker)
             {
@@ -201,13 +201,13 @@ namespace Lab_1
                     break;
             }
 
-            if (cursorPosLeft == cursorPosLeft2)
+            if (cursorPosLeft == CursorPosLeft2)
             {
                 cursorPosLeft -= 50;
             }
 
-            MoveCursor(ref cursorPosLeft, ref cursorPosTop, direction, ref Matrix);
-            if (cursorPosLeft == cursorPosLeft2)
+            MoveCursor(ref cursorPosLeft, ref cursorPosTop, direction, ref matrix);
+            if (cursorPosLeft == CursorPosLeft2)
             {
                 cursorPosLeft += 50;
             }
@@ -216,53 +216,54 @@ namespace Lab_1
             {
                 if (cursorPosTop != 0)
                 {
-                    if (Matrix == Field.Matrix1)
+                    if (matrix == Field.Matrix1)
                     {
-                        Check(cursorPosLeft, cursorPosTop, ref Matrix);
+                        Check(cursorPosLeft, cursorPosTop, ref matrix);
                     }
                     else
                     {
-                        Check(cursorPosLeft - 50, cursorPosTop, ref Matrix);
+                        Check(cursorPosLeft - 50, cursorPosTop, ref matrix);
                     }
                 }
 
-                if ((cursorPosLeft == field.middleOfField + 1 && cursorPosTop == 0) ||
-                    (cursorPosLeft == field.middleOfField && cursorPosTop == 0) ||
-                    (cursorPosLeft == field.middleOfField + 2 && cursorPosTop == 0))
+                if ((cursorPosLeft == field.MiddleOfField + 1 && cursorPosTop == 0) ||
+                    (cursorPosLeft == field.MiddleOfField && cursorPosTop == 0) ||
+                    (cursorPosLeft == field.MiddleOfField + 2 && cursorPosTop == 0))
                 {
                     timeStop = 1;
                     Console.Clear();
                     result.Win();
-                    //Win();
                 }
             }
             else
             {
-                if (Matrix == Field.Matrix1)
+                if (matrix == Field.Matrix1)
                 {
-                    Check(cursorPosLeft, cursorPosTop, ref Matrix);
+                    Check(cursorPosLeft, cursorPosTop, ref matrix);
                 }
                 else
                 {
-                    Check(cursorPosLeft - 50, cursorPosTop, ref Matrix);
+                    Check(cursorPosLeft - 50, cursorPosTop, ref matrix);
                 }
             }
-            if (cursorPosLeft == cursorPosLeft2)
+
+            if (cursorPosLeft == CursorPosLeft2)
             {
                 cursorPosLeft -= 50;
             }
-            MoveCursor(ref cursorPosLeft, ref cursorPosTop, direction, ref Matrix);
-            if (cursorPosLeft == cursorPosLeft2)
+
+            MoveCursor(ref cursorPosLeft, ref cursorPosTop, direction, ref matrix);
+            if (cursorPosLeft == CursorPosLeft2)
             {
                 cursorPosLeft += 50;
             }
         }
 
-        public void MoveCursor(ref int left, ref int top, int Case, ref object[,] Matrix)
+        public void MoveCursor(ref int left, ref int top, int @case, ref object[,] matrix)
         {
-            if (Matrix[top, left].GetType() == typeof(Wall))
+            if (matrix[top, left].GetType() == typeof(Wall))
             {
-                switch (Case)
+                switch (@case)
                 {
                     case 1:
                         top++;
@@ -286,58 +287,58 @@ namespace Lab_1
                 left = 1;
             }
 
-            if (top < 1 && left == field.middleOfField + 1)
+            if (top < 1 && left == field.MiddleOfField + 1)
             {
                 top = 0;
             }
 
-            if (top < 1 && left != field.middleOfField + 1 && left != field.middleOfField + 2 && left != field.middleOfField)
+            if (top < 1 && left != field.MiddleOfField + 1 && left != field.MiddleOfField + 2 && left != field.MiddleOfField)
             {
                 top = 1;
             }
 
-            if (left > Field.matrixLength - 2)
+            if (left > Field.MatrixLength - 2)
             {
-                left = Field.matrixLength - 2;
+                left = Field.MatrixLength - 2;
             }
 
-            if (top == Field.matrixWidth - 1 && left == field.middleOfField)
+            if (top == Field.MatrixWidth - 1 && left == field.MiddleOfField)
             {
-                top = Field.matrixWidth - 1;
+                top = Field.MatrixWidth - 1;
             }
 
-            if (top > Field.matrixWidth - 2 && left != field.middleOfField && left != field.middleOfField + 2 && left != field.middleOfField + 1)
+            if (top > Field.MatrixWidth - 2 && left != field.MiddleOfField && left != field.MiddleOfField + 2 && left != field.MiddleOfField + 1)
             {
-                top = Field.matrixWidth - 2;
+                top = Field.MatrixWidth - 2;
             }
 
-            if (Matrix[top, left].GetType() == typeof(Bonus))
+            if (matrix[top, left].GetType() == typeof(Bonus))
             {
-                Matrix[top, left] = ' ';
-                life = 1;
-                Console.SetCursorPosition(Field.matrixLength + 1, 1);
+                matrix[top, left] = ' ';
+                Life = 1;
+                Console.SetCursorPosition(Field.MatrixLength + 1, 1);
                 Console.Write("Life: 1");
             }
 
-            if (Matrix[top, left].GetType() == typeof(Trap))
+            if (matrix[top, left].GetType() == typeof(Trap))
             {
-                if (life == 0)
+                if (Life == 0)
                 {
-                    result.Defeat(ref Matrix);
+                    result.Defeat(ref matrix);
                 }
 
-                if (life == 1)
+                if (Life == 1)
                 {
-                    life = 0;
-                    Matrix[top, left] = ' ';
-                    Console.SetCursorPosition(Field.matrixLength + 1, 1);
+                    Life = 0;
+                    matrix[top, left] = ' ';
+                    Console.SetCursorPosition(Field.MatrixLength + 1, 1);
                     Console.Write("Life: 0");
                 }
             }
 
             lock (locker)
             {
-                if (Matrix == Field.Matrix1)
+                if (matrix == Field.Matrix1)
                 {
                     Console.SetCursorPosition(left, top);
                 }
@@ -348,38 +349,37 @@ namespace Lab_1
             }
         }
 
-        public void Check(int x, int y, ref object[,] Matrix)
+        public void Check(int x, int y, ref object[,] matrix)
         {
             int amount = 0;
-            Trap trap = new Trap();
-            //Console.WriteLine(Matrix.GetLength(0/1));
-            if (y - 1 <= Field.matrixWidth)
+            // Console.WriteLine(Matrix.GetLength(0/1));
+            if (y - 1 <= Field.MatrixWidth)
             {
-                if (Matrix[y - 1, x].GetType() == typeof(Trap))//y-1, x
+                if (matrix[y - 1, x].GetType() == typeof(Trap))
                 {
                     amount++;
                 }
             }
 
-            if (x + 1 <= Field.matrixLength)
+            if (x + 1 <= Field.MatrixLength)
             {
-                if (Matrix[y, x + 1].GetType() == typeof(Trap))
+                if (matrix[y, x + 1].GetType() == typeof(Trap))
                 {
                     amount++;
                 }
             }
 
-            if (x - 1 <= Field.matrixLength)
+            if (x - 1 <= Field.MatrixLength)
             {
-                if (Matrix[y, x - 1].GetType() == typeof(Trap))
+                if (matrix[y, x - 1].GetType() == typeof(Trap))
                 {
                     amount++;
                 }
             }
 
-            if (y + 1 < Field.matrixWidth)
+            if (y + 1 < Field.MatrixWidth)
             {
-                if (Matrix[y + 1, x].GetType() == typeof(Trap))
+                if (matrix[y + 1, x].GetType() == typeof(Trap))
                 {
                     amount++;
                 }
@@ -396,8 +396,6 @@ namespace Lab_1
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
         }
-
-
 
         public void WhatColor(int minesAmount)
         {
