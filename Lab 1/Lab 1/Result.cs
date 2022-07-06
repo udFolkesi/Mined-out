@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Lab_1
@@ -31,11 +32,13 @@ namespace Lab_1
                                             
 ");
             Console.ForegroundColor = ConsoleColor.Gray; //типа всвязке
+            throw new Exception();
+            //Environment.Exit(0);
         }
 
-        public void Defeat(ref object[,] matrix)
+        public void Defeat(ref Element[,] matrix)
         {
-            Player.timeStop = 1;
+            Game.gameStopped = true;
             Console.Clear();
             field.Draw(ref Field.Matrix1);
             if (Menu.PlayerAmount == 2)
@@ -59,13 +62,14 @@ namespace Lab_1
             Console.CursorVisible = true;
             char nextGame;
             bool question = true;
-            Player player = new Player();
+            Game player = new Game();
             while (question)
             {
                 nextGame = Console.ReadKey().KeyChar;
                 Console.WriteLine();
                 if (nextGame == 'y')
                 {
+                    Game.gameStopped = false;
                     //File.save();
                     question = false;
                     Console.CursorVisible = false;
@@ -84,17 +88,16 @@ namespace Lab_1
                         field.Define(ref Field.Matrix1);
                         field.Define(ref Field.Matrix2);
                     }
-
-                    player.Define();
+                    player.Start();
+                    Console.WriteLine(matrix[7, 12]);
                 }
 
                 if (nextGame == 'n')
                 {
                     question = false;
                     Console.Clear();
+                    Console.CursorVisible = false;
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-
-                    // Console.BackgroundColor = ConsoleColor.Yellow;
                     Console.WriteLine(
                         @"
   ______                                                  
@@ -105,6 +108,8 @@ namespace Lab_1
  \_____/  \_||_||_|_|_| \____)   \___/  \_/  \____)|_| 
 
                     ");
+                    throw new Exception("end");
+                    //Environment.Exit(0); // какая альтернатива
                 }
                 else
                 {
@@ -112,6 +117,7 @@ namespace Lab_1
                     Console.WriteLine("Wrong.");
                     Console.ForegroundColor = ConsoleColor.Gray;
                 }
+                // Thread.Sleep(50);
             }
 
             // restart?

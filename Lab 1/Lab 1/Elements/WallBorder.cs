@@ -16,7 +16,7 @@ namespace Lab_1
             symbol = '#';
         }
 
-        public static void Draw()
+        public override void Draw()
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.BackgroundColor = ConsoleColor.DarkBlue;

@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Lab_1
 {
-    public class Player: Element
+    public class Bonus: Element
     {
+        public override char symbol { set; get; }
         public override void Define()
         {
-
+            symbol = '$';
         }
-
-        public override void Draw() // или просто static
+        public override void Draw()
         {
-
+            
         }
     }
 }

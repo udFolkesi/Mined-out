@@ -62,20 +62,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bonus.cs" />
+    <Compile Include="Elements\Cell.cs" />
+    <Compile Include="Elements\Bonus.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="Files.cs" />
     <Compile Include="Menu.cs" />
-    <Compile Include="AddElements.cs" />
+    <Compile Include="ElementsAdder.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result.cs" />
     <Compile Include="Rules.cs" />
-    <Compile Include="Trap.cs" />
-    <Compile Include="Wall.cs" />
-    <Compile Include="WallBorder.cs" />
+    <Compile Include="Elements\Trap.cs" />
+    <Compile Include="Elements\Wall.cs" />
+    <Compile Include="Elements\WallBorder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

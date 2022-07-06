@@ -13,11 +13,11 @@ namespace Lab_1
         private readonly string[] listMenu = new string[] { "Start game", "Rate", "Settings", "Exit" };
         private ConsoleKeyInfo k;
         private Field field = new Field();
-        private Player player = new Player();
+        private Game player = new Game();
         private Rules rules = new Rules();
         public static int PlayerAmount = 1;
 
-        public async Task WordMenu()
+        private async Task WordMenu()
         {
             await Task.Run(() =>
             {
@@ -57,9 +57,23 @@ namespace Lab_1
             _ = WordMenu();
 
             Console.CursorVisible = false; // гасим курсор
+            Navigate();
+
+            while (true)
+            {
+                k = Console.ReadKey(true);
+                if (k.Key == ConsoleKey.B)
+                {
+                    Console.Clear();
+                    Start();
+                }
+            }
+        }
+
+        private void Navigate()
+        {
             int x = 0;
             int y = 1;
-
             do
             {
                 Console.SetCursorPosition(x, y);
@@ -97,57 +111,7 @@ namespace Lab_1
 
                 if (k.Key == ConsoleKey.Enter && y == 1)
                 {
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.WriteLine("1 player | 2 players");
-                    Console.WriteLine("--------");
-                    int index = 0;
-                    do
-                    {
-                        k = Console.ReadKey(true);
-                        if (k.Key == ConsoleKey.RightArrow)
-                        {
-                            Console.SetCursorPosition(0, 1);
-                            Console.WriteLine("        ");
-                            Console.SetCursorPosition(11, 1);
-                            Console.WriteLine("---------");
-                            index = 1;
-                        }
-
-                        if (k.Key == ConsoleKey.LeftArrow)
-                        {
-                            Console.SetCursorPosition(11, 1);
-                            Console.WriteLine("         ");
-                            Console.SetCursorPosition(0, 1);
-                            Console.WriteLine("--------");
-                            index = 0;
-                            // выбранный пункт сделать темнее
-                        }
-
-                        if (k.Key == ConsoleKey.Enter && index == 0)
-                        {
-                            Console.Clear();
-                            rules.Define();
-                            field.Define(ref Field.Matrix1);
-                            player.Define();
-                            Console.Beep();
-                        }
-
-                        if (k.Key == ConsoleKey.Enter && index == 1)
-                        {
-                            PlayerAmount = 2;
-                            Console.Clear();
-                            field.Define(ref Field.Matrix1);
-                            field.Define(ref Field.Matrix2);
-                            player.Define();
-
-                            // player.Define();
-                        }
-
-                        //перегрузку метода
-                    }
-                    while (k.Key != ConsoleKey.Enter);
-
+                    ChoosePlayerAmount();
                     // time();
                 }
 
@@ -179,6 +143,58 @@ namespace Lab_1
                 {
                     Console.Clear();
                 }
+            }
+            while (k.Key != ConsoleKey.Enter);
+        }
+
+        private void ChoosePlayerAmount()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("1 player | 2 players");
+            Console.WriteLine("--------");
+            int index = 0;
+            do
+            {
+                k = Console.ReadKey(true);
+                if (k.Key == ConsoleKey.RightArrow)
+                {
+                    Console.SetCursorPosition(0, 1);
+                    Console.WriteLine("        ");
+                    Console.SetCursorPosition(11, 1);
+                    Console.WriteLine("---------");
+                    index = 1;
+                }
+
+                if (k.Key == ConsoleKey.LeftArrow)
+                {
+                    Console.SetCursorPosition(11, 1);
+                    Console.WriteLine("         ");
+                    Console.SetCursorPosition(0, 1);
+                    Console.WriteLine("--------");
+                    index = 0;
+                    // выбранный пункт сделать темнее
+                }
+
+                if (k.Key == ConsoleKey.Enter && index == 0)
+                {
+                    Console.Clear();
+                    rules.Define();
+                    field.Define(ref Field.Matrix1);
+                    player.Start();
+                    Console.Beep();
+                }
+
+                if (k.Key == ConsoleKey.Enter && index == 1)
+                {
+                    PlayerAmount = 2;
+                    Console.Clear();
+                    field.Define(ref Field.Matrix1);
+                    field.Define(ref Field.Matrix2);
+                    player.Start();
+                }
+
+                //перегрузку метода
             }
             while (k.Key != ConsoleKey.Enter);
         }

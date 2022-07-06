@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Lab_1
 {
-    public class AddElements
+    public class ElementsAdder
     {
         private static Random random = new Random();
         // Console.ForegroundColor = ConsoleColor.Red;
-        public void AddTraps(int posX, int length, int width, ref object[,] matrix)
+        public void AddTraps(int posX, int length, int width, ref Element[,] matrix)
         {
             int traps = random.Next(1, 6); // 6
             for (int j = 0; j < traps; j++)
@@ -23,22 +23,23 @@ namespace Lab_1
             }
         }
 
-        public void AddWall(ref object[,] matrix)
+        public void AddWall(ref Element[,] matrix)
         {
             for (int i = 0; i < Field.MatrixWidth; i++)
             {
                 Place(ref matrix, "wall");
-                Wall.Draw();
+                Wall wall = new Wall();
+                wall.Draw();
             }
         }
 
-        public void AddBonus(ref object[,] matrix)
+        public void AddBonus(ref Element[,] matrix)
         {
             Place(ref matrix, "bonus");
             Console.Write('$');
         }
 
-        public void Place(ref object[,] matrix, string elem)
+        public void Place(ref Element[,] matrix, string elem)
         {
             int y = random.Next(1, Field.MatrixWidth - 1);
             int x = random.Next(1, Field.MatrixLength - 1);

@@ -10,7 +10,7 @@ namespace Lab_1
     class Files
     {
         string path = "saves.txt";
-        private int num = 0;
+        private int lineCount = 0;
 
         public void GetInfo()
         {
@@ -19,55 +19,34 @@ namespace Lab_1
                 string input = null;
                 while ((input = streamReader.ReadLine()) != null)
                 {
-                    Console.WriteLine(input);
+                    ShowInfo(input);
                 }
 
-                Console.ReadLine();
+                //Console.ReadLine();
             }
+        }
+
+        public void ShowInfo(string info)
+        {
+            Console.WriteLine(info);
         }
 
         public void GetNum()
         {
             using (StreamReader streamReader = new StreamReader(path))
             {
-                /*string input = null;
-                while ((input = streamReader.ReadLine()) != null)
-                {
-                    Console.WriteLine(input);
-                }*/
-                string strNum = "";
-                try
-                {
-                    strNum = File.ReadLines(path).Last();
-                }
-                catch
-                {
-                    Console.WriteLine("Проблемка");
-                }
-
-                try
-                {
-                    num = int.Parse(strNum.Substring(0, 2));
-                }
-                catch
-                {
-                    Console.WriteLine("Шото не так");
-                }
-
-                //int.TryParse(string.Join("", strNum.Where(c => char.IsDigit(c))), out num);
+                lineCount = System.IO.File.ReadAllLines(path).Length;
             }
-
-            //Console.ReadLine();
         }
 
         public void Save()
         {
             GetNum();
-            num++;
+            lineCount++;
             using (StreamWriter writer = new StreamWriter(path, true))
             {
-                writer.Write($"{num} Record. Field size: {Field.MatrixWidth}x{Field.MatrixLength};" +
-                    $" Time: {Player._time}; Result: Victory");
+                writer.Write($"{lineCount} Record. Field size: {Field.MatrixWidth}x{Field.MatrixLength};" +
+                    $" Time: {Game.SpentTime}; Result: Victory");
                 writer.WriteLine();
             }
         }

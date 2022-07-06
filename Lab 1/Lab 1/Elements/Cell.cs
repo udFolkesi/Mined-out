@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace Lab_1
 {
-    public class Bonus: Element
+    public class Cell: Element
     {
-        public override char symbol { set; get; }
         public override void Define()
         {
-            symbol = '$';
+            
+        }
+        public override void Draw()
+        {
+
         }
     }
 }

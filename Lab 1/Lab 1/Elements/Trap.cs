@@ -15,7 +15,7 @@ namespace Lab_1
             symbol = 'X';
         }
 
-        public static void Draw()
+        public override void Draw() // или просто static
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write('X');
