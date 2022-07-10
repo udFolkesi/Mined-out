@@ -10,6 +10,9 @@ namespace Lab_1
     {
         public virtual char symbol { set; get; } 
         public abstract void Define();
-        public abstract void Draw(); //static
+        public virtual void Draw()
+        {
+
+        }// static
     }
 }

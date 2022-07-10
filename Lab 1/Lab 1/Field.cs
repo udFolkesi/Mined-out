@@ -71,7 +71,7 @@ namespace Lab_1
                         }
                         else
                         {
-                            Console.Write(' ');
+                            Cell.Print();
                         }
                     }
 
@@ -122,12 +122,12 @@ namespace Lab_1
 
                         if (Matrix[i, j].GetType() == typeof(Bonus))
                         {
-                            Console.Write('$');
+                            Bonus.Print();
                         }
 
                         if (Matrix[i, j].GetType() == typeof(Cell))
                         {
-                            Console.Write(' ');
+                            Cell.Print();
                         }
                     }
 

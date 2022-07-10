@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab_1
+namespace Lab1_GUI
 {
-    public class Cell: Element
+    public class Bonus: Element
     {
+        public override char symbol { set; get; }
         public override void Define()
         {
-            
+            symbol = '$';
         }
-        public static void Print() // display
+        public static void Print()
         {
-            Console.Write(' ');
+            Console.Write('$');
         }
     }
 }

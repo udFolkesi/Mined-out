@@ -13,9 +13,9 @@ namespace Lab_1
         {
             symbol = '$';
         }
-        public override void Draw()
+        public static void Print()
         {
-            
+            Console.Write('$');
         }
     }
 }

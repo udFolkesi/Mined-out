@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace Lab_1
+namespace Lab1_GUI
 {
     public class Game
     {
         // proeprty?
         private static ConsoleKeyInfo key;
+        public static int TrapAmount = 0;
         public int CursorPosLeft2 = 0; // 11
         public int CursorPosTop2 = 0; // 7
         public int CursorPosLeft = 0; // 11
         public int CursorPosTop = 0; // 7
+        public static int PlayerAmount;
+        //private Form2 form2 = new Form2();
         private Player player = new Player();
         private Field field = new Field();
-        private Rules rules = new Rules();
-        private Result result = new Result();
         public static TimeSpan SpentTime;
         public static bool gameStopped = false;
         private static object locker = new object();
@@ -60,48 +62,25 @@ namespace Lab_1
 
         public void Start()
         {
-            lock (locker)
-            {
-                Console.SetCursorPosition(Field.MatrixLength + 5, 0);
-            }
-
-            var watch2 = Stopwatch.StartNew();
+            /*var watch2 = Stopwatch.StartNew();
             watch2.Reset();
-            Console.WriteLine(watch2.Elapsed);
-            field.MiddleOfField = Convert.ToInt32(Math.Floor(Field.MatrixLength / 2d) - 1);
-            CursorPosLeft = field.MiddleOfField + 1;
+            Console.WriteLine(watch2.Elapsed);*/
+            Field.MiddleOfField = Convert.ToInt32(Math.Floor(Field.MatrixLength / 2d) - 1);
+            CursorPosLeft = Field.MiddleOfField + 1;
             CursorPosTop = Field.MatrixWidth - 1;
-            CursorPosLeft2 = 50 + field.MiddleOfField + 1;
+            CursorPosLeft2 = 50 + Field.MiddleOfField + 1;
             CursorPosTop2 = Field.MatrixWidth - 1;
-            lock (locker)
-            {
-                Console.SetCursorPosition(CursorPosLeft, CursorPosTop);
-            }
 
             Check(CursorPosLeft, CursorPosTop, ref Field.Matrix1);
 
-            lock (locker)
+            if (PlayerAmount == 2)
             {
-                Console.SetCursorPosition(CursorPosLeft, CursorPosTop);
-            }
-
-            if (Menu.PlayerAmount == 2)
-            {
-                lock (locker)
-                {
-                    Console.SetCursorPosition(CursorPosLeft2, CursorPosTop2);
-                }
-
                 Check(CursorPosLeft2 - 50, CursorPosTop2, ref Field.Matrix2);
-
-                lock (locker)
-                {
-                    Console.SetCursorPosition(CursorPosLeft2, CursorPosTop2);
-                }
             }
 
             key = Console.ReadKey(true);
-            Timer(watch2);
+            //Timer(watch2);
+            
 
             while (gameStopped == false) // пока игровая сессия идет = true
             {
@@ -156,11 +135,11 @@ namespace Lab_1
 
                 if (key.Key == ConsoleKey.B)
                 {
-                    Menu menu = new Menu();
+                    //Menu menu = new Menu();
                     gameStopped = true;
                     Thread.Sleep(20);
                     Console.Clear();
-                    menu.Start();
+                    //menu.Start();
                 }
 
                 if (key.Key == ConsoleKey.R)
@@ -168,7 +147,7 @@ namespace Lab_1
                     gameStopped = true;
                     Thread.Sleep(20);
                     Console.Clear();
-                    rules.Define();
+                    //rules.Define();
                     field.Define(ref Field.Matrix1);
                     Start();
                     // Console.Beep();
@@ -251,7 +230,7 @@ namespace Lab_1
                 {
                     gameStopped = true;
                     Console.Clear();
-                    result.Win();
+                    //result.Win();
                 }
             }
             else
@@ -290,12 +269,12 @@ namespace Lab_1
                 left = 1;
             }
 
-            if (top < 1 && left == field.MiddleOfField + 1)
+            if (top < 1 && left == Field.MiddleOfField + 1)
             {
                 top = 0;
             }
 
-            if (top < 1 && left != field.MiddleOfField + 1 && left != field.MiddleOfField + 2 && left != field.MiddleOfField)
+            if (top < 1 && left != Field.MiddleOfField + 1 && left != Field.MiddleOfField + 2 && left != Field.MiddleOfField)
             {
                 top = 1;
             }
@@ -305,12 +284,12 @@ namespace Lab_1
                 left = Field.MatrixLength - 2;
             }
 
-            if (top == Field.MatrixWidth - 1 && left == field.MiddleOfField)
+            if (top == Field.MatrixWidth - 1 && left == Field.MiddleOfField)
             {
                 top = Field.MatrixWidth - 1;
             }
 
-            if (top > Field.MatrixWidth - 2 && left != field.MiddleOfField && left != field.MiddleOfField + 2 && left != field.MiddleOfField + 1)
+            if (top > Field.MatrixWidth - 2 && left != Field.MiddleOfField && left != Field.MiddleOfField + 2 && left != Field.MiddleOfField + 1)
             {
                 top = Field.MatrixWidth - 2;
             }
@@ -327,7 +306,7 @@ namespace Lab_1
             {
                 if (Life == 0 /*&& timeStop == 0*/)
                 {
-                     result.Defeat(ref matrix);
+                     //result.Defeat(ref matrix);
                 }
 
                 if (Life == 1)
@@ -354,13 +333,13 @@ namespace Lab_1
 
         public void Check(int x, int y, ref Element[,] matrix)
         {
-            int trapAmount = 0;
+            //int trapAmount = 0;
             // Console.WriteLine(Matrix.GetLength(0/1));
             if (y - 1 <= 0)
             {
                 if (matrix[y - 1, x].GetType() == typeof(Trap))
                 {
-                    trapAmount++;
+                    TrapAmount++;
                 }
             }
 
@@ -368,7 +347,7 @@ namespace Lab_1
             {
                 if (matrix[y, x + 1].GetType() == typeof(Trap))
                 {
-                    trapAmount++;
+                    TrapAmount++;
                 }
             }
 
@@ -376,7 +355,7 @@ namespace Lab_1
             {
                 if (matrix[y, x - 1].GetType() == typeof(Trap))
                 {
-                    trapAmount++;
+                    TrapAmount++;
                 }
             } // проверить надобность в проверке
 
@@ -384,22 +363,21 @@ namespace Lab_1
             {
                 if (matrix[y + 1, x].GetType() == typeof(Trap))
                 {
-                    trapAmount++;
+                    TrapAmount++;
                 }
             }
 
-            lock (locker)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Player.WhatColor(trapAmount);
-                Console.BackgroundColor = ConsoleColor.DarkGray;
-                /*if(timeStop == 0)
-                {*/
-
-                    Console.Write(trapAmount);
-                //}
-                //matrix[x, y] = player;
-            }
+            Console.ForegroundColor = ConsoleColor.Green;
+            Player.WhatColor(TrapAmount);
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            /*if(timeStop == 0)
+            {*/
+            Form2 form2 = new Form2();
+            form2.labelPlayer.Location = new System.Drawing.Point(x, y);
+            form2.labelPlayer.Text = TrapAmount.ToString();
+            //Console.Write(TrapAmount);
+            //}
+            //matrix[x, y] = player;
 
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
