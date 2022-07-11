@@ -180,7 +180,7 @@ namespace Lab_1
                 {
                     Console.Clear();
                     rules.Define();
-                    field.Define(ref Field.Matrix1);
+                    field.Define(ref Field.field1.Matrix);
                     player.Start();
                     Console.Beep();
                 }
@@ -189,8 +189,8 @@ namespace Lab_1
                 {
                     PlayerAmount = 2;
                     Console.Clear();
-                    field.Define(ref Field.Matrix1);
-                    field.Define(ref Field.Matrix2);
+                    field.Define(ref Field.field1.Matrix);
+                    field.Define(ref Field.field2.Matrix);
                     player.Start();
                 }
 

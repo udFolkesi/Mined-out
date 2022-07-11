@@ -78,7 +78,7 @@ namespace Lab_1
                 Console.SetCursorPosition(CursorPosLeft, CursorPosTop);
             }
 
-            Check(CursorPosLeft, CursorPosTop, ref Field.Matrix1);
+            Check(CursorPosLeft, CursorPosTop, ref Field.field1.Matrix);
 
             lock (locker)
             {
@@ -92,7 +92,7 @@ namespace Lab_1
                     Console.SetCursorPosition(CursorPosLeft2, CursorPosTop2);
                 }
 
-                Check(CursorPosLeft2 - 50, CursorPosTop2, ref Field.Matrix2);
+                Check(CursorPosLeft2 - 50, CursorPosTop2, ref Field.field2.Matrix);
 
                 lock (locker)
                 {
@@ -108,7 +108,7 @@ namespace Lab_1
                 switch (key.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        MoveCase((int)Direction.up, ref Field.Matrix1, ref CursorPosLeft, ref CursorPosTop);
+                        MoveCase((int)Direction.up, ref Field.field1.Matrix, ref CursorPosLeft, ref CursorPosTop);
                         break;
                     case ConsoleKey.DownArrow:
                         if (CursorPosTop == Field.MatrixWidth - 1)
@@ -116,25 +116,25 @@ namespace Lab_1
                             break;
                         }
 
-                        MoveCase((int)Direction.down, ref Field.Matrix1, ref CursorPosLeft, ref CursorPosTop);
+                        MoveCase((int)Direction.down, ref Field.field1.Matrix, ref CursorPosLeft, ref CursorPosTop);
                         break;
                     case ConsoleKey.LeftArrow:
-                        MoveCase((int)Direction.left, ref Field.Matrix1, ref CursorPosLeft, ref CursorPosTop);
+                        MoveCase((int)Direction.left, ref Field.field1.Matrix, ref CursorPosLeft, ref CursorPosTop);
                         break;
                     case ConsoleKey.RightArrow:
-                        MoveCase((int)Direction.right, ref Field.Matrix1, ref CursorPosLeft, ref CursorPosTop);
+                        MoveCase((int)Direction.right, ref Field.field1.Matrix, ref CursorPosLeft, ref CursorPosTop);
                         break;
                     case ConsoleKey.W:
-                        MoveCase((int)Direction.up, ref Field.Matrix2, ref CursorPosLeft2, ref CursorPosTop2);
+                        MoveCase((int)Direction.up, ref Field.field2.Matrix, ref CursorPosLeft2, ref CursorPosTop2);
                         break;
                     case ConsoleKey.S:
-                        MoveCase((int)Direction.down, ref Field.Matrix2, ref CursorPosLeft2, ref CursorPosTop2);
+                        MoveCase((int)Direction.down, ref Field.field2.Matrix, ref CursorPosLeft2, ref CursorPosTop2);
                         break;
                     case ConsoleKey.A:
-                        MoveCase((int)Direction.left, ref Field.Matrix2, ref CursorPosLeft2, ref CursorPosTop2);
+                        MoveCase((int)Direction.left, ref Field.field2.Matrix, ref CursorPosLeft2, ref CursorPosTop2);
                         break;
                     case ConsoleKey.D:
-                        MoveCase((int)Direction.right, ref Field.Matrix2, ref CursorPosLeft2, ref CursorPosTop2);
+                        MoveCase((int)Direction.right, ref Field.field2.Matrix, ref CursorPosLeft2, ref CursorPosTop2);
                         break;
                 }
 
@@ -169,7 +169,7 @@ namespace Lab_1
                     Thread.Sleep(20);
                     Console.Clear();
                     rules.Define();
-                    field.Define(ref Field.Matrix1);
+                    field.Define(ref Field.field1.Matrix);
                     Start();
                     // Console.Beep();
                 }
@@ -237,7 +237,7 @@ namespace Lab_1
             {
                 if (cursorPosTop != 0)
                 {
-                    if (matrix == Field.Matrix1)
+                    if (matrix == Field.field1.Matrix)
                     {
                         Check(cursorPosLeft, cursorPosTop, ref matrix);
                     }
@@ -256,7 +256,7 @@ namespace Lab_1
             }
             else
             {
-                if (matrix == Field.Matrix1)
+                if (matrix == Field.field1.Matrix)
                 {
                     Check(cursorPosLeft, cursorPosTop, ref matrix);
                 }
@@ -341,7 +341,7 @@ namespace Lab_1
 
             lock (locker)
             {
-                if (matrix == Field.Matrix1)
+                if (matrix == Field.field1.Matrix)
                 {
                     Console.SetCursorPosition(left, top);
                 }

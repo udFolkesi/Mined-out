@@ -34,11 +34,16 @@ namespace Lab1_GUI
             // 
             // textBox1
             // 
+            this.textBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.textBox1.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.textBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox1.Enabled = false;
             this.textBox1.ForeColor = System.Drawing.SystemColors.Window;
+            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.textBox1.Location = new System.Drawing.Point(544, 12);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(234, 111);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "You can use arrows(◄ ►▲▼) for move\r\nRestart - press R\r\nTo show hint press.. \r\nAdd" +

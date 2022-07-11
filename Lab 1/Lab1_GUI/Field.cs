@@ -12,6 +12,7 @@ namespace Lab1_GUI
     {
         public static int MatrixWidth = 15;
         public static int MatrixLength = 23;
+        
 
         // public int matrixLength { set; get; } = 23;
         // public static Element[,] Matrix1 = new Element[40, 40];

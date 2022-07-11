@@ -8,8 +8,8 @@ namespace Lab_1
 {
     public class Player: Element
     {
-        public int CursorPosLeft = 0; // 11
-        public int CursorPosTop = 0;
+        public static int CursorPosLeft = 0; // 11
+        public static int CursorPosTop = 0;
         public override void Define()
         {
 
@@ -60,6 +60,7 @@ namespace Lab_1
 
         public static void WhatColor(int minesAmount)
         {
+
             switch (minesAmount)
             {
                 case 1:

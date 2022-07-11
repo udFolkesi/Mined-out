@@ -12,22 +12,34 @@ namespace Lab_1
         public static int MatrixWidth = 8;
         public static int MatrixLength = 23;
 
+
         // public int matrixLength { set; get; } = 23;
         // public static Element[,] Matrix1 = new Element[40, 40];
-        public static Element[,] Matrix1 = new Element[40, 40];
-        public static Element[,] Matrix2 = new Element[40, 40];
+
+        public Element[,] Matrix = new Element[40, 40];
+        //public static Element[,] Matrix1 = new Element[40, 40];
+        //public static Element[,] Matrix2 = new Element[40, 40];
         //public static char[,] Matrix2 = new char[100, 50];
-        public int[] MyArray = new int[] { 1, 2, 3 };
+
         public Element this[int index1, int index2]
         {
-            set { Matrix1[index1, index2] = value; }
-            get { return Matrix1[index1, index2]; }
+            set { field1.Matrix[index1, index2] = value; }
+            get { return field2.Matrix[index1, index2]; }
         }
 
         public int MiddleOfField  = Convert.ToInt32(Math.Floor(MatrixLength / 2d) - 1);
 
         public object Locker = new object();
         private ElementsAdder addElement = new ElementsAdder();
+
+        public static Field field1 = new Field()
+        {
+            
+        };
+        public static Field field2 = new Field()
+        {
+
+        };
 
         // abstract field
         public void Define(ref Element[,] Matrix)
@@ -38,7 +50,7 @@ namespace Lab_1
                 Console.SetCursorPosition(0, 0);
                 for (int i = 0; i < MatrixWidth; i++)
                 {
-                    if (Matrix == Matrix2)
+                    if (Matrix == field2.Matrix)
                     {
                         Console.SetCursorPosition(50, i);
                     }
@@ -95,7 +107,7 @@ namespace Lab_1
                 Console.SetCursorPosition(0, 0);
                 for (int i = 0; i < MatrixWidth; i++)
                 {
-                    if (Matrix == Matrix2)
+                    if (Matrix == field2.Matrix)
                     {
                         Console.SetCursorPosition(50, i);
                     }

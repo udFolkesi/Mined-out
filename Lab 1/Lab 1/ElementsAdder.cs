@@ -52,7 +52,7 @@ namespace Lab_1
                 matrix[y, x] = new Wall();
             }
 
-            if (matrix == Field.Matrix2)
+            if (matrix == Field.field2.Matrix)
             {
                 Console.SetCursorPosition(50 + x, y);
             }

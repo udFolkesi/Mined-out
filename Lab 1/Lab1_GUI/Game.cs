@@ -331,10 +331,8 @@ namespace Lab1_GUI
             }
         }
 
-        public void Check(int x, int y, ref Element[,] matrix)
+        public static void Check(int x, int y, ref Element[,] matrix)
         {
-            //int trapAmount = 0;
-            // Console.WriteLine(Matrix.GetLength(0/1));
             if (y - 1 <= 0)
             {
                 if (matrix[y - 1, x].GetType() == typeof(Trap))
@@ -367,20 +365,8 @@ namespace Lab1_GUI
                 }
             }
 
-            Console.ForegroundColor = ConsoleColor.Green;
+            Form2.labelPlayer.ForeColor = System.Drawing.Color.Green;
             Player.WhatColor(TrapAmount);
-            Console.BackgroundColor = ConsoleColor.DarkGray;
-            /*if(timeStop == 0)
-            {*/
-            Form2 form2 = new Form2();
-            form2.labelPlayer.Location = new System.Drawing.Point(x, y);
-            form2.labelPlayer.Text = TrapAmount.ToString();
-            //Console.Write(TrapAmount);
-            //}
-            //matrix[x, y] = player;
-
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
 }

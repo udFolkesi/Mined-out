@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lab_1;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,20 +17,25 @@ namespace Lab1_GUI
         int y = 0;
         ElementsAdder elementsAdder = new ElementsAdder();
         Field field = new Field();
+        
 
         public Form2()
         {
             InitializeComponent();
+
             field.Define(ref Field.Matrix1);
-            //textBox.Visible = true;
             PrintField(ref Field.Matrix1);
             Game game = new Game();
             //game.Start();
             //this.Controls.Add(player);
+
             textBox1.TabStop = false;
+            labelPlayer.BringToFront();
+            KeyDown += new KeyEventHandler(Form2_KeyDown);
+
         }
 
-        public Label labelPlayer = new Label
+        public static Label labelPlayer = new Label
         {
             Size = new Size(14, 14),
             Font = new Font(FontFamily.GenericSansSerif, 6, FontStyle.Bold),
@@ -83,7 +89,8 @@ namespace Lab1_GUI
 
                     if (Matrix[i, j].GetType() == typeof(Player))
                     {
-                        labelPlayer.Location = new Point(x+1, y+1);
+                        labelPlayer.Location = new Point(x + 1, y + 1);
+                        
                         this.Controls.Add(labelPlayer);
                         //PrintElem(typeof(Player));
                     }
@@ -93,6 +100,39 @@ namespace Lab1_GUI
 
                 y += 15;
             }
+        }
+
+        void Form2_KeyDown(object sender, KeyEventArgs e)
+        {
+            int x = labelPlayer.Location.X;
+            int y = labelPlayer.Location.Y;
+
+            if (e.KeyCode == Keys.Right)
+            {
+                Game.Check(Player.PosLeft, Player.PosTop, ref Field.Matrix1);
+                x += 15;
+            }
+                
+            if (e.KeyCode == Keys.Left)
+            {
+                Game.Check(Player.PosLeft, Player.PosTop, ref Field.Matrix1);
+                x -= 15;
+            }
+                
+            if (e.KeyCode == Keys.Up)
+            {
+                Game.Check(Player.PosLeft, Player.PosTop, ref Field.Matrix1);
+                
+                y -= 15;
+            }
+                
+            if (e.KeyCode == Keys.Down)
+            {
+                Game.Check(Player.PosLeft, Player.PosTop, ref Field.Matrix1);
+                y += 15;
+            }
+                
+            labelPlayer.Location = new Point(x, y);
         }
 
         public void PrintElem(Type type) // класс в параметр

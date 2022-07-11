@@ -33,6 +33,7 @@ namespace Lab_1
 ");
             Console.ForegroundColor = ConsoleColor.Gray; //типа всвязке
             throw new Exception();
+            
             //Environment.Exit(0);
         }
 
@@ -40,10 +41,10 @@ namespace Lab_1
         {
             Game.gameStopped = true;
             Console.Clear();
-            field.Draw(ref Field.Matrix1);
+            field.Draw(ref Field.field1.Matrix);
             if (Menu.PlayerAmount == 2)
             {
-                field.Draw(ref Field.Matrix2);
+                field.Draw(ref Field.field2.Matrix);
             }
 
             Console.ForegroundColor = ConsoleColor.Red;
@@ -79,14 +80,14 @@ namespace Lab_1
                     if (Menu.PlayerAmount == 1)
                     {
                         rules.Define();
-                        field.Define(ref Field.Matrix1);
+                        field.Define(ref Field.field1.Matrix);
                     }
                     else
                     {
                         player.CursorPosLeft = 50 + field.MiddleOfField;
                         player.CursorPosTop = Field.MatrixWidth - 1;
-                        field.Define(ref Field.Matrix1);
-                        field.Define(ref Field.Matrix2);
+                        field.Define(ref Field.field1.Matrix);
+                        field.Define(ref Field.field2.Matrix);
                     }
                     player.Start();
                     Console.WriteLine(matrix[7, 12]);
