@@ -29,7 +29,10 @@ namespace Lab1_GUI
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            textBox1 = new System.Windows.Forms.TextBox();
+            label1 = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -49,15 +52,48 @@ namespace Lab1_GUI
             this.textBox1.Text = "You can use arrows(◄ ►▲▼) for move\r\nRestart - press R\r\nTo show hint press.. \r\nAdd" +
     "itional life - $\r\nBack - press B\r\nIf you want to finish game press Esc";
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            label1.Location = new System.Drawing.Point(593, 136);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(64, 17);
+            label1.TabIndex = 1;
+            label1.Text = "00:00:00";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label2.Location = new System.Drawing.Point(544, 136);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(43, 17);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Time:";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(547, 157);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(47, 17);
+            label3.TabIndex = 3;
+            label3.Text = "Life: 0";
+            // 
             // Form2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlText;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            BackColor = System.Drawing.SystemColors.ControlText;
+            ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(label1);
             this.Controls.Add(this.textBox1);
-            this.Name = "Form2";
-            this.Text = "Form2";
+            ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            Name = "Form2";
+            Text = "Form2";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -66,5 +102,8 @@ namespace Lab1_GUI
         #endregion
 
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label2;
+        public static System.Windows.Forms.Label label3;
+        public static System.Windows.Forms.Label label1;
     }
 }

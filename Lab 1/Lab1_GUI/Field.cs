@@ -11,19 +11,15 @@ namespace Lab1_GUI
     public class Field
     {
         public static int MatrixWidth = 15;
-        public static int MatrixLength = 23;
-        
+        public static int MatrixLength = 24;
+        public Element[,] Matrix = new Element[40, 40];
+        public static Field first = new Field();
+        public static Field second = new Field();
 
-        // public int matrixLength { set; get; } = 23;
-        // public static Element[,] Matrix1 = new Element[40, 40];
-        public static Element[,] Matrix1 = new Element[40, 40];
-        public static Element[,] Matrix2 = new Element[40, 40];
-        //public static char[,] Matrix2 = new char[100, 50];
-        public int[] MyArray = new int[] { 1, 2, 3 };
         public Element this[int index1, int index2]
         {
-            set { Matrix1[index1, index2] = value; }
-            get { return Matrix1[index1, index2]; }
+            set { first[index1, index2] = value; }
+            get { return second[index1, index2]; }
         }
 
         public static int MiddleOfField  = Convert.ToInt32(Math.Floor(MatrixLength / 2d) - 1);

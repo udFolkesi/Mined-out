@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Lab1_GUI
 {
@@ -13,15 +14,13 @@ namespace Lab1_GUI
         /*private Files file = new Files();
         private Field field = new Field(); // public?
         private Rules rules = new Rules();
-        private object locker = new object();
+        private object locker = new object();*/
 
-        public void Win()
+        public static void Win()
         {
-            file.Save();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Clear();
-            Console.Write(
-                    @"
+            //file.Save();
+            MessageBox.Show(
+                @"
  _    _  _                                  
 | |  | |(_)        _                        
 | |  | | _   ____ | |_   ___    ____  _   _ 
@@ -29,17 +28,17 @@ namespace Lab1_GUI
   \  /  | |( (___ | |__| |_| || |    | |_| |
    \/   |_| \____) \___)\___/ |_|     \__  |
                                      (____/ 
-                                            
 ");
-            Console.ForegroundColor = ConsoleColor.Gray; //типа всвязке
-            throw new Exception();
-            //Environment.Exit(0);
         }
 
-        public void Defeat(ref Element[,] matrix)
+        public static void Defeat(ref Element[,] matrix)
         {
+            //form2.PrintField(ref Field.second.Matrix);
+            //Form2 form2 = new Form2();
+            //form2.PrintField(ref Field.second.Matrix);
             Game.gameStopped = true;
-            Console.Clear();
+            MessageBox.Show("Хуева дела");
+            /*Console.Clear();
             field.Draw(ref Field.Matrix1);
             if (Menu.PlayerAmount == 2)
             {
@@ -120,7 +119,7 @@ namespace Lab1_GUI
                 // Thread.Sleep(50);
             }
 
-            // restart?
-        }*/
+            // restart?*/
+        }
     }
 }

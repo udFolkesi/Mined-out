@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,46 +16,36 @@ namespace Lab1_GUI
     {
         int x = 0;
         int y = 0;
-        ElementsAdder elementsAdder = new ElementsAdder();
         Field field = new Field();
-        
+        Game game = new Game();
 
         public Form2()
         {
             InitializeComponent();
-
-            field.Define(ref Field.Matrix1);
-            PrintField(ref Field.Matrix1);
-            Game game = new Game();
-            //game.Start();
-            //this.Controls.Add(player);
-
+            field.Define(ref Field.first.Matrix);
+            PrintField(ref Field.first.Matrix);
             textBox1.TabStop = false;
             labelPlayer.BringToFront();
+            game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
             KeyDown += new KeyEventHandler(Form2_KeyDown);
-
+            game.Timer();
+            //game.Timer();
         }
+        
 
         public static Label labelPlayer = new Label
         {
-            Size = new Size(14, 14),
+            Size = new Size(15, 15),
             Font = new Font(FontFamily.GenericSansSerif, 6, FontStyle.Bold),
             Text = Game.TrapAmount.ToString(),
             TextAlign = ContentAlignment.MiddleCenter,
-            ForeColor = Color.Green,
-            BackColor = Color.White
+            BackColor = Color.Black
         };
 
         public void PrintField(ref Element[,] Matrix)
         {
-            
             for (int i = 0; i < Field.MatrixWidth; i++)
             {
-                if (Matrix == Field.Matrix2)
-                {
-                    // Console.SetCursorPosition(50, i);
-                }
-
                 for (int j = 0; j < Field.MatrixLength; j++)
                 {
                     if (j == 0)
@@ -64,33 +55,40 @@ namespace Lab1_GUI
 
                     if (Matrix[i, j].GetType() == typeof(Trap))
                     {
-                        PrintElem(typeof(Trap));
+                        if(Game.gameStopped == false)
+                        {
+                            PrintElem(typeof(Cell), x, y);
+                        }
+                        else
+                        {
+                            PrintElem(typeof(Trap), x, y);
+                        }
                     }
 
                     if (Matrix[i, j].GetType() == typeof(WallBorder))
                     {
-                        PrintElem(typeof(WallBorder));
+                        PrintElem(typeof(WallBorder), x, y);
                     }
 
                     if (Matrix[i, j].GetType() == typeof(Wall))
                     {
-                        PrintElem(typeof(Wall));
+                        PrintElem(typeof(Wall), x, y);
                     }
 
                     if (Matrix[i, j].GetType() == typeof(Bonus))
                     {
-                        PrintElem(typeof(Bonus));
+                        PrintElem(typeof(Bonus), x, y);
                     }
 
                     if (Matrix[i, j].GetType() == typeof(Cell))
                     {
-                        PrintElem(typeof(Cell));
+                        PrintElem(typeof(Cell), x, y);
                     }
 
                     if (Matrix[i, j].GetType() == typeof(Player))
                     {
+                        PrintElem(typeof(PassedCell), x, y);
                         labelPlayer.Location = new Point(x + 1, y + 1);
-                        
                         this.Controls.Add(labelPlayer);
                         //PrintElem(typeof(Player));
                     }
@@ -102,47 +100,61 @@ namespace Lab1_GUI
             }
         }
 
-        void Form2_KeyDown(object sender, KeyEventArgs e)
+        public void Form2_KeyDown(object sender, KeyEventArgs e)
         {
-            int x = labelPlayer.Location.X;
-            int y = labelPlayer.Location.Y;
+            Player.first.labelX = labelPlayer.Location.X;
+            Player.first.labelY = labelPlayer.Location.Y;
 
-            if (e.KeyCode == Keys.Right)
+            if (e.KeyCode == Keys.Right && Field.first.Matrix[Player.first.PosTop, Player.first.PosLeft + 1].GetType() != typeof(Wall))
             {
-                Game.Check(Player.PosLeft, Player.PosTop, ref Field.Matrix1);
-                x += 15;
+                Player.first.PosLeft += 1;
+                Player.first.labelX += 15;
+                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix);
+                PrintElem(typeof(PassedCell), Player.first.labelX, Player.first.labelY);
+                game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
             }
                 
-            if (e.KeyCode == Keys.Left)
+            if (e.KeyCode == Keys.Left && Field.first.Matrix[Player.first.PosTop, Player.first.PosLeft - 1].GetType() != typeof(Wall))
             {
-                Game.Check(Player.PosLeft, Player.PosTop, ref Field.Matrix1);
-                x -= 15;
+                Player.first.PosLeft -= 1;
+                Player.first.labelX -= 15;
+                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix);
+                PrintElem(typeof(PassedCell), Player.first.labelX, Player.first.labelY);
+                game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
             }
                 
-            if (e.KeyCode == Keys.Up)
+            if (e.KeyCode == Keys.Up && Field.first.Matrix[Player.first.PosTop - 1, Player.first.PosLeft].GetType() != typeof(Wall))
             {
-                Game.Check(Player.PosLeft, Player.PosTop, ref Field.Matrix1);
-                
-                y -= 15;
+                Player.first.PosTop -= 1;
+                Player.first.labelY -= 15;
+                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix);
+                PrintElem(typeof(PassedCell), Player.first.labelX, Player.first.labelY);
+                game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
             }
                 
-            if (e.KeyCode == Keys.Down)
+            if (e.KeyCode == Keys.Down && Field.first.Matrix[Player.first.PosTop + 1, Player.first.PosLeft].GetType() != typeof(Wall))
             {
-                Game.Check(Player.PosLeft, Player.PosTop, ref Field.Matrix1);
-                y += 15;
+                Player.first.PosTop += 1;
+                Player.first.labelY += 15;
+                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix);
+                PrintElem(typeof(PassedCell), Player.first.labelX, Player.first.labelY);
+                game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
             }
                 
-            labelPlayer.Location = new Point(x, y);
+            labelPlayer.Location = new Point(Player.first.labelX, Player.first.labelY);
+            labelPlayer.BringToFront();
         }
 
-        public void PrintElem(Type type) // класс в параметр
+        public void PrintElem(Type type, int x, int y) // класс в параметр
         {
             PictureBox pictureBox = new PictureBox();
-            string border = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/blueCell.jpg";
-            string cell = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/whiteCell.jpg";
+            //pictureBox.BorderStyle = BorderStyle.None;
+            string border = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/wall.png";
+            string cell = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/cell.png";
             string bonus = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/bonus.png";
             string trap = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/mine.png";
             string wall = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/wall.jpg";
+            string passedCell = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/Grey_Cell.png";
             if (type == typeof(WallBorder))
             {
                 pictureBox.Image = Image.FromFile(border);
@@ -158,15 +170,33 @@ namespace Lab1_GUI
             if (type == typeof(Trap))
             {
                 pictureBox.Image = Image.FromFile(trap);
+                if (Game.gameStopped == true)
+                {
+                    pictureBox.BringToFront();
+                }
             }
             if (type == typeof(Wall))
             {
                 pictureBox.Image = Image.FromFile(wall);
             }
+            if (type == typeof(PassedCell))
+            {
+                pictureBox.Image = Image.FromFile(passedCell);
+            }
+
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox.Size = new Size(15, 15);
+            if(type == typeof(PassedCell))
+            {
+                pictureBox.Size = new Size(15, 15);
+            }
+            else
+            {
+                pictureBox.Size = new Size(15, 15);
+            }
+            
             pictureBox.Location = new Point(x, y);
             this.Controls.Add(pictureBox);
+            pictureBox.BringToFront();
         }
     }
 }

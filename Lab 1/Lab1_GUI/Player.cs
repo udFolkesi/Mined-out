@@ -9,18 +9,24 @@ namespace Lab1_GUI
 {
     public class Player: Element
     {
-        public static int PosLeft = 30; // 11
-        public static int PosTop = Field.MiddleOfField + 1;
-        
-        public override void Define()
+        public int PosLeft = Field.MiddleOfField + 1;// 11
+        public int PosTop = Field.MatrixWidth - 1;
+
+        public int labelX = Form2.labelPlayer.Location.X;
+        public int labelY = Form2.labelPlayer.Location.Y;
+
+        public int Life { get; set; } = 0;
+
+        public static Player first = new Player()
         {
-
-        }
-
-        public override void Draw() // или просто static
+            PosLeft = Field.MiddleOfField + 1,
+            PosTop = Field.MatrixWidth - 1
+        };
+        public static Player second = new Player()
         {
-
-        }
+            PosLeft = Field.MiddleOfField + 1,
+            PosTop = Field.MatrixWidth - 1
+        };
 
         public static void WhatColor(int minesAmount)
         {
@@ -36,6 +42,16 @@ namespace Lab1_GUI
                     Form2.labelPlayer.ForeColor = System.Drawing.Color.Red;
                     break;
             }
+        }
+
+        public override void Define()
+        {
+
+        }
+
+        public override void Draw() // или просто static
+        {
+
         }
     }
 }
