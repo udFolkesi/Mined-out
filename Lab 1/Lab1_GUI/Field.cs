@@ -28,7 +28,7 @@ namespace Lab1_GUI
 
         public void Define(ref Element[,] Matrix)
         {
-            
+            MiddleOfField = Convert.ToInt32(Math.Floor(MatrixLength / 2d) - 1);
             //form2.metod();
             for (int i = 0; i < MatrixWidth; i++)
             {

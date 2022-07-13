@@ -4,45 +4,45 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace Lab_1
+namespace Lab1_GUI
 {
     class Files
     {
-        string path = "saves.txt";
+        string path = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab 1/bin/Debug/saves.txt";
         private int lineCount = 0;
 
         public void GetInfo()
         {
             using (StreamReader streamReader = new StreamReader(path))
             {
+                string info = "";
                 string input = null;
                 while ((input = streamReader.ReadLine()) != null)
                 {
-                    ShowInfo(input);
+                    info += $"\n{input}";
                 }
-
-                //Console.ReadLine();
+                ShowInfo(info);
             }
         }
 
         public void ShowInfo(string info)
         {
-            Console.WriteLine(info);
+            MessageBox.Show(info);
         }
 
-        public int GetNum()
+        public void GetNum()
         {
             using (StreamReader streamReader = new StreamReader(path))
             {
-                return System.IO.File.ReadAllLines(path).Length;
+                lineCount = System.IO.File.ReadAllLines(path).Length;
             }
         }
 
         public void Save()
         {
             GetNum();
-            lineCount = GetNum();
             lineCount++;
             using (StreamWriter writer = new StreamWriter(path, true))
             {

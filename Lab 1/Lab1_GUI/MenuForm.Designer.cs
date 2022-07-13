@@ -1,7 +1,7 @@
 ﻿
 namespace Lab1_GUI
 {
-    partial class Form1
+    partial class MenuForm
     {
         /// <summary>
         /// Required designer variable.
@@ -36,7 +36,7 @@ namespace Lab1_GUI
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.Menu = new System.Windows.Forms.TextBox();
+            this.MenuLabel = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,6 +58,7 @@ namespace Lab1_GUI
             this.button2.TabIndex = 1;
             this.button2.Text = "Rate";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -67,6 +68,7 @@ namespace Lab1_GUI
             this.button3.TabIndex = 2;
             this.button3.Text = "Settings";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -76,6 +78,7 @@ namespace Lab1_GUI
             this.button4.TabIndex = 3;
             this.button4.Text = "Exit";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
@@ -100,28 +103,30 @@ namespace Lab1_GUI
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Lab1_GUI.Properties.Resources.mined_out_cover2;
-            this.pictureBox1.Location = new System.Drawing.Point(267, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(279, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(287, 225);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             // 
-            // Menu
+            // MenuLabel
             // 
-            this.Menu.Location = new System.Drawing.Point(400, 243);
-            this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(40, 22);
-            this.Menu.TabIndex = 7;
-            this.Menu.Text = "Menu";
+            this.MenuLabel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.MenuLabel.Location = new System.Drawing.Point(400, 243);
+            this.MenuLabel.Name = "MenuLabel";
+            this.MenuLabel.Size = new System.Drawing.Size(45, 22);
+            this.MenuLabel.TabIndex = 7;
+            this.MenuLabel.Text = "Menu";
             // 
-            // Form1
+            // MenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.BackColor = System.Drawing.SystemColors.MenuText;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.Menu);
+            this.Controls.Add(this.MenuLabel);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -129,7 +134,7 @@ namespace Lab1_GUI
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Name = "Form1";
+            this.Name = "MenuForm";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -146,7 +151,7 @@ namespace Lab1_GUI
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox Menu;
+        private System.Windows.Forms.TextBox MenuLabel;
     }
 }
 

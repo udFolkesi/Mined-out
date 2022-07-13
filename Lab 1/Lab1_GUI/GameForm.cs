@@ -12,24 +12,26 @@ using System.Windows.Forms;
 
 namespace Lab1_GUI
 {
-    public partial class Form2 : Form
+    public partial class GameForm : Form
     {
         int x = 0;
         int y = 0;
         Field field = new Field();
         Game game = new Game();
 
-        public Form2()
+
+        public GameForm()
         {
             InitializeComponent();
+            Player.first.PosLeft = Field.MiddleOfField + 1;
+            Player.first.PosTop = Field.MatrixWidth - 1;
             field.Define(ref Field.first.Matrix);
             PrintField(ref Field.first.Matrix);
-            textBox1.TabStop = false;
             labelPlayer.BringToFront();
             game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
             KeyDown += new KeyEventHandler(Form2_KeyDown);
-            game.Timer();
-            //game.Timer();
+            Game.gameStopped = false;
+            game.Timer(label1);
         }
         
 
@@ -44,6 +46,7 @@ namespace Lab1_GUI
 
         public void PrintField(ref Element[,] Matrix)
         {
+            Field.MiddleOfField = Convert.ToInt32(Math.Floor(Field.MatrixLength / 2d) - 1);
             for (int i = 0; i < Field.MatrixWidth; i++)
             {
                 for (int j = 0; j < Field.MatrixLength; j++)
@@ -55,14 +58,8 @@ namespace Lab1_GUI
 
                     if (Matrix[i, j].GetType() == typeof(Trap))
                     {
-                        if(Game.gameStopped == false)
-                        {
-                            PrintElem(typeof(Cell), x, y);
-                        }
-                        else
-                        {
-                            PrintElem(typeof(Trap), x, y);
-                        }
+                        PrintElem(typeof(Trap), x, y);
+                        PrintElem(typeof(Cell), x, y);
                     }
 
                     if (Matrix[i, j].GetType() == typeof(WallBorder))
@@ -90,7 +87,6 @@ namespace Lab1_GUI
                         PrintElem(typeof(PassedCell), x, y);
                         labelPlayer.Location = new Point(x + 1, y + 1);
                         this.Controls.Add(labelPlayer);
-                        //PrintElem(typeof(Player));
                     }
 
                     x += 15;
@@ -109,7 +105,7 @@ namespace Lab1_GUI
             {
                 Player.first.PosLeft += 1;
                 Player.first.labelX += 15;
-                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix);
+                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix, label3);
                 PrintElem(typeof(PassedCell), Player.first.labelX, Player.first.labelY);
                 game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
             }
@@ -118,7 +114,7 @@ namespace Lab1_GUI
             {
                 Player.first.PosLeft -= 1;
                 Player.first.labelX -= 15;
-                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix);
+                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix, label3);
                 PrintElem(typeof(PassedCell), Player.first.labelX, Player.first.labelY);
                 game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
             }
@@ -127,7 +123,7 @@ namespace Lab1_GUI
             {
                 Player.first.PosTop -= 1;
                 Player.first.labelY -= 15;
-                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix);
+                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix, label3);
                 PrintElem(typeof(PassedCell), Player.first.labelX, Player.first.labelY);
                 game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
             }
@@ -136,7 +132,7 @@ namespace Lab1_GUI
             {
                 Player.first.PosTop += 1;
                 Player.first.labelY += 15;
-                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix);
+                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix, label3);
                 PrintElem(typeof(PassedCell), Player.first.labelX, Player.first.labelY);
                 game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
             }
@@ -145,43 +141,43 @@ namespace Lab1_GUI
             labelPlayer.BringToFront();
         }
 
-        public void PrintElem(Type type, int x, int y) // класс в параметр
+        public void PrintElem(Type type, int x, int y) // класс в параметр !!!!!!!!!!!!!!!!!!!!!!!!!!!
         {
             PictureBox pictureBox = new PictureBox();
-            //pictureBox.BorderStyle = BorderStyle.None;
-            string border = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/wall.png";
-            string cell = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/cell.png";
-            string bonus = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/bonus.png";
-            string trap = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/mine.png";
-            string wall = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/wall.jpg";
-            string passedCell = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/Grey_Cell.png";
+            PictureBox pictureBoxTrap = new PictureBox();
+
             if (type == typeof(WallBorder))
             {
-                pictureBox.Image = Image.FromFile(border);
+                pictureBox.Image = Image.FromFile(WallBorder.path);
             }
+
             if (type == typeof(Cell))
             {
-                pictureBox.Image = Image.FromFile(cell);
+                pictureBox.Image = Image.FromFile(Cell.path);
             }
+
             if (type == typeof(Bonus))
             {
-                pictureBox.Image = Image.FromFile(bonus);
+                pictureBox.Image = Image.FromFile(Bonus.path);
             }
+
             if (type == typeof(Trap))
             {
-                pictureBox.Image = Image.FromFile(trap);
-                if (Game.gameStopped == true)
+                pictureBox.Image = Image.FromFile(Trap.path);
+                /*if (Game.gameStopped == true)
                 {
                     pictureBox.BringToFront();
-                }
+                }*/
             }
+
             if (type == typeof(Wall))
             {
-                pictureBox.Image = Image.FromFile(wall);
+                pictureBox.Image = Image.FromFile(Wall.path);
             }
+
             if (type == typeof(PassedCell))
             {
-                pictureBox.Image = Image.FromFile(passedCell);
+                pictureBox.Image = Image.FromFile(PassedCell.path);
             }
 
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -197,6 +193,18 @@ namespace Lab1_GUI
             pictureBox.Location = new Point(x, y);
             this.Controls.Add(pictureBox);
             pictureBox.BringToFront();
+        }
+
+        public void ShowTraps()
+        {
+            foreach (var picture in Controls.OfType<PictureBox>())
+            {
+                if(picture.Name == "pictureBox")
+                {
+                    //picture.BringToFront();
+                    MessageBox.Show("fef");
+                }
+            }
         }
     }
 }

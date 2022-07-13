@@ -10,11 +10,18 @@ using System.Windows.Forms;
 
 namespace Lab1_GUI
 {
-    public partial class Form3 : Form
+    public partial class FieldSizeForm : Form
     {
-        public Form3()
+        public FieldSizeForm()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Field.MatrixWidth = int.Parse(textBox1.Text);
+            Field.MatrixLength = int.Parse(textBox2.Text);
+            Close();
         }
     }
 }
