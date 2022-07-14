@@ -12,8 +12,8 @@ namespace Lab1_GUI
         public int PosLeft = Field.MiddleOfField + 1;// 11
         public int PosTop = Field.MatrixWidth - 1;
 
-        public int labelX = GameForm.labelPlayer.Location.X;
-        public int labelY = GameForm.labelPlayer.Location.Y;
+        public int labelX = GameForm.labelPlayer1.Location.X;
+        public int labelY = GameForm.labelPlayer1.Location.Y;
 
         public int Life { get; set; } = 0;
 
@@ -33,13 +33,13 @@ namespace Lab1_GUI
             switch (minesAmount)
             {
                 case 1:
-                    GameForm.labelPlayer.ForeColor = System.Drawing.Color.Yellow;
+                    GameForm.labelPlayer1.ForeColor = System.Drawing.Color.Yellow;
                     break;
                 case 2:
-                    GameForm.labelPlayer.ForeColor = System.Drawing.Color.Orange;
+                    GameForm.labelPlayer1.ForeColor = System.Drawing.Color.Orange;
                     break;
                 case 3:
-                    GameForm.labelPlayer.ForeColor = System.Drawing.Color.Red;
+                    GameForm.labelPlayer1.ForeColor = System.Drawing.Color.Red;
                     break;
             }
         }

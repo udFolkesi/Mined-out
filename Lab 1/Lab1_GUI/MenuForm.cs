@@ -33,16 +33,15 @@ namespace Lab1_GUI
 
         private void button5_Click(object sender, EventArgs e)
         {
+            Game.PlayerAmount = 1;
             GameForm form2 = new GameForm();
             form2.Show();
-            Game.PlayerAmount = 1;
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            GameForm form2 = new GameForm();
             Game.PlayerAmount = 2;
-
+            GameForm form2 = new GameForm();
             form2.Show();
         }
 

@@ -10,49 +10,13 @@ namespace Lab1_GUI
     public class Game
     {
         public static int TrapAmount = 0;
-        public static int PlayerAmount;
+        public static int PlayerAmount = 1;
         public static TimeSpan SpentTime;
         public static bool gameStopped = false;
         
 
         public void Start()
         {
-            //Timer();
-
-                /*if (key.Key == ConsoleKey.P)
-                {
-                    gameStopped = true;
-                    //key = ConsoleKey.Clear;
-                    while (gameStopped == true)
-                    {
-                        if(key.Key == ConsoleKey.P)
-                        {
-                            gameStopped = false;
-                        }
-                    }
-                }
-
-                if (key.Key == ConsoleKey.B)
-                {
-                    //Menu menu = new Menu();
-                    gameStopped = true;
-                    Thread.Sleep(20);
-                    Console.Clear();
-                    //menu.Start();
-                }
-
-                if (key.Key == ConsoleKey.R)
-                {
-                    gameStopped = true;
-                    Thread.Sleep(20);
-                    Console.Clear();
-                    //rules.Define();
-                    field.Define(ref Field.Matrix1);
-                    Start();
-                    // Console.Beep();
-                }
-            }*/
-            
         }
 
         public void Timer(Label label)
@@ -167,8 +131,8 @@ namespace Lab1_GUI
                 }
             }
 
-            GameForm.labelPlayer.Text = TrapAmount.ToString();
-            GameForm.labelPlayer.ForeColor = System.Drawing.Color.Green;
+            GameForm.labelPlayer1.Text = TrapAmount.ToString();
+            GameForm.labelPlayer1.ForeColor = System.Drawing.Color.Green;
             Player.WhatColor(TrapAmount);
         }
     }

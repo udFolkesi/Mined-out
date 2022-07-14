@@ -24,8 +24,6 @@ namespace Lab1_GUI
         public void Defeat(ref Element[,] matrix)
         {
             Game.gameStopped = true;
-            //gameForm.PrintField(ref Field.first.Matrix);
-            gameForm.ShowTraps();
             ResultForm.NameResult("Defeat");
             ResultForm.Show();
         }
