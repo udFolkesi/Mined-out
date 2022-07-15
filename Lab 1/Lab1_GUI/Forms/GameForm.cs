@@ -15,6 +15,7 @@ namespace Lab1_GUI
 {
     public partial class GameForm : Form
     {
+        // метода вывода элемента в классе эелемента
         int x = 0;
         int y = 0;
         Field field = new Field();
@@ -27,19 +28,7 @@ namespace Lab1_GUI
             Player.first.PosTop = Field.MatrixWidth - 1;
             Player.second.PosLeft = Player.first.PosLeft;
             Player.second.PosTop = Player.first.PosTop;
-            field.Define(ref Field.first.Matrix);
-            PrintField(ref Field.first.Matrix, labelPlayer1);
-            if (Game.PlayerAmount == 2)
-            {
-                field.Define(ref Field.second.Matrix);
-                PrintField(ref Field.second.Matrix, labelPlayer2);
-            }
-
-            labelPlayer1.BringToFront();
-            game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
-            KeyDown += new KeyEventHandler(Form2_KeyDown);
-            Game.gameStopped = false;
-            game.Timer(label1);
+            Start();
         }
         
 
@@ -60,6 +49,23 @@ namespace Lab1_GUI
             TextAlign = labelPlayer1.TextAlign,
             BackColor = labelPlayer1.BackColor
         };
+
+        public void Start()
+        {
+            field.Define(ref Field.first.Matrix);
+            PrintField(ref Field.first.Matrix, labelPlayer1);
+            game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix, labelPlayer1);
+            if (Game.PlayerAmount == 2)
+            {
+                field.Define(ref Field.second.Matrix);
+                PrintField(ref Field.second.Matrix, labelPlayer2);
+                game.Check(Player.second.PosLeft, Player.second.PosTop, ref Field.second.Matrix, labelPlayer2);
+            }
+
+            KeyDown += new KeyEventHandler((sender, e) => Form2_KeyDown(sender, e, Field.first.Matrix, Field.second.Matrix, Player.first, Player.second));
+            Game.GameStopped = false;
+            game.Timer(label1);
+        }
 
         public void PrintField(ref Element[,] Matrix, Label labelPlayer)
         {
@@ -106,6 +112,7 @@ namespace Lab1_GUI
                         PrintElem(typeof(PassedCell), x, y);
                         labelPlayer.Location = new Point(x + 1, y + 1);
                         this.Controls.Add(labelPlayer);
+                        labelPlayer.BringToFront();
                     }
 
                     x += 15;
@@ -116,60 +123,96 @@ namespace Lab1_GUI
             y += 15;
         }
 
-        public void Form2_KeyDown(object sender, KeyEventArgs e)
+        public void Form2_KeyDown(object sender, KeyEventArgs e, Element[,] matrxi1, Element[,] matrix2, Player player1, Player player2) //object sender, KeyEventArgs e
         {
-            Player.first.labelX = labelPlayer1.Location.X;
-            Player.first.labelY = labelPlayer1.Location.Y;
-            Player.second.labelX = labelPlayer2.Location.X;
-            Player.second.labelY = labelPlayer2.Location.Y;
+            player1.labelX = labelPlayer1.Location.X;
+            player1.labelY = labelPlayer1.Location.Y;
+            player2.labelX = labelPlayer2.Location.X;
+            player2.labelY = labelPlayer2.Location.Y;
 
-            if (e.KeyCode == Keys.Right && Field.first.Matrix[Player.first.PosTop, Player.first.PosLeft + 1].GetType() != typeof(Wall))
+            if (e.KeyCode == Keys.Right && matrxi1[player1.PosTop, player1.PosLeft + 1].GetType() != typeof(Wall))
             {
-                Player.first.PosLeft += 1;
-                Player.first.labelX += 15;
-                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix, label3);
-                PrintElem(typeof(PassedCell), Player.first.labelX, Player.first.labelY);
-                game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
+                player1.PosLeft += 1;
+                player1.labelX += 15;
+                game.MovePlayer(ref player1.PosLeft, ref player1.PosTop, ref matrxi1, label3);
+                PrintElem(typeof(PassedCell), player1.labelX, player1.labelY);
+                game.Check(player1.PosLeft, player1.PosTop, ref matrxi1, labelPlayer1);
             }
                 
-            if (e.KeyCode == Keys.Left && Field.first.Matrix[Player.first.PosTop, Player.first.PosLeft - 1].GetType() != typeof(Wall))
+            if (e.KeyCode == Keys.Left && matrxi1[player1.PosTop, player1.PosLeft - 1].GetType() != typeof(Wall))
             {
-                Player.first.PosLeft -= 1;
-                Player.first.labelX -= 15;
-                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix, label3);
-                PrintElem(typeof(PassedCell), Player.first.labelX, Player.first.labelY);
-                game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
+                player1.PosLeft -= 1;
+                player1.labelX -= 15;
+                game.MovePlayer(ref player1.PosLeft, ref player1.PosTop, ref matrxi1, label3);
+                PrintElem(typeof(PassedCell), player1.labelX, player1.labelY);
+                game.Check(player1.PosLeft, player1.PosTop, ref matrxi1, labelPlayer1);
             }
                 
-            if (e.KeyCode == Keys.Up && Field.first.Matrix[Player.first.PosTop - 1, Player.first.PosLeft].GetType() != typeof(Wall))
+            if (e.KeyCode == Keys.Up && matrxi1[player1.PosTop - 1, player1.PosLeft].GetType() != typeof(Wall))
             {
-                Player.first.PosTop -= 1;
-                Player.first.labelY -= 15;
-                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix, label3);
-                PrintElem(typeof(PassedCell), Player.first.labelX, Player.first.labelY);
-                game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
+                player1.PosTop -= 1;
+                player1.labelY -= 15;
+                game.MovePlayer(ref player1.PosLeft, ref player1.PosTop, ref matrxi1, label3);
+                PrintElem(typeof(PassedCell), player1.labelX, player1.labelY);
+                game.Check(player1.PosLeft, player1.PosTop, ref matrxi1, labelPlayer1);
             }
                 
-            if (e.KeyCode == Keys.Down && Field.first.Matrix[Player.first.PosTop + 1, Player.first.PosLeft].GetType() != typeof(Wall))
+            if (e.KeyCode == Keys.Down && matrxi1[player1.PosTop + 1, player1.PosLeft].GetType() != typeof(Wall))
             {
-                Player.first.PosTop += 1;
-                Player.first.labelY += 15;
-                game.MovePlayer(ref Player.first.PosLeft, ref Player.first.PosTop, ref Field.first.Matrix, label3);
-                PrintElem(typeof(PassedCell), Player.first.labelX, Player.first.labelY);
-                game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix);
+                player1.PosTop += 1;
+                player1.labelY += 15;
+                game.MovePlayer(ref player1.PosLeft, ref player1.PosTop, ref matrxi1, label3);
+                PrintElem(typeof(PassedCell), player1.labelX, player1.labelY);
+                game.Check(player1.PosLeft, player1.PosTop, ref matrxi1, labelPlayer1);
+            }
+
+            if (e.KeyCode == Keys.D && matrix2[player2.PosTop, player2.PosLeft + 1].GetType() != typeof(Wall))
+            {
+                player2.PosLeft += 1;
+                player2.labelX += 15;
+                game.MovePlayer(ref player2.PosLeft, ref player2.PosTop, ref matrxi1, label3);
+                PrintElem(typeof(PassedCell), player2.labelX, player2.labelY);
+                game.Check(player2.PosLeft, player2.PosTop, ref matrxi1, labelPlayer2);
+            }
+
+            if (e.KeyCode == Keys.A && matrix2[player2.PosTop, player2.PosLeft - 1].GetType() != typeof(Wall))
+            {
+                player2.PosLeft -= 1;
+                player2.labelX -= 15;
+                game.MovePlayer(ref player2.PosLeft, ref player2.PosTop, ref matrxi1, label3);
+                PrintElem(typeof(PassedCell), player2.labelX, player2.labelY);
+                game.Check(player2.PosLeft, player2.PosTop, ref matrxi1, labelPlayer2);
+            }
+
+            if (e.KeyCode == Keys.W && matrix2[player2.PosTop - 1, player2.PosLeft].GetType() != typeof(Wall))
+            {
+                player2.PosTop -= 1;
+                player2.labelY -= 15;
+                game.MovePlayer(ref player2.PosLeft, ref player2.PosTop, ref matrxi1, label3);
+                PrintElem(typeof(PassedCell), player2.labelX, player2.labelY);
+                game.Check(player2.PosLeft, player2.PosTop, ref matrxi1, labelPlayer2);
+            }
+
+            if (e.KeyCode == Keys.S && matrix2[player2.PosTop + 1, player2.PosLeft].GetType() != typeof(Wall))
+            {
+                player2.PosTop += 1;
+                player2.labelY += 15;
+                game.MovePlayer(ref player2.PosLeft, ref player2.PosTop, ref matrxi1, label3);
+                PrintElem(typeof(PassedCell), player2.labelX, player2.labelY);
+                game.Check(player2.PosLeft, player2.PosTop, ref matrxi1, labelPlayer2);
 
             }
 
-            if(Game.gameStopped == true)
+            if (Game.GameStopped == true)
             {
                 ShowTraps();
             }
                 
-            labelPlayer1.Location = new Point(Player.first.labelX, Player.first.labelY);
+            labelPlayer1.Location = new Point(player1.labelX, player1.labelY);
             labelPlayer1.BringToFront();
             if(Game.PlayerAmount == 2)
             {
-                labelPlayer2.Location = new Point(Player.second.labelX, Player.second.labelY);
+                labelPlayer2.Location = new Point(player2.labelX, player2.labelY);
                 labelPlayer2.BringToFront();
             }
         }
@@ -237,7 +280,7 @@ namespace Lab1_GUI
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
@@ -246,6 +289,14 @@ namespace Lab1_GUI
             GameForm form2 = new GameForm();
             form2.Show();
             Game.PlayerAmount = 1;
+        }
+
+        private void backToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Game.GameStopped = true;
+            MessageBox.Show("PAUSE");
+            Game.GameStopped = false;
+            game.Timer(label1);
         }
     }
 }

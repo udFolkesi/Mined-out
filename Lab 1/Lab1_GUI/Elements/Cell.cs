@@ -15,7 +15,7 @@ namespace Lab1_GUI
         }
         public static void Print() // display
         {
-            Console.Write(' ');
+
         }
     }
 }

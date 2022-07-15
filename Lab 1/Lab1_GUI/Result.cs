@@ -23,7 +23,7 @@ namespace Lab1_GUI
 
         public void Defeat(ref Element[,] matrix)
         {
-            Game.gameStopped = true;
+            Game.GameStopped = true;
             ResultForm.NameResult("Defeat");
             ResultForm.Show();
         }

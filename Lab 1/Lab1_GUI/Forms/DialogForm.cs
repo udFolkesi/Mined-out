@@ -34,7 +34,7 @@ namespace Lab1_GUI
             }
             GameForm gameForm = new GameForm();
             gameForm.Show();
-            Game.gameStopped = false;
+            Game.GameStopped = false;
             Game.PlayerAmount = 1;
         }
 

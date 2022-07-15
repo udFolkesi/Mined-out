@@ -12,8 +12,7 @@ namespace Lab1_GUI
         public static int TrapAmount = 0;
         public static int PlayerAmount = 1;
         public static TimeSpan SpentTime;
-        public static bool gameStopped = false;
-        
+        public static bool GameStopped = false;
 
         public void Start()
         {
@@ -24,11 +23,11 @@ namespace Lab1_GUI
             var watch = Stopwatch.StartNew();
             Task.Run(() =>
             {
-                while (gameStopped == false)
+                while (GameStopped == false)
                 {
                     label.Text = watch.Elapsed.ToString();
-
-                    if (gameStopped == true)
+                    
+                    if (GameStopped == true)
                     {
                         SpentTime = watch.Elapsed;
                         watch.Stop();
@@ -96,7 +95,7 @@ namespace Lab1_GUI
             }
         }
 
-        public void Check(int x, int y, ref Element[,] matrix)
+        public void Check(int x, int y, ref Element[,] matrix, Label labelPlayer)
         {
             TrapAmount = 0;
             if (true)
@@ -131,9 +130,9 @@ namespace Lab1_GUI
                 }
             }
 
-            GameForm.labelPlayer1.Text = TrapAmount.ToString();
-            GameForm.labelPlayer1.ForeColor = System.Drawing.Color.Green;
-            Player.WhatColor(TrapAmount);
+            labelPlayer.Text = TrapAmount.ToString();
+            labelPlayer.ForeColor = System.Drawing.Color.Green;
+            Player.WhatColor(TrapAmount, labelPlayer);
         }
     }
 }

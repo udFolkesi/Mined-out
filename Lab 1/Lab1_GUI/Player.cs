@@ -28,18 +28,18 @@ namespace Lab1_GUI
             PosTop = Field.MatrixWidth - 1
         };
 
-        public static void WhatColor(int minesAmount)
+        public static void WhatColor(int minesAmount, Label labelPlayer)
         {
             switch (minesAmount)
             {
                 case 1:
-                    GameForm.labelPlayer1.ForeColor = System.Drawing.Color.Yellow;
+                    labelPlayer.ForeColor = System.Drawing.Color.Yellow;
                     break;
                 case 2:
-                    GameForm.labelPlayer1.ForeColor = System.Drawing.Color.Orange;
+                    labelPlayer.ForeColor = System.Drawing.Color.Orange;
                     break;
                 case 3:
-                    GameForm.labelPlayer1.ForeColor = System.Drawing.Color.Red;
+                    labelPlayer.ForeColor = System.Drawing.Color.Red;
                     break;
             }
         }
