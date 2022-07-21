@@ -13,6 +13,6 @@ namespace Lab1_GUI
         public virtual void Draw()
         {
 
-        }// static
+        }
     }
 }

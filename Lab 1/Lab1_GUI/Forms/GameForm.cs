@@ -205,7 +205,17 @@ namespace Lab1_GUI
 
             if (Game.GameStopped == true)
             {
+                PictureBox explosion = new PictureBox()
+                {
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    Image = Image.FromFile("C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/explosion.gif"),
+                    Size = new Size(15, 15),
+                    Location = new Point(player1.labelX, player1.labelY),
+
+                };
+                this.Controls.Add(explosion);
                 ShowTraps();
+                explosion.BringToFront();
             }
                 
             labelPlayer1.Location = new Point(player1.labelX, player1.labelY);
@@ -294,7 +304,10 @@ namespace Lab1_GUI
         private void backToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Game.GameStopped = true;
+            this.Opacity = .98;
+            this.Enabled = false;
             MessageBox.Show("PAUSE");
+            this.Enabled = true;
             Game.GameStopped = false;
             game.Timer(label1);
         }

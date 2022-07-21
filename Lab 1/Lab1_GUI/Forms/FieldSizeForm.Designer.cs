@@ -81,6 +81,7 @@ namespace Lab1_GUI
             // 
             // button1
             // 
+            this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.button1.Location = new System.Drawing.Point(142, 143);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
@@ -93,6 +94,7 @@ namespace Lab1_GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(380, 178);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox2);
@@ -100,6 +102,7 @@ namespace Lab1_GUI
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.Name = "FieldSizeForm";
             this.Text = "Form4";
             this.ResumeLayout(false);

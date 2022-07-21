@@ -19,6 +19,15 @@ namespace Lab1_GUI
 
         public void NameResult(string result)
         {
+            if(result == "Easy win")
+            {
+                label1.ForeColor = Color.GreenYellow;
+            }
+            else
+            {
+                label1.ForeColor = Color.Red;
+            }
+
             label1.Text = result;
         }
 
@@ -27,6 +36,16 @@ namespace Lab1_GUI
             this.Close();
             DialogForm form3 = new DialogForm();
             form3.Show();
+        }
+
+        private void button1_MouseEnter(object sender, EventArgs e)
+        {
+            button1.ForeColor = Color.Red;
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            button1.ForeColor = Color.White;
         }
     }
 }
