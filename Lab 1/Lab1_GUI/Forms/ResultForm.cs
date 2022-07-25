@@ -19,7 +19,7 @@ namespace Lab1_GUI
 
         public void NameResult(string result)
         {
-            if(result == "Easy win")
+            if (result == "Easy win")
             {
                 label1.ForeColor = Color.GreenYellow;
             }

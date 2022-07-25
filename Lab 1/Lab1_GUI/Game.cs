@@ -14,10 +14,6 @@ namespace Lab1_GUI
         public static TimeSpan SpentTime;
         public static bool GameStopped = false;
 
-        public void Start()
-        {
-        }
-
         public void Timer(Label label)
         {
             var watch = Stopwatch.StartNew();
@@ -26,7 +22,6 @@ namespace Lab1_GUI
                 while (GameStopped == false)
                 {
                     label.Text = watch.Elapsed.ToString();
-                    
                     if (GameStopped == true)
                     {
                         SpentTime = watch.Elapsed;
@@ -56,7 +51,7 @@ namespace Lab1_GUI
 
             if (top == 0)
             {
-                if(left == Field.MiddleOfField || left == Field.MiddleOfField + 2 || left == Field.MiddleOfField + 1)
+                if (left == Field.MiddleOfField || left == Field.MiddleOfField + 2 || left == Field.MiddleOfField + 1)
                 {
                     Result result = new Result();
                     result.Win();
@@ -89,7 +84,7 @@ namespace Lab1_GUI
 
             if (matrix[top, left].GetType() == typeof(Bonus))
             {
-                //matrix[top, left] = new Cell();
+                // matrix[top, left] = new Cell();
                 Player.first.Life = 1;
                 label.Text = $"Life: {Player.first.Life}";
             }
@@ -132,7 +127,7 @@ namespace Lab1_GUI
 
             labelPlayer.Text = TrapAmount.ToString();
             labelPlayer.ForeColor = System.Drawing.Color.Green;
-            Player.WhatColor(TrapAmount, labelPlayer);
+            labelPlayer.ForeColor = Player.color[TrapAmount];
         }
     }
 }

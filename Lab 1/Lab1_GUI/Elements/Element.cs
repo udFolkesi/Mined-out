@@ -8,11 +8,8 @@ namespace Lab1_GUI
 {
     public abstract class Element
     {
-        public virtual char symbol { set; get; } 
-        public abstract void Define();
-        public virtual void Draw()
-        {
+        public virtual char symbol { set; get; }
 
-        }
+        public abstract void Define();
     }
 }

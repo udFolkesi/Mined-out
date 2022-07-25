@@ -24,7 +24,10 @@ namespace Lab1_GUI
         {
             List<Form> openForms = new List<Form>();
             foreach (Form form in Application.OpenForms)
-            openForms.Add(form);
+            {
+                openForms.Add(form);
+            }
+
             foreach (Form form in openForms)
             {
                 if (form.Name != "MenuForm")
@@ -32,6 +35,7 @@ namespace Lab1_GUI
                     form.Hide();
                 }
             }
+
             GameForm gameForm = new GameForm();
             gameForm.Show();
             Game.GameStopped = false;

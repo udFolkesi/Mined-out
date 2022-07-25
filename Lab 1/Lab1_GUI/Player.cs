@@ -20,36 +20,24 @@ namespace Lab1_GUI
         public static Player first = new Player()
         {
             PosLeft = Field.MiddleOfField + 1,
-            PosTop = Field.MatrixWidth - 1
+            PosTop = Field.MatrixWidth - 1,
         };
+
         public static Player second = new Player()
         {
             PosLeft = Field.MiddleOfField + 1,
-            PosTop = Field.MatrixWidth - 1
+            PosTop = Field.MatrixWidth - 1,
         };
 
-        public static void WhatColor(int minesAmount, Label labelPlayer)
+        public static Dictionary<int, System.Drawing.Color> color = new Dictionary<int, System.Drawing.Color>()
         {
-            switch (minesAmount)
-            {
-                case 1:
-                    labelPlayer.ForeColor = System.Drawing.Color.Yellow;
-                    break;
-                case 2:
-                    labelPlayer.ForeColor = System.Drawing.Color.Orange;
-                    break;
-                case 3:
-                    labelPlayer.ForeColor = System.Drawing.Color.Red;
-                    break;
-            }
-        }
+            {0, System.Drawing.Color.Green },
+            {1, System.Drawing.Color.Yellow },
+            {2, System.Drawing.Color.Orange },
+            {3, System.Drawing.Color.Red }
+        };
 
         public override void Define()
-        {
-
-        }
-
-        public override void Draw() // или просто static
         {
 
         }

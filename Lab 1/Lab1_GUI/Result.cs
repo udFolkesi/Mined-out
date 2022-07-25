@@ -10,8 +10,9 @@ namespace Lab1_GUI
 {
     public class Result
     {
-        ResultForm ResultForm = new ResultForm();
-        GameForm gameForm = new GameForm();
+        private ResultForm ResultForm = new ResultForm();
+        private GameForm gameForm = new GameForm();
+
         public void Win()
         {
             Files files = new Files();

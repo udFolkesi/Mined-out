@@ -70,9 +70,6 @@ namespace Lab1_GUI
                 Thread.Sleep(10);
                 while (true)
                 {
-                    //MenuLabel.Text = "   ";
-                    //Thread.Sleep(500);
-                    //MenuLabel.Text = "Menu";
                     MenuLabel.ForeColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
                     Thread.Sleep(500);
                 }

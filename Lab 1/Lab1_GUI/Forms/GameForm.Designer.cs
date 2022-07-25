@@ -79,7 +79,7 @@ namespace Lab1_GUI
             this.label4.Size = new System.Drawing.Size(243, 97);
             this.label4.TabIndex = 4;
             this.label4.Text = "Your goal is to reach the finish line\r\nwithout getting blown up by mines,\r\nwhich " +
-    "amount indicates as player\r\nGood luck!:)";
+    "amount indicates as player\r\nUse arrows for move\r\nGood luck!:)";
             // 
             // menuStrip1
             // 
@@ -90,7 +90,7 @@ namespace Lab1_GUI
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(606, 173);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(274, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(124, 28);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -108,21 +108,21 @@ namespace Lab1_GUI
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(166, 26);
             this.toolStripMenuItem2.Text = "Main Menu";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(166, 26);
             this.toolStripMenuItem3.Text = "Restart";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // backToolStripMenuItem
             // 
             this.backToolStripMenuItem.Name = "backToolStripMenuItem";
-            this.backToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.backToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.backToolStripMenuItem.Text = "Pause";
             this.backToolStripMenuItem.Click += new System.EventHandler(this.backToolStripMenuItem_Click);
             // 

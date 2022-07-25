@@ -15,10 +15,5 @@ namespace Lab1_GUI
         {
 
         }
-
-        public override void Draw()
-        {
-
-        }
     }
 }

@@ -9,7 +9,7 @@ namespace Lab1_GUI
     public class ElementsAdder
     {
         private static Random random = new Random();
-        // Console.ForegroundColor = ConsoleColor.Red;
+
         public void AddTraps(int posX, int length, int width, ref Element[,] matrix)
         {
             int traps = random.Next(1, 6); // 6
