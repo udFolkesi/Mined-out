@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Lab1_GUI.Bonus">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAEBAA=</HashCode>
+      <FileName>Elements\Bonus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.Cell">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAEBAA=</HashCode>
+      <FileName>Elements\Cell.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.Element">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Elements\Element.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.PassedCell">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAEBAA=</HashCode>
+      <FileName>Elements\PassedCell.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.Trap">
+    <Position X="14" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAgAAAAACAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Elements\Trap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.Wall">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAgAAAAACAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Elements\Wall.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.WallBorder">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAgAAAAACAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Elements\WallBorder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.ElementsAdder" Collapsed="true">
+    <Position X="18.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUQAAAAAAAA=</HashCode>
+      <FileName>ElementsAdder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.Field" Collapsed="true">
+    <Position X="20" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAACgEAAAgAAAAgCAAAAAAAAAAABCA=</HashCode>
+      <FileName>Field.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.Files" Collapsed="true">
+    <Position X="16.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAABAACAAAAAAAEAEAAAAAgAAAAAAA=</HashCode>
+      <FileName>Files.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.DialogForm" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABAAAACAAAACAAAYAAAAAGAAAAAAAAA=</HashCode>
+      <FileName>Forms\DialogForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.FieldSizeForm" Collapsed="true">
+    <Position X="21.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAACAAABAAAACAAAACAAAIAAAAEEAAAAAAAAA=</HashCode>
+      <FileName>Forms\FieldSizeForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.GameForm" Collapsed="true">
+    <Position X="20" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQCAAAAIACAAABgCAACAAAACAACAABAIAABgABAAQAA=</HashCode>
+      <FileName>Forms\GameForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.MenuForm" Collapsed="true">
+    <Position X="21.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAECAAAAAAAACAAAACAMA5AAAAAHAOAABAAAA=</HashCode>
+      <FileName>Forms\MenuForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.ResultForm">
+    <Position X="21.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABAAAACAAAACAAEIAAAAAEAAAAAAEAg=</HashCode>
+      <FileName>Forms\ResultForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.Game" Collapsed="true">
+    <Position X="18.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAgAgCAAIAAQAAAAAAAAAAAAIAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.Player">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAhABQgEAAAAAAAAAAAIAAAAAAAABBAA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.Program" Collapsed="true">
+    <Position X="16.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.Result">
+    <Position X="20" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAABAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.Properties.Resources">
+    <Position X="18.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAEAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab1_GUI.Properties.Settings">
+    <Position X="16.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace Lab_1
 {
-    public class Rules : Element
+    public class Rules
     {
-        public override void Define()
+        public void Define()
         {
-            // throw new NotImplementedException();
-            Console.SetCursorPosition(20, 1);
+            Console.SetCursorPosition(2, 0);
             Console.Write(@"
-                           ============= Rules ================
-                           You can use arrows(◄ ►▲▼) for move
-                           To show hint press.. 
-                           If you want to finish game press Esc
+                                              ============= Rules ================
+                                              You can use arrows(◄ ►▲▼) for move
+                                              Restart - press R
+                                              To show hint press.. 
+                                              Additional life - $
+                                              Back - press B
+                                              If you want to finish game press Esc
             ");
         }
     }

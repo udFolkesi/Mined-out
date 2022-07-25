@@ -2,90 +2,149 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Lab_1
 {
-    public class Field : Element
+    public class Field
     {
-        internal static readonly char[,] Matrix = new char[8, 23];
-        private Mine mine = new Mine();
+        public static int MatrixWidth = 8;
+        public static int MatrixLength = 23;
 
-        // 6, 17
-        public override void Define()
+
+        // public int matrixLength { set; get; } = 23;
+        // public static Element[,] Matrix1 = new Element[40, 40];
+
+        public Element[,] Matrix = new Element[40, 40];
+        //public static Element[,] Matrix1 = new Element[40, 40];
+        //public static Element[,] Matrix2 = new Element[40, 40];
+        //public static char[,] Matrix2 = new char[100, 50];
+
+        public Element this[int index1, int index2]
         {
-            Console.SetCursorPosition(0, 0);
-            for (int i = 0; i < 8; i++)
-            {
-                for (int k = 0; k < 23; k++)
-                {
-                    if (i > 0 && i < 7 && k > 0 && k < 22)
-                    {
-                        Matrix[i, k] = ' ';
-                    }
-                    else
-                    {
-                        Matrix[i, k] = '#';
-                    }
-
-                    if (i == 0 && k < 13 && k > 9)
-                    {
-                        Matrix[i, k] = ' ';
-                    }
-
-                    if (i == 7 && k < 13 && k > 9)
-                    {
-                        Matrix[i, k] = ' ';
-                    }
-
-                    if (Matrix[i, k] == '#')
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkBlue;
-                        Console.BackgroundColor = ConsoleColor.DarkBlue;
-                        Console.Write(Matrix[i, k]);
-                        Console.BackgroundColor = ConsoleColor.Black;
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                    }
-                    else
-                    {
-                        Console.Write(Matrix[i, k]);
-                    }
-                }
-
-                Console.WriteLine();
-                mine.Traps(i);
-            }
+            set { field1.Matrix[index1, index2] = value; }
+            get { return field2.Matrix[index1, index2]; }
         }
 
-        public void Draw()
+        public int MiddleOfField  = Convert.ToInt32(Math.Floor(MatrixLength / 2d) - 1);
+
+        public object Locker = new object();
+        private ElementsAdder addElement = new ElementsAdder();
+
+        public static Field field1 = new Field()
         {
-            for (int i = 0; i < 8; i++)
+            
+        };
+        public static Field field2 = new Field()
+        {
+
+        };
+
+        // abstract field
+        public void Define(ref Element[,] Matrix)
+        {
+            //Array.Clear(Matrix, 50, 50);
+            lock (Locker)
             {
-                for (int j = 0; j < 23; j++)
+                Console.SetCursorPosition(0, 0);
+                for (int i = 0; i < MatrixWidth; i++)
                 {
-                    if (Matrix[i, j] == 'X')
+                    if (Matrix == field2.Matrix)
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(Matrix[i, j]);
-                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.SetCursorPosition(50, i);
                     }
 
-                    if (Matrix[i, j] == '#')
+                    for (int k = 0; k < MatrixLength; k++)
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkBlue;
-                        Console.BackgroundColor = ConsoleColor.DarkBlue;
-                        Console.Write(Matrix[i, j]);
-                        Console.BackgroundColor = ConsoleColor.Black;
-                        Console.ForegroundColor = ConsoleColor.Gray;
+                        if (i > 0 && i < MatrixWidth - 1 && k > 0 && k < MatrixLength - 1)
+                        {
+                            Matrix[i, k] = new Cell();
+                        }
+                        else
+                        {
+                            Matrix[i, k] = new WallBorder();
+                        }
+
+                        if (i == 0 && k >= MiddleOfField && k <= MiddleOfField + 2)
+                        {
+                            Matrix[i, k] = new Cell();
+                        }
+
+                        if (i == MatrixWidth - 1 && k >= MiddleOfField && k <= MiddleOfField + 2)
+                        {
+                            Matrix[i, k] = new Cell();
+                        }
+
+                        if (Matrix[i, k].GetType() == typeof(WallBorder))
+                        {
+                            WallBorder wallBorder = new WallBorder();
+                            wallBorder.Draw();
+                        }
+                        else
+                        {
+                            Cell.Print();
+                        }
                     }
 
-                    if (Matrix[i, j] == ' ')
-                    {
-                        Console.Write(Matrix[i, j]);
-                    }
+                    Console.WriteLine();
+                    addElement.AddTraps(i, MatrixLength, MatrixWidth, ref Matrix);
                 }
 
-                Console.WriteLine();
+                addElement.AddWall(ref Matrix);
+                addElement.AddBonus(ref Matrix);
+                
+            }
+            /*Field field = new Field();
+            Console.WriteLine(field[0, 1]);*/
+        }
+
+        public void Draw(ref Element[,] Matrix)
+        {
+            Thread.Sleep(50);
+            lock (Locker)
+            {
+                Console.SetCursorPosition(0, 0);
+                for (int i = 0; i < MatrixWidth; i++)
+                {
+                    if (Matrix == field2.Matrix)
+                    {
+                        Console.SetCursorPosition(50, i);
+                    }
+
+                    for (int j = 0; j < MatrixLength; j++)
+                    {
+                        if (Matrix[i, j].GetType() == typeof(Trap))
+                        {
+                            Trap trap = new Trap();
+                            trap.Draw();
+                        }
+
+                        if (Matrix[i, j].GetType() == typeof(WallBorder))
+                        {
+                            WallBorder wallBorder = new WallBorder();
+                            wallBorder.Draw();
+                        }
+
+                        if (Matrix[i, j].GetType() == typeof(Wall))
+                        {
+                            Wall wall = new Wall();
+                            wall.Draw();
+                        }
+
+                        if (Matrix[i, j].GetType() == typeof(Bonus))
+                        {
+                            Bonus.Print();
+                        }
+
+                        if (Matrix[i, j].GetType() == typeof(Cell))
+                        {
+                            Cell.Print();
+                        }
+                    }
+
+                    Console.WriteLine();
+                }
             }
         }
     }
