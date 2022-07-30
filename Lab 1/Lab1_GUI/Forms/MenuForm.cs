@@ -16,19 +16,19 @@ namespace Lab1_GUI
         public MenuForm()
         {
             InitializeComponent();
-            WordMenu();
-            button5.Visible = false;
-            button6.Visible = false;
-            button1.Click += button1_Click;
-            button5.Click += button1_Click;
-            button6.Click += button1_Click;
+            ChangeMenuColor();
+            player1_bttn.Visible = false;
+            player2_bttn.Visible = false;
+            startGame_bttn.Click += button1_Click;
+            player1_bttn.Click += button1_Click;
+            player2_bttn.Click += button1_Click;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            button1.Visible = false;
-            button5.Visible = true;
-            button6.Visible = true;
+            startGame_bttn.Visible = false;
+            player1_bttn.Visible = true;
+            player2_bttn.Visible = true;
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -59,15 +59,15 @@ namespace Lab1_GUI
 
         private void button4_Click(object sender, EventArgs e)
         {
+            // сделать что-то перед выходом, что-то сохранить и тп
             Application.Exit();
         }
 
-        private async Task WordMenu()
+        private async Task ChangeMenuColor()
         {
             await Task.Run(() =>
             {
                 var rnd = new Random();
-                Thread.Sleep(10);
                 while (true)
                 {
                     MenuLabel.ForeColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));

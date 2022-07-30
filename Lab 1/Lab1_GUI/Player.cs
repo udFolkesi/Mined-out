@@ -12,8 +12,8 @@ namespace Lab1_GUI
         public int PosLeft = Field.MiddleOfField + 1;// 11
         public int PosTop = Field.MatrixWidth - 1;
 
-        public int labelX = GameForm.labelPlayer1.Location.X;
-        public int labelY = GameForm.labelPlayer1.Location.Y;
+        public int labelX = 150;
+        public int labelY = 120;
 
         public int Life { get; set; } = 0;
 

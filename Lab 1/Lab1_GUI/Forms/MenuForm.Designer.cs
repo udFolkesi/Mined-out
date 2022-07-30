@@ -30,76 +30,76 @@ namespace Lab1_GUI
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuForm));
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.startGame_bttn = new System.Windows.Forms.Button();
+            this.rate_bttn = new System.Windows.Forms.Button();
+            this.settings_bttn = new System.Windows.Forms.Button();
+            this.exit_bttn = new System.Windows.Forms.Button();
+            this.player1_bttn = new System.Windows.Forms.Button();
+            this.player2_bttn = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.MenuLabel = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // startGame_bttn
             // 
-            this.button1.Location = new System.Drawing.Point(359, 271);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(123, 38);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Start Game";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.startGame_bttn.Location = new System.Drawing.Point(359, 271);
+            this.startGame_bttn.Name = "startGame_bttn";
+            this.startGame_bttn.Size = new System.Drawing.Size(123, 38);
+            this.startGame_bttn.TabIndex = 0;
+            this.startGame_bttn.Text = "Start Game";
+            this.startGame_bttn.UseVisualStyleBackColor = true;
+            this.startGame_bttn.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // rate_bttn
             // 
-            this.button2.Location = new System.Drawing.Point(359, 315);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(123, 38);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Rate";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.rate_bttn.Location = new System.Drawing.Point(359, 315);
+            this.rate_bttn.Name = "rate_bttn";
+            this.rate_bttn.Size = new System.Drawing.Size(123, 38);
+            this.rate_bttn.TabIndex = 1;
+            this.rate_bttn.Text = "Rate";
+            this.rate_bttn.UseVisualStyleBackColor = true;
+            this.rate_bttn.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // settings_bttn
             // 
-            this.button3.Location = new System.Drawing.Point(359, 359);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(123, 38);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Settings";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.settings_bttn.Location = new System.Drawing.Point(359, 359);
+            this.settings_bttn.Name = "settings_bttn";
+            this.settings_bttn.Size = new System.Drawing.Size(123, 38);
+            this.settings_bttn.TabIndex = 2;
+            this.settings_bttn.Text = "Settings";
+            this.settings_bttn.UseVisualStyleBackColor = true;
+            this.settings_bttn.Click += new System.EventHandler(this.button3_Click);
             // 
-            // button4
+            // exit_bttn
             // 
-            this.button4.Location = new System.Drawing.Point(359, 403);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(123, 38);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Exit";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.exit_bttn.Location = new System.Drawing.Point(359, 403);
+            this.exit_bttn.Name = "exit_bttn";
+            this.exit_bttn.Size = new System.Drawing.Size(123, 38);
+            this.exit_bttn.TabIndex = 3;
+            this.exit_bttn.Text = "Exit";
+            this.exit_bttn.UseVisualStyleBackColor = true;
+            this.exit_bttn.Click += new System.EventHandler(this.button4_Click);
             // 
-            // button5
+            // player1_bttn
             // 
-            this.button5.Location = new System.Drawing.Point(325, 271);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(86, 38);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "1 player";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.player1_bttn.Location = new System.Drawing.Point(325, 271);
+            this.player1_bttn.Name = "player1_bttn";
+            this.player1_bttn.Size = new System.Drawing.Size(86, 38);
+            this.player1_bttn.TabIndex = 4;
+            this.player1_bttn.Text = "1 player";
+            this.player1_bttn.UseVisualStyleBackColor = true;
+            this.player1_bttn.Click += new System.EventHandler(this.button5_Click);
             // 
-            // button6
+            // player2_bttn
             // 
-            this.button6.Location = new System.Drawing.Point(426, 271);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(86, 38);
-            this.button6.TabIndex = 5;
-            this.button6.Text = "2 players";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.player2_bttn.Location = new System.Drawing.Point(426, 271);
+            this.player2_bttn.Name = "player2_bttn";
+            this.player2_bttn.Size = new System.Drawing.Size(86, 38);
+            this.player2_bttn.TabIndex = 5;
+            this.player2_bttn.Text = "2 players";
+            this.player2_bttn.UseVisualStyleBackColor = true;
+            this.player2_bttn.Click += new System.EventHandler(this.button6_Click);
             // 
             // pictureBox1
             // 
@@ -129,12 +129,12 @@ namespace Lab1_GUI
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.MenuLabel);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.player2_bttn);
+            this.Controls.Add(this.player1_bttn);
+            this.Controls.Add(this.exit_bttn);
+            this.Controls.Add(this.settings_bttn);
+            this.Controls.Add(this.rate_bttn);
+            this.Controls.Add(this.startGame_bttn);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MenuForm";
             this.Text = "Form1";
@@ -146,12 +146,12 @@ namespace Lab1_GUI
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button startGame_bttn;
+        private System.Windows.Forms.Button rate_bttn;
+        private System.Windows.Forms.Button settings_bttn;
+        private System.Windows.Forms.Button exit_bttn;
+        private System.Windows.Forms.Button player1_bttn;
+        private System.Windows.Forms.Button player2_bttn;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox MenuLabel;
     }

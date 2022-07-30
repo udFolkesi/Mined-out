@@ -19,14 +19,14 @@ namespace Lab1_GUI
         public Element this[int index1, int index2]
         {
             set { first[index1, index2] = value; }
-            get { return second[index1, index2]; }
+            get { return first[index1, index2]; }
         }
 
         public static int MiddleOfField  = Convert.ToInt32(Math.Floor(MatrixLength / 2d) - 1);
 
         private ElementsAdder elementsAdder = new ElementsAdder();
 
-        public void Define(ref Element[,] Matrix)
+        public void Fill(ref Element[,] Matrix)
         {
             MiddleOfField = Convert.ToInt32(Math.Floor(MatrixLength / 2d) - 1);
 
@@ -62,10 +62,10 @@ namespace Lab1_GUI
                 elementsAdder.AddTraps(i, MatrixLength, MatrixWidth, ref Matrix);
             }
 
-            elementsAdder.Place(ref Matrix, "bonus");
+            elementsAdder.Place(ref Matrix, new Bonus());
             for (int i = 0; i < MatrixWidth; i++)
             {
-                elementsAdder.Place(ref Matrix, "wallBorder");
+                elementsAdder.Place(ref Matrix, new WallBorder());
             }
         }
     }

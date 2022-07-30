@@ -18,6 +18,7 @@ namespace Lab1_GUI
         // метода вывода элемента в классе эелемента
         int x = 0;
         int y = 0;
+        //public const int CellLength = 15; // перенести в класс клетки
         private Field field = new Field();
         private Game game = new Game();
 
@@ -31,45 +32,26 @@ namespace Lab1_GUI
             Start();
         }
 
-        public static Label labelPlayer1 = new Label
-        {
-            Size = new Size(15, 15),
-            Font = new Font(FontFamily.GenericSansSerif, 6, FontStyle.Bold),
-            Text = Game.TrapAmount.ToString(),
-            TextAlign = ContentAlignment.MiddleCenter,
-            BackColor = Color.Black,
-        };
-
-        public static Label labelPlayer2 = new Label()
-        {
-            Size = labelPlayer1.Size,
-            Font = labelPlayer1.Font,
-            Text = labelPlayer1.Text,
-            TextAlign = labelPlayer1.TextAlign,
-            BackColor = labelPlayer1.BackColor,
-        };
-
         public void Start()
         {
-            field.Define(ref Field.first.Matrix);
+            field.Fill(ref Field.first.Matrix);
             PrintField(ref Field.first.Matrix, labelPlayer1);
             game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix, labelPlayer1);
             if (Game.PlayerAmount == 2)
             {
-                field.Define(ref Field.second.Matrix);
+                field.Fill(ref Field.second.Matrix);
                 PrintField(ref Field.second.Matrix, labelPlayer2);
                 game.Check(Player.second.PosLeft, Player.second.PosTop, ref Field.second.Matrix, labelPlayer2);
             }
 
-            KeyDown += new KeyEventHandler((sender, e) => Form2_KeyDown(sender, e, Field.first.Matrix, Field.second.Matrix, Player.first, Player.second));
+            KeyDown += new KeyEventHandler((sender, e) => PressKey(e, Field.first.Matrix, Field.second.Matrix, Player.first, Player.second));
             Game.GameStopped = false;
-            game.Timer(label1);
+            //game.Timer(timeNumbers_label);
         }
 
         public void PrintField(ref Element[,] matrix, Label labelPlayer)
         {
             Field.MiddleOfField = Convert.ToInt32(Math.Floor(Field.MatrixLength / 2d) - 1);
-            Type elemType;
 
             for (int i = 0; i < Field.MatrixWidth; i++)
             {
@@ -80,32 +62,33 @@ namespace Lab1_GUI
                         x = 0;
                     }
 
-                    elemType = matrix[i, j].GetType();
-                    PrintElem(elemType, x, y);
-                    if (elemType == typeof(Trap))
+                    if (matrix[i, j].GetType() == typeof(Player))
                     {
-                        PrintElem(typeof(Cell), x, y);
-                    }
-
-                    if (elemType == typeof(Player))
-                    {
-                        PrintElem(typeof(PassedCell), x, y);
+                        PrintElem(new PassedCell().Path, x, y);
                         labelPlayer.Location = new Point(x + 1, y + 1);
                         this.Controls.Add(labelPlayer);
                         labelPlayer.BringToFront();
                     }
+                    else
+                    {
+                        PrintElem(matrix[i, j].Path, x, y);
+                    }
 
-                    x += 15;
+                    if (matrix[i, j].GetType() == typeof(Trap))
+                    {
+                        PrintElem(new Cell().Path, x, y);
+                    }
+
+                    x += Element.Length;
                 }
 
-                y += 15;
+                y += Element.Length;
             }
 
-            y += 15;
+            y += Element.Length;
         }
 
-        public void Form2_KeyDown(
-            object sender,
+        public void PressKey(
             KeyEventArgs e,
             Element[,] matrxi1,
             Element[,] matrix2,
@@ -120,29 +103,29 @@ namespace Lab1_GUI
             if (e.KeyCode == Keys.Right && matrxi1[player1.PosTop, player1.PosLeft + 1].GetType() != typeof(Wall))
             {
                 player1.PosLeft += 1;
-                player1.labelX += 15;
+                player1.labelX += Element.Length;
             }
 
             if (e.KeyCode == Keys.Left && matrxi1[player1.PosTop, player1.PosLeft - 1].GetType() != typeof(Wall))
             {
                 player1.PosLeft -= 1;
-                player1.labelX -= 15;
+                player1.labelX -= Element.Length;
             }
 
             if (e.KeyCode == Keys.Up && matrxi1[player1.PosTop - 1, player1.PosLeft].GetType() != typeof(Wall))
             {
                 player1.PosTop -= 1;
-                player1.labelY -= 15;
+                player1.labelY -= Element.Length;
             }
 
             if (e.KeyCode == Keys.Down && matrxi1[player1.PosTop + 1, player1.PosLeft].GetType() != typeof(Wall))
             {
                 player1.PosTop += 1;
-                player1.labelY += 15;
+                player1.labelY += Element.Length;
             }
 
-            game.MovePlayer(ref player1.PosLeft, ref player1.PosTop, ref matrxi1, label3);
-            PrintElem(typeof(PassedCell), player1.labelX, player1.labelY);
+            game.MovePlayer(ref player1, ref matrxi1, life_label);
+            PrintElem(new PassedCell().Path, player1.labelX, player1.labelY);
             game.Check(player1.PosLeft, player1.PosTop, ref matrxi1, labelPlayer1);
 
             if(Game.PlayerAmount == 2)
@@ -150,29 +133,29 @@ namespace Lab1_GUI
                 if (e.KeyCode == Keys.D && matrix2[player2.PosTop, player2.PosLeft + 1].GetType() != typeof(Wall))
                 {
                     player2.PosLeft += 1;
-                    player2.labelX += 15;
+                    player2.labelX += Element.Length;
                 }
 
                 if (e.KeyCode == Keys.A && matrix2[player2.PosTop, player2.PosLeft - 1].GetType() != typeof(Wall))
                 {
                     player2.PosLeft -= 1;
-                    player2.labelX -= 15;
+                    player2.labelX -= Element.Length;
                 }
 
                 if (e.KeyCode == Keys.W && matrix2[player2.PosTop - 1, player2.PosLeft].GetType() != typeof(Wall))
                 {
                     player2.PosTop -= 1;
-                    player2.labelY -= 15;
+                    player2.labelY -= Element.Length;
                 }
 
                 if (e.KeyCode == Keys.S && matrix2[player2.PosTop + 1, player2.PosLeft].GetType() != typeof(Wall))
                 {
                     player2.PosTop += 1;
-                    player2.labelY += 15;
+                    player2.labelY += Element.Length;
                 }
 
-                game.MovePlayer(ref player2.PosLeft, ref player2.PosTop, ref matrxi1, label3);
-                PrintElem(typeof(PassedCell), player2.labelX, player2.labelY);
+                game.MovePlayer(ref player2, ref matrxi1, life_label);
+                PrintElem(new PassedCell().Path, player2.labelX, player2.labelY);
                 game.Check(player2.PosLeft, player2.PosTop, ref matrxi1, labelPlayer2);
             }
 
@@ -182,9 +165,8 @@ namespace Lab1_GUI
                 {
                     SizeMode = PictureBoxSizeMode.StretchImage,
                     Image = Image.FromFile("C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/explosion.gif"),
-                    Size = new Size(15, 15),
+                    Size = new Size(Element.Length, Element.Length),
                     Location = new Point(player1.labelX, player1.labelY),
-
                 };
                 this.Controls.Add(explosion);
                 ShowTraps();
@@ -200,46 +182,21 @@ namespace Lab1_GUI
             }
         }
 
-        public void PrintElem(Type type, int x, int y) // класс в параметр !!!!!!!!!!!!!!!!!!!!!!!!!!!
+        public void PrintElem(string path, int x, int y) // класс в параметр 
         {
-            PictureBox pictureBox = new PictureBox();
-            //pictureBox.Image = Image.FromFile( .path);
-            // constructor
-
-            if (type == typeof(WallBorder))
+            PictureBox pictureBox = new PictureBox()
             {
-                pictureBox.Image = Image.FromFile(WallBorder.path);
+                Image = Image.FromFile(path),
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Size = new Size(Element.Length, Element.Length),
+                Location = new Point(x, y),
+            };
+
+            if (path == new Trap().Path)
+            {
+                pictureBox.Tag = "trap";
             }
 
-            if (type == typeof(Cell))
-            {
-                pictureBox.Image = Image.FromFile(Cell.path);
-            }
-
-            if (type == typeof(Bonus))
-            {
-                pictureBox.Image = Image.FromFile(Bonus.path);
-            }
-
-            if (type == typeof(Trap))
-            {
-                pictureBox.Name = "trap";
-                pictureBox.Image = Image.FromFile(Trap.path);
-            }
-
-            if (type == typeof(Wall))
-            {
-                pictureBox.Image = Image.FromFile(Wall.path);
-            }
-
-            if (type == typeof(PassedCell))
-            {
-                pictureBox.Image = Image.FromFile(PassedCell.path);
-            }
-
-            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox.Size = new Size(15, 15);
-            pictureBox.Location = new Point(x, y);
             this.Controls.Add(pictureBox);
             pictureBox.BringToFront();
         }
@@ -248,7 +205,7 @@ namespace Lab1_GUI
         {
             foreach (var picture in this.Controls.OfType<PictureBox>())
             {
-                if(picture.Name == "trap")
+                if (picture.Tag == "trap")
                 {
                     picture.BringToFront();
                 }
@@ -274,9 +231,10 @@ namespace Lab1_GUI
             this.Opacity = .98;
             this.Enabled = false;
             MessageBox.Show("PAUSE");
+            this.Opacity = 1;
             this.Enabled = true;
             Game.GameStopped = false;
-            game.Timer(label1);
+            game.Timer(timeNumbers_label);
         }
     }
 }
