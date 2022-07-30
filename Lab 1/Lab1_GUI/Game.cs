@@ -19,70 +19,66 @@ namespace Lab1_GUI
             var watch = Stopwatch.StartNew();
             Task.Run(() =>
             {
-                while (GameStopped == false)
+                while (!GameStopped)
                 {
                     label.Text = watch.Elapsed.ToString();
-                    if (GameStopped == true)
-                    {
-                        SpentTime = watch.Elapsed;
-                        watch.Stop();
-                    }
                 }
+                SpentTime = watch.Elapsed;
+                watch.Stop();
             });
         }
 
-        public void MovePlayer(ref int left, ref int top, ref Element[,] matrix, Label label)
+        public void MovePlayer(ref Player player, ref Element[,] matrix, Label label)
         {
-            if (matrix[top, left].GetType() == typeof(Trap))
+            Result result = new Result();
+            if (matrix[player.PosTop, player.PosLeft].GetType() == typeof(Trap))
             {
                 if (Player.first.Life == 0)
                 {
-                    Result result = new Result();
                     result.Defeat(ref matrix);
                 }
 
                 if (Player.first.Life == 1)
                 {
                     Player.first.Life = 0;
-                    matrix[top, left] = new Cell();
+                    matrix[player.PosTop, player.PosLeft] = new Cell();
                     label.Text = $"Life: {Player.first.Life}";
                 }
             }
 
-            if (top == 0)
+            if (player.PosTop == 0)
             {
-                if (left == Field.MiddleOfField || left == Field.MiddleOfField + 2 || left == Field.MiddleOfField + 1)
+                if (player.PosLeft == Field.MiddleOfField || player.PosLeft == Field.MiddleOfField + 2 || player.PosLeft == Field.MiddleOfField + 1)
                 {
-                    Result result = new Result();
                     result.Win();
                 }
             }
 
-            if (left < 1)
+            if (player.PosLeft < 1)
             {
-                left += 1;
-                Player.first.labelX += 15;
+                player.PosLeft += 1;
+                Player.first.labelX += Element.Length;
             }
 
-            if (top < 1 && left != Field.MiddleOfField && left != Field.MiddleOfField + 2 && left != Field.MiddleOfField + 1)
+            if (player.PosTop < 1 && player.PosLeft != Field.MiddleOfField && player.PosLeft != Field.MiddleOfField + 2 && player.PosLeft != Field.MiddleOfField + 1)
             {
-                top += 1;
-                Player.first.labelY += 15;
+                player.PosTop += 1;
+                Player.first.labelY += Element.Length;
             }
 
-            if (left > Field.MatrixLength - 2)
+            if (player.PosLeft > Field.MatrixLength - 2)
             {
-                left -= 1;
-                Player.first.labelX -= 15;
+                player.PosLeft -= 1;
+                Player.first.labelX -= Element.Length;
             }
 
-            if (top > Field.MatrixWidth - 2 && left != Field.MiddleOfField && left != Field.MiddleOfField + 2 && left != Field.MiddleOfField + 1)
+            if (player.PosTop > Field.MatrixWidth - 2 && player.PosLeft != Field.MiddleOfField && player.PosLeft != Field.MiddleOfField + 2 && player.PosLeft != Field.MiddleOfField + 1)
             {
-                top -= 1;
-                Player.first.labelY -= 15;
+                player.PosTop -= 1;
+                Player.first.labelY -= Element.Length;
             }
 
-            if (matrix[top, left].GetType() == typeof(Bonus))
+            if (matrix[player.PosTop, player.PosLeft].GetType() == typeof(Bonus))
             {
                 // matrix[top, left] = new Cell();
                 Player.first.Life = 1;
