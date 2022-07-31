@@ -169,7 +169,7 @@ namespace Lab1_GUI
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_FormClosing);
             if (!Game.GameStopped)
             {
-                this.KeyDown += new System.Windows.Forms.KeyEventHandler((sender, e) => PressKey(sender, e, Field.first.Matrix, Field.second.Matrix, Player.first, Player.second));
+                this.KeyDown += new System.Windows.Forms.KeyEventHandler((sender, e) => PressKey(e, Field.first.Matrix, Field.second.Matrix, Player.first, Player.second));
             }
 
             this.menuStrip1.ResumeLayout(false);

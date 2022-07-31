@@ -84,61 +84,20 @@ namespace Lab1_GUI
         }
 
         public void PressKey(
-            object sender,
             KeyEventArgs e,
             Element[,] matrxi1,
             Element[,] matrix2,
             Player player1,
             Player player2)
         {
-
-            if (e.KeyCode == Keys.Right && matrxi1[player1.PosTop, player1.PosLeft + 1].GetType() != typeof(Wall))
-            {
-                player1.PosLeft += 1;
-            }
-
-            if (e.KeyCode == Keys.Left && matrxi1[player1.PosTop, player1.PosLeft - 1].GetType() != typeof(Wall))
-            {
-                player1.PosLeft -= 1;
-            }
-
-            if (e.KeyCode == Keys.Up && matrxi1[player1.PosTop - 1, player1.PosLeft].GetType() != typeof(Wall))
-            {
-                
-                player1.PosTop -= 1;
-            }
-
-            if (e.KeyCode == Keys.Down && matrxi1[player1.PosTop + 1, player1.PosLeft].GetType() != typeof(Wall))
-            {
-                player1.PosTop += 1;
-            }
-
+            ChangePos(e.KeyCode, ref player1, matrxi1);
             game.MovePlayer(ref player1, ref matrxi1, life_label);
             PrintElem(new PassedCell().Path, player1.PosLeft * Element.Length, player1.PosTop * Element.Length);
             game.Check(player1.PosLeft, player1.PosTop, ref matrxi1, labelPlayer1);
 
             if(Game.PlayerAmount == 2)
             {
-                if (e.KeyCode == Keys.D && matrix2[player2.PosTop, player2.PosLeft + 1].GetType() != typeof(Wall))
-                {
-                    player2.PosLeft += 1;
-                }
-
-                if (e.KeyCode == Keys.A && matrix2[player2.PosTop, player2.PosLeft - 1].GetType() != typeof(Wall))
-                {
-                    player2.PosLeft -= 1;
-                }
-
-                if (e.KeyCode == Keys.W && matrix2[player2.PosTop - 1, player2.PosLeft].GetType() != typeof(Wall))
-                {
-                    player2.PosTop -= 1;
-                }
-
-                if (e.KeyCode == Keys.S && matrix2[player2.PosTop + 1, player2.PosLeft].GetType() != typeof(Wall))
-                {
-                    player2.PosTop += 1;
-                }
-
+                ChangePos(e.KeyCode, ref player2, matrix2);
                 game.MovePlayer(ref player2, ref matrxi1, life_label);
                 PrintElem(new PassedCell().Path, player2.PosLeft * Element.Length, player2.PosTop * Element.Length);
                 game.Check(player2.PosLeft, player2.PosTop, ref matrxi1, labelPlayer2);
@@ -183,6 +142,29 @@ namespace Lab1_GUI
 
             this.Controls.Add(pictureBox);
             pictureBox.BringToFront();
+        }
+
+        private void ChangePos(Keys key, ref Player player, Element[,] matrix)
+        {
+            if (key == Keys.Right && matrix[player.PosTop, player.PosLeft + 1].GetType() != typeof(Wall))
+            {
+                player.PosLeft += 1;
+            }
+
+            if (key == Keys.Left && matrix[player.PosTop, player.PosLeft - 1].GetType() != typeof(Wall))
+            {
+                player.PosLeft -= 1;
+            }
+
+            if (key == Keys.Up && matrix[player.PosTop - 1, player.PosLeft].GetType() != typeof(Wall))
+            {
+                player.PosTop -= 1;
+            }
+
+            if (key == Keys.Down && matrix[player.PosTop + 1, player.PosLeft].GetType() != typeof(Wall))
+            {
+                player.PosTop += 1;
+            }
         }
 
         public void ShowTraps()
