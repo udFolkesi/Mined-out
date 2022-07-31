@@ -15,25 +15,21 @@ namespace Lab1_GUI
 {
     public partial class GameForm : Form
     {
-        // метода вывода элемента в классе эелемента
         int x = 0;
         int y = 0;
-        //public const int CellLength = 15; // перенести в класс клетки
         private Field field = new Field();
         private Game game = new Game();
 
         public GameForm()
         {
+            Game.GameStopped = false;
             InitializeComponent();
-            Player.first.PosLeft = Field.MiddleOfField + 1;
-            Player.first.PosTop = Field.MatrixWidth - 1;
-            Player.second.PosLeft = Player.first.PosLeft;
-            Player.second.PosTop = Player.first.PosTop;
             Start();
         }
 
         public void Start()
         {
+            
             field.Fill(ref Field.first.Matrix);
             PrintField(ref Field.first.Matrix, labelPlayer1);
             game.Check(Player.first.PosLeft, Player.first.PosTop, ref Field.first.Matrix, labelPlayer1);
@@ -44,7 +40,6 @@ namespace Lab1_GUI
                 game.Check(Player.second.PosLeft, Player.second.PosTop, ref Field.second.Matrix, labelPlayer2);
             }
 
-            KeyDown += new KeyEventHandler((sender, e) => PressKey(e, Field.first.Matrix, Field.second.Matrix, Player.first, Player.second));
             Game.GameStopped = false;
             //game.Timer(timeNumbers_label);
         }
@@ -89,43 +84,37 @@ namespace Lab1_GUI
         }
 
         public void PressKey(
+            object sender,
             KeyEventArgs e,
             Element[,] matrxi1,
             Element[,] matrix2,
             Player player1,
             Player player2)
         {
-            player1.labelX = labelPlayer1.Location.X;
-            player1.labelY = labelPlayer1.Location.Y;
-            player2.labelX = labelPlayer2.Location.X;
-            player2.labelY = labelPlayer2.Location.Y;
 
             if (e.KeyCode == Keys.Right && matrxi1[player1.PosTop, player1.PosLeft + 1].GetType() != typeof(Wall))
             {
                 player1.PosLeft += 1;
-                player1.labelX += Element.Length;
             }
 
             if (e.KeyCode == Keys.Left && matrxi1[player1.PosTop, player1.PosLeft - 1].GetType() != typeof(Wall))
             {
                 player1.PosLeft -= 1;
-                player1.labelX -= Element.Length;
             }
 
             if (e.KeyCode == Keys.Up && matrxi1[player1.PosTop - 1, player1.PosLeft].GetType() != typeof(Wall))
             {
+                
                 player1.PosTop -= 1;
-                player1.labelY -= Element.Length;
             }
 
             if (e.KeyCode == Keys.Down && matrxi1[player1.PosTop + 1, player1.PosLeft].GetType() != typeof(Wall))
             {
                 player1.PosTop += 1;
-                player1.labelY += Element.Length;
             }
 
             game.MovePlayer(ref player1, ref matrxi1, life_label);
-            PrintElem(new PassedCell().Path, player1.labelX, player1.labelY);
+            PrintElem(new PassedCell().Path, player1.PosLeft * Element.Length, player1.PosTop * Element.Length);
             game.Check(player1.PosLeft, player1.PosTop, ref matrxi1, labelPlayer1);
 
             if(Game.PlayerAmount == 2)
@@ -133,30 +122,33 @@ namespace Lab1_GUI
                 if (e.KeyCode == Keys.D && matrix2[player2.PosTop, player2.PosLeft + 1].GetType() != typeof(Wall))
                 {
                     player2.PosLeft += 1;
-                    player2.labelX += Element.Length;
                 }
 
                 if (e.KeyCode == Keys.A && matrix2[player2.PosTop, player2.PosLeft - 1].GetType() != typeof(Wall))
                 {
                     player2.PosLeft -= 1;
-                    player2.labelX -= Element.Length;
                 }
 
                 if (e.KeyCode == Keys.W && matrix2[player2.PosTop - 1, player2.PosLeft].GetType() != typeof(Wall))
                 {
                     player2.PosTop -= 1;
-                    player2.labelY -= Element.Length;
                 }
 
                 if (e.KeyCode == Keys.S && matrix2[player2.PosTop + 1, player2.PosLeft].GetType() != typeof(Wall))
                 {
                     player2.PosTop += 1;
-                    player2.labelY += Element.Length;
                 }
 
                 game.MovePlayer(ref player2, ref matrxi1, life_label);
-                PrintElem(new PassedCell().Path, player2.labelX, player2.labelY);
+                PrintElem(new PassedCell().Path, player2.PosLeft * Element.Length, player2.PosTop * Element.Length);
                 game.Check(player2.PosLeft, player2.PosTop, ref matrxi1, labelPlayer2);
+            }
+
+            labelPlayer1.Location = new Point(player1.PosLeft * Element.Length, player1.PosTop * Element.Length);
+            labelPlayer1.BringToFront();
+            if (Game.PlayerAmount == 2)
+            {
+                labelPlayer2.Location = new Point(player2.PosLeft * Element.Length, player2.PosTop * Element.Length);
             }
 
             if (Game.GameStopped == true)
@@ -164,21 +156,13 @@ namespace Lab1_GUI
                 PictureBox explosion = new PictureBox()
                 {
                     SizeMode = PictureBoxSizeMode.StretchImage,
-                    Image = Image.FromFile("C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/explosion.gif"),
+                    Image = Properties.Resources.explosion,
                     Size = new Size(Element.Length, Element.Length),
-                    Location = new Point(player1.labelX, player1.labelY),
+                    Location = new Point(player1.PosLeft * Element.Length, player1.PosTop * Element.Length),
                 };
                 this.Controls.Add(explosion);
                 ShowTraps();
                 explosion.BringToFront();
-            }
-
-            labelPlayer1.Location = new Point(player1.labelX, player1.labelY);
-            labelPlayer1.BringToFront();
-            if (Game.PlayerAmount == 2)
-            {
-                labelPlayer2.Location = new Point(player2.labelX, player2.labelY);
-                labelPlayer2.BringToFront();
             }
         }
 
@@ -235,6 +219,11 @@ namespace Lab1_GUI
             this.Enabled = true;
             Game.GameStopped = false;
             game.Timer(timeNumbers_label);
+        }
+
+        private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Game.GameStopped = true;
         }
     }
 }

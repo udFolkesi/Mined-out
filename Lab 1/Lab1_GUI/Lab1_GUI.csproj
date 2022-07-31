@@ -111,6 +111,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DialogForm.resx">
       <DependentUpon>DialogForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -141,6 +142,46 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1f9e8.ico" />
+    <None Include="images\whiteCell21.png" />
+    <None Include="images\whiteCell1.jpg" />
+    <None Include="images\wall1.png" />
+    <None Include="images\wall1.jpg" />
+    <None Include="images\unnamed1.png" />
+    <None Include="images\red1.png" />
+    <None Include="images\mined_out_cover21.jpg" />
+    <None Include="images\mine1.png" />
+    <None Include="images\greyCell21.png" />
+    <None Include="images\greyCell1.png" />
+    <None Include="images\Grey_Cell1.png" />
+    <None Include="images\cell1.png" />
+    <None Include="images\bonus1.png" />
+    <None Include="images\bonus1.jpg" />
+    <None Include="images\blueCell1.jpg" />
+    <None Include="images\1f9e81.png" />
+    <None Include="images\11.png" />
+    <None Include="images\01.png" />
+    <None Include="images\whiteCell2.png" />
+    <None Include="images\whiteCell.jpg" />
+    <None Include="images\wall.png" />
+    <None Include="images\wall.jpg" />
+    <None Include="images\unnamed.png" />
+    <None Include="images\trap.jpg" />
+    <None Include="images\red.png" />
+    <None Include="images\mine.png" />
+    <None Include="images\greyCell2.png" />
+    <None Include="images\greyCell.png" />
+    <None Include="images\Grey_Cell.png" />
+    <None Include="images\explosion.gif" />
+    <None Include="images\cell.png" />
+    <None Include="images\bonus.png" />
+    <None Include="images\bonus.jpg" />
+    <None Include="images\blueCell.jpg" />
+    <None Include="images\3.png" />
+    <None Include="images\2.png" />
+    <None Include="images\1f9e8.png" />
+    <None Include="images\1f9e8.ico" />
+    <None Include="images\1.png" />
+    <None Include="images\0.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="images\mined_out_cover2.jpg" />
@@ -156,6 +197,4 @@
     <PreBuildEvent>if exist "$(TargetPath).locked" del "$(TargetPath).locked"
 if exist "$(TargetPath)" if not exist "$(TargetPath).locked" move "$(TargetPath)" "$(TargetPath).locked"</PreBuildEvent>
   </PropertyGroup>
-
-
 </Project>
