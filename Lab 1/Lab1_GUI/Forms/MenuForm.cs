@@ -19,48 +19,49 @@ namespace Lab1_GUI
             ChangeMenuColor();
             player1_bttn.Visible = false;
             player2_bttn.Visible = false;
-            startGame_bttn.Click += button1_Click;
-            player1_bttn.Click += button1_Click;
-            player2_bttn.Click += button1_Click;
+            startGame_bttn.Click += StartGame_bttn_Click;
+            player1_bttn.Click += StartGame_bttn_Click;
+            player2_bttn.Click += StartGame_bttn_Click;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void StartGame_bttn_Click(object sender, EventArgs e)
         {
             startGame_bttn.Visible = false;
             player1_bttn.Visible = true;
             player2_bttn.Visible = true;
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void Player1_bttn_Click(object sender, EventArgs e)
         {
             Game.PlayerAmount = 1;
             GameForm form2 = new GameForm();
             form2.Show();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void Player2_bttn_Click(object sender, EventArgs e)
         {
             Game.PlayerAmount = 2;
             GameForm form2 = new GameForm();
             form2.Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Rate_bttn_Click(object sender, EventArgs e)
         {
             Files files = new Files();
             files.GetInfo();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Settings_bttn_Click(object sender, EventArgs e)
         {
             FieldSizeForm fieldSizeForm = new FieldSizeForm();
             fieldSizeForm.Show();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void Exit_bttn_Click(object sender, EventArgs e)
         {
             // сделать что-то перед выходом, что-то сохранить и тп
-            Application.Exit();
+            Game.GameStopped = true;
+            this.Close();
         }
 
         private async Task ChangeMenuColor()

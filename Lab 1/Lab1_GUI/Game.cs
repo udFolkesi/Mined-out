@@ -30,11 +30,11 @@ namespace Lab1_GUI
 
         public void MovePlayer(ref Player player, ref Element[,] matrix, Label label)
         {
-            Result result = new Result();
             if (matrix[player.PosTop, player.PosLeft].GetType() == typeof(Trap))
             {
                 if (Player.first.Life == 0)
                 {
+                    Result result = new Result();
                     result.Defeat(ref matrix);
                 }
 
@@ -50,6 +50,7 @@ namespace Lab1_GUI
             {
                 if (player.PosLeft == Field.MiddleOfField || player.PosLeft == Field.MiddleOfField + 2 || player.PosLeft == Field.MiddleOfField + 1)
                 {
+                    Result result = new Result();
                     result.Win();
                 }
             }
@@ -57,25 +58,21 @@ namespace Lab1_GUI
             if (player.PosLeft < 1)
             {
                 player.PosLeft += 1;
-                Player.first.labelX += Element.Length;
             }
 
             if (player.PosTop < 1 && player.PosLeft != Field.MiddleOfField && player.PosLeft != Field.MiddleOfField + 2 && player.PosLeft != Field.MiddleOfField + 1)
             {
                 player.PosTop += 1;
-                Player.first.labelY += Element.Length;
             }
 
             if (player.PosLeft > Field.MatrixLength - 2)
             {
                 player.PosLeft -= 1;
-                Player.first.labelX -= Element.Length;
             }
 
             if (player.PosTop > Field.MatrixWidth - 2 && player.PosLeft != Field.MiddleOfField && player.PosLeft != Field.MiddleOfField + 2 && player.PosLeft != Field.MiddleOfField + 1)
             {
                 player.PosTop -= 1;
-                Player.first.labelY -= Element.Length;
             }
 
             if (matrix[player.PosTop, player.PosLeft].GetType() == typeof(Bonus))

@@ -49,7 +49,7 @@ namespace Lab1_GUI
             this.startGame_bttn.TabIndex = 0;
             this.startGame_bttn.Text = "Start Game";
             this.startGame_bttn.UseVisualStyleBackColor = true;
-            this.startGame_bttn.Click += new System.EventHandler(this.button1_Click);
+            this.startGame_bttn.Click += new System.EventHandler(this.StartGame_bttn_Click);
             // 
             // rate_bttn
             // 
@@ -59,7 +59,7 @@ namespace Lab1_GUI
             this.rate_bttn.TabIndex = 1;
             this.rate_bttn.Text = "Rate";
             this.rate_bttn.UseVisualStyleBackColor = true;
-            this.rate_bttn.Click += new System.EventHandler(this.button2_Click);
+            this.rate_bttn.Click += new System.EventHandler(this.Rate_bttn_Click);
             // 
             // settings_bttn
             // 
@@ -69,7 +69,7 @@ namespace Lab1_GUI
             this.settings_bttn.TabIndex = 2;
             this.settings_bttn.Text = "Settings";
             this.settings_bttn.UseVisualStyleBackColor = true;
-            this.settings_bttn.Click += new System.EventHandler(this.button3_Click);
+            this.settings_bttn.Click += new System.EventHandler(this.Settings_bttn_Click);
             // 
             // exit_bttn
             // 
@@ -79,7 +79,7 @@ namespace Lab1_GUI
             this.exit_bttn.TabIndex = 3;
             this.exit_bttn.Text = "Exit";
             this.exit_bttn.UseVisualStyleBackColor = true;
-            this.exit_bttn.Click += new System.EventHandler(this.button4_Click);
+            this.exit_bttn.Click += new System.EventHandler(this.Exit_bttn_Click);
             // 
             // player1_bttn
             // 
@@ -89,7 +89,7 @@ namespace Lab1_GUI
             this.player1_bttn.TabIndex = 4;
             this.player1_bttn.Text = "1 player";
             this.player1_bttn.UseVisualStyleBackColor = true;
-            this.player1_bttn.Click += new System.EventHandler(this.button5_Click);
+            this.player1_bttn.Click += new System.EventHandler(this.Player1_bttn_Click);
             // 
             // player2_bttn
             // 
@@ -99,7 +99,7 @@ namespace Lab1_GUI
             this.player2_bttn.TabIndex = 5;
             this.player2_bttn.Text = "2 players";
             this.player2_bttn.UseVisualStyleBackColor = true;
-            this.player2_bttn.Click += new System.EventHandler(this.button6_Click);
+            this.player2_bttn.Click += new System.EventHandler(this.Player2_bttn_Click);
             // 
             // pictureBox1
             // 

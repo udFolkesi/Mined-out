@@ -166,6 +166,12 @@ namespace Lab1_GUI
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "GameForm";
             this.Text = "Form2";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_FormClosing);
+            if (!Game.GameStopped)
+            {
+                this.KeyDown += new System.Windows.Forms.KeyEventHandler((sender, e) => PressKey(sender, e, Field.first.Matrix, Field.second.Matrix, Player.first, Player.second));
+            }
+
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

@@ -56,6 +56,16 @@ namespace Lab1_GUI
                     if (i == MatrixWidth - 1 && k == MiddleOfField + 1)
                     {
                         Matrix[i, k] = new Player();
+                        if (Matrix == first.Matrix)
+                        {
+                            Player.first.PosLeft = k;
+                            Player.first.PosTop = i;
+                        }
+                        else
+                        {
+                            Player.second.PosLeft = k;
+                            Player.second.PosTop = i;
+                        }
                     }
                 }
 
@@ -65,7 +75,7 @@ namespace Lab1_GUI
             elementsAdder.Place(ref Matrix, new Bonus());
             for (int i = 0; i < MatrixWidth; i++)
             {
-                elementsAdder.Place(ref Matrix, new WallBorder());
+                elementsAdder.Place(ref Matrix, new Wall());
             }
         }
     }

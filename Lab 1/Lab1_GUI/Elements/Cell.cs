@@ -11,8 +11,8 @@ namespace Lab1_GUI
         public override string Path { set; get; }
         public Cell()
         {
-            //Path = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/cell.png";
-            Path = "./cell.png";
+            Path = "C:/Users/USER/Desktop/GitHub/Lab 1/Lab1_GUI/images/cell.png";
+            
         }
         public override void Define()
         {

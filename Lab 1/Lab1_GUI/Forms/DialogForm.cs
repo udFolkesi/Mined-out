@@ -13,20 +13,20 @@ namespace Lab1_GUI
 {
     public partial class DialogForm : Form
     {
+        private List<Form> openForms = new List<Form>();
         public DialogForm()
         {
             InitializeComponent();
+            foreach (Form form in Application.OpenForms)
+            {
+                openForms.Add(form);
+            }
             button1.Click += button1_Click;
             button2.Click += button2_Click;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            List<Form> openForms = new List<Form>();
-            foreach (Form form in Application.OpenForms)
-            {
-                openForms.Add(form);
-            }
 
             foreach (Form form in openForms)
             {
@@ -47,7 +47,14 @@ namespace Lab1_GUI
             ResultForm resultForm = new ResultForm();
             resultForm.NameResult("Game over");
             resultForm.Show();
-            Application.Exit(); 
+            Game.GameStopped = true;
+            foreach (Form form in openForms)
+            {
+                if (form.Name == "MenuForm")
+                {
+                    form.Close();
+                }
+            }
         }
     }
 }
